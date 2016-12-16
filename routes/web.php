@@ -12,4 +12,5 @@
 */
 
 Route::get('/','LoginController@index' )->name('login.index');
+Route::post('/','LoginController@authenticate' )->name('login.authenticate');
 

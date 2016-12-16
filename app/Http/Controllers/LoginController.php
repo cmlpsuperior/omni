@@ -14,7 +14,7 @@ class LoginController extends Controller
 		return view('login.index');  
 	}
     
-    public function autenticar(Request $request){
+    public function authenticate(Request $request){
         $email = $request->get('email');
         $password =  $request->get('password');
         if (Auth::attempt(['email' => $email, 'password' => $password])) {
