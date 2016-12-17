@@ -13,4 +13,5 @@
 
 Route::get('/','LoginController@index' )->name('login.index');
 Route::post('/','LoginController@authenticate' )->name('login.authenticate');
+Route::get('/logout','LoginController@logout' )->name('login.logout');
 

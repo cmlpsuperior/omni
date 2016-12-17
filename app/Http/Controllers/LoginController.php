@@ -19,7 +19,7 @@ class LoginController extends Controller
         $password =  $request->get('password');
         if (Auth::attempt(['email' => $email, 'password' => $password])) {
             //return redirect()->action('ClienteController@index' );
-            return view ('se autentico correctamente');
+            return view ('home');
         }
         
         return redirect()->action('LoginController@index' )->withInput()->withErrors ('Usuario o contraseña incorrecto');  
