@@ -16,9 +16,11 @@ class Employee extends Model
     	'names',
     	'fatherLastName',
     	'motherLastName',
+
     	'birthdate',
     	'documentNumber',
         'email',
+        
         'state',
         'gender',        
         'phone',
@@ -26,7 +28,7 @@ class Employee extends Model
         'entryDate',
         'endDate',
         
-        'idPosition',        
+        'idPosition',  
     	'idDocumentType',
     	'idDriverLicense',
     	'idUser'
@@ -47,4 +49,10 @@ class Employee extends Model
     public function driverLicense (){
     	return $this->belongsTo('App\DriverLicense', 'idDriverLicense', 'idDriverLicense');
     }
+
+    public function position (){
+        return $this->belongsTo('App\Position', 'idPosition', 'idPosition');
+    }
+
+    
 }
