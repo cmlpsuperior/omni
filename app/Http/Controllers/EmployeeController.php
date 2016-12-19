@@ -16,9 +16,24 @@ use App\Http\Requests\EmployeeRequest;
 
 class EmployeeController extends Controller
 {
-    public function index(){       
+    public function index(Request $request){
+        $documentNumber ='';
+        $names='';
+        $fatherLastName='';
+        $motherLastName='';
+
+        if ( $request->has('documentNumber') ) $documentNumber = $request->get('documentNumber');
+        if ( $request->has('names') ) $names = $request->get('names');
+        if ( $request->has('fatherLastName') ) $fatherLastName = $request->get('fatherLastName');
+        if ( $request->has('motherLastName') ) $motherLastName = $request->get('motherLastName');
+
+        //it can be improved using ifs
         $employees = Employee::orderBy('idEmployee', 'desc')
-                  ->simplePaginate(10);
+                    ->where('documentNumber','like', '%'.$documentNumber.'%')
+                    ->where('names','like', '%'.$names.'%')
+                    ->where('fatherLastName','like', '%'.$fatherLastName.'%')
+                    ->where('motherLastName','like', '%'.$motherLastName.'%')
+                    ->simplePaginate(15);
 
         return view('employee.index', ['employees'=>$employees]); 
     }
@@ -45,13 +60,13 @@ class EmployeeController extends Controller
 
         	//create a new row in table employee
 	    	$employee= new employee();
-	    	$employee->names=$request->get('names');
-	    	$employee->fatherLastName=$request->get('fatherLastName');
-	    	$employee->motherLastName=$request->get('motherLastName');
+	    	$employee->names=ucfirst( strtolower( trim( $request->get('names') ) ) ); //ucfirst is to upper first letter, srtolower is used for lower all letters, trim is used for erase blank letters
+	    	$employee->fatherLastName=ucfirst( strtolower( trim( $request->get('fatherLastName') ) ) );
+	    	$employee->motherLastName=ucfirst( strtolower( trim( $request->get('motherLastName') ) ) );
 
 	    	$employee->birthdate=$request->get('birthdate');
 	        $employee->documentNumber=$request->get('documentNumber');
-	        if ( $request->get('email')!='' ) $employee->email = $request->get('email');
+	        if ( trim( $request->get('email') )!='' ) $employee->email = strtolower( trim ( $request->get('email') ) );
 
 	        $employee->state = 'Activo';
             $employee->gender = $request->get('gender');
@@ -73,7 +88,6 @@ class EmployeeController extends Controller
 
     public function show ($id){
         return 'Legue al show';
-    	//return view('cliente.show', ["cliente"=>Cliente::findOrFail($id)]);
     }
 
     public function edit($id){

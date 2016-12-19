@@ -115,8 +115,8 @@
 <div class="row">
   <div class="col-lg-12">
     <div class="form-group text-center">
-      <a class="btn btn-danger" href="{{ action('EmployeeController@index') }}">Cancelar</a>
-      <button type="submit" class="btn btn-primary">Registrar</button>
+      <a class="btn btn-danger" href="{{ action('EmployeeController@index') }}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancelar</a>
+      <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Registrar</button>
     </div>
   </div>
 </div>

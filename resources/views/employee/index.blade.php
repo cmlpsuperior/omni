@@ -21,7 +21,7 @@
     </div>
 
     <div class="col-md-4 text-right">
-        <a class="btn btn-info"><span class="glyphicon glyphicon-filter" aria-hidden="true"></span> Filtrar</a>
+        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#filterModal"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Buscar</button>
         <a href="{{ action('EmployeeController@create') }}" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Nuevo empleado</a>
     </div>
     
@@ -55,9 +55,12 @@
 			        @endforeach
                 </tbody>
             </table>
+            {{ $employees->links() }}
         </div>
     </div>
 </div>
+
+@include('employee.filterModal')
 
 @endsection
 
