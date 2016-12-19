@@ -16,4 +16,5 @@ Route::post('/','LoginController@authenticate' );
 Route::get('/logout','LoginController@logout' );
 
 Route::get('/employee','EmployeeController@index' );
-
+Route::get('/employee/create','EmployeeController@create' );
+Route::post('/employee','EmployeeController@store' );

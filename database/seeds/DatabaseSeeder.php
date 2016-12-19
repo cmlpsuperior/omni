@@ -31,7 +31,8 @@ class UsersTableSeeder extends Seeder
         DB::table('users')->delete();
 
         User::create([
-        			'email' => 'henryespinozat@gmail.com',
+                    'name' => '46618582',
+        			//'email' => 'henryespinozat@gmail.com',
         			'password' => Hash::make('46618582'), //to encrip password
         				]);
 	}

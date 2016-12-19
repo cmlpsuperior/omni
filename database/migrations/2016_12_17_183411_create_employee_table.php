@@ -17,7 +17,7 @@ class CreateEmployeeTable extends Migration
 
             $table->datetime('birthdate');
             $table->string('documentNumber',20)->unique();
-            $table->string('email', 100)->unique();
+            $table->string('email', 100)->nullable()->unique();
 
             $table->string('state', 50);
             $table->string('gender', 50);

@@ -10,7 +10,9 @@ use App\DocumentType;
 use App\Position;
 use App\DriverLicense;
 use App\User;
-
+use DB;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\EmployeeRequest;
 
 class EmployeeController extends Controller
 {
@@ -22,49 +24,51 @@ class EmployeeController extends Controller
     }
 
     public function create (){
-    	$cargos= Cargo::orderBy('nombre', 'asc')->get();
-        $tiposDocumentos= TipoDocumento::orderBy('idTipoDocumento', 'asc')->get();
+    	$documentTypes= DocumentType::orderBy('name', 'asc')->get();
+        $positions= Position::orderBy('name', 'asc')->get();
+        $driverLicenses= DriverLicense::orderBy('name', 'asc')->get();
 
-    	return view('empleado.create', ['tiposDocumentos'=>$tiposDocumentos, 'cargos'=> $cargos]);
+    	return view('employee.create', [
+            'documentTypes'=>$documentTypes, 
+            'positions'=> $positions,
+            'driverLicenses'=> $driverLicenses
+            ]);
     }
 
-    public function store (EmpleadoRequest $request){        
-        //una transaccion, ya que ambos deben registrar, sino ninguno.
+    public function store (EmployeeRequest $request){
         DB::beginTransaction();
+        	//create a new row in table users
+        	$user = new User();
+        	$user->name = $request->get('documentNumber');
+        	$user->password =  Hash::make( $request->get('documentNumber') );
+            $user->save();
 
-        	//creo para la tabal USERs
-        	$usuario = new Usuario();
+        	//create a new row in table employee
+	    	$employee= new employee();
+	    	$employee->names=$request->get('names');
+	    	$employee->fatherLastName=$request->get('fatherLastName');
+	    	$employee->motherLastName=$request->get('motherLastName');
 
-        	$usuario->name = $request->get('numeroDocumento');
-        	$usuario->usuario = $request->get('numeroDocumento');
-        	$usuario->password =  Hash::make( $request->get('numeroDocumento') );
-            $usuario->save();
+	    	$employee->birthdate=$request->get('birthdate');
+	        $employee->documentNumber=$request->get('documentNumber');
+	        if ( $request->get('email')!='' ) $employee->email = $request->get('email');
 
-        	//creamos el empleado
-	    	$empleado= new Empleado();
-	    	$empleado->nombres=$request->get('nombres');
-	    	$empleado->apellidoPaterno=$request->get('apellidoPaterno');
-	    	$empleado->apellidoMaterno=$request->get('apellidoMaterno');
-	    	$empleado->fechaNacimiento=$request->get('fechaNacimiento');
-	        $empleado->numeroDocumento=$request->get('numeroDocumento');
+	        $employee->state = 'Activo';
+            $employee->gender = $request->get('gender');
+            if ( $request->get('phone')!='' ) $employee->phone = $request->get('phone');
 
-	        if ( $request->get('correo')!='' ) $empleado->correo = $request->get('correo');
-	    	
-	        $empleado->estado = 'Activo';
+            $employee->entryDate= $request->get('entryDate');
+            $employee->endDate= null;
 
-	        if ( $request->get('licencia')!='' ) $empleado->licencia = $request->get('licencia');
+            $employee->idDocumentType=$request->get('idDocumentType');
+	        if ( $request->get('idDriverLicense')!='' ) $employee->idDriverLicense = $request->get('idDriverLicense');	  
+            $employee->idPosition=$request->get('idPosition');
+	    	$employee->idUser = $user->id;
 
-	        $empleado->fechaIngreso= $request->get('fechaIngreso');
-	        $empleado->fechaSalida = null;
-	    	$empleado->idCargo=$request->get('idCargo');
-	    	$empleado->idTipoDocumento=$request->get('idTipoDocumento');
-
-	    	$empleado->idUser = $usuario->id;
-	    	$empleado->save();
-
+	    	$employee->save();
     	DB::commit();
 
-    	return Redirect('empleado'); //es una URL
+    	return Redirect('employee'); //es una URL
     }
 
     public function show ($id){

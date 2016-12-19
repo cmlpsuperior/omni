@@ -39,14 +39,14 @@
 	                        </div>
 	                    </div>
 	                </div>
-                	@endforeach>
+                	@endforeach
 				@endif  
 				
 									
 				<div class="form-group row">
 					<div class="col-xs-10 col-sm-8 col-md-6 col-lg-4 col-xs-offset-1 col-sm-offset-2 col-md-offset-3 col-lg-offset-4">
-						<label for="email">Correo electrónico</label>
-						<input type="email" id="email" name="email" class="form-control" value="{{ old('email') }}" required>
+						<label for="name">Usuario</label>
+						<input type="name" id="name" name="name" class="form-control" value="{{ old('name') }}" required>
 					</div>			
 				</div>
 

@@ -15,9 +15,9 @@ class LoginController extends Controller
 	}
     
     public function authenticate(Request $request){
-        $email = $request->get('email');
+        $name = $request->get('name');
         $password =  $request->get('password');
-        if (Auth::attempt(['email' => $email, 'password' => $password])) {
+        if (Auth::attempt(['name' => $name, 'password' => $password])) {
             //return redirect()->action('ClienteController@index' );
             return view ('home');
         }
