@@ -142,7 +142,7 @@ class EmployeeTableSeeder extends Seeder
 
                     'state'=> 'Activo',
                     'gender'=> 'Hombre',        
-                    'phone'=>930414373,
+                    'phone'=> '930414373',
 
                     'entryDate'=> '2016-01-01 00:00:00',
                     'endDate'=> null,

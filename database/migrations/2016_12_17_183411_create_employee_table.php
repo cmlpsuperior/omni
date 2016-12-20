@@ -21,7 +21,7 @@ class CreateEmployeeTable extends Migration
 
             $table->string('state', 50);
             $table->string('gender', 50);
-            $table->integer('phone')->nullable();
+            $table->string('phone', 20)->nullable();
 
             $table->datetime('entryDate');
             $table->datetime('endDate')->nullable();

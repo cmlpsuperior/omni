@@ -12,7 +12,7 @@
 */
 
 Route::get('/','LoginController@index' );
-Route::post('/','LoginController@authenticate' );
+Route::post('/authenticate','LoginController@authenticate' );
 Route::get('/logout','LoginController@logout' );
 
 Route::get('/employee','EmployeeController@index' );
