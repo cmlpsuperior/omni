@@ -18,3 +18,6 @@ Route::get('/logout','LoginController@logout' );
 Route::get('/employee','EmployeeController@index' );
 Route::get('/employee/create','EmployeeController@create' );
 Route::post('/employee','EmployeeController@store' );
+Route::get('/employee/{id}/edit','EmployeeController@edit' );
+Route::put('/employee/{id}/update','EmployeeController@update' );
+Route::delete('/employee/{id}/destroy','EmployeeController@destroy' );

@@ -13,6 +13,7 @@ use App\User;
 use DB;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\EmployeeRequest;
+use App\Http\Requests\EmployeeUpdateRequest;
 
 class EmployeeController extends Controller
 {
@@ -33,7 +34,7 @@ class EmployeeController extends Controller
                     ->where('names','like', '%'.$names.'%')
                     ->where('fatherLastName','like', '%'.$fatherLastName.'%')
                     ->where('motherLastName','like', '%'.$motherLastName.'%')
-                    ->simplePaginate(15);
+                    ->simplePaginate(10);
 
         return view('employee.index', ['employees'=>$employees]); 
     }
@@ -83,7 +84,7 @@ class EmployeeController extends Controller
 	    	$employee->save();
     	DB::commit();
 
-    	return Redirect('employee'); //es una URL
+    	return Redirect('employee')->with('message','El empleado ha sido registrado exitosamente.'); //es una URL
     }
 
     public function show ($id){
@@ -91,50 +92,55 @@ class EmployeeController extends Controller
     }
 
     public function edit($id){
+        $documentTypes= DocumentType::orderBy('name', 'asc')->get();
+        $positions= Position::orderBy('name', 'asc')->get();
+        $driverLicenses= DriverLicense::orderBy('name', 'asc')->get();
 
-        //obtengo todas las zonas registradas:
-        $tiposDocumentos= TipoDocumento::orderBy('nombre', 'asc')->get();
-        $cargos= Cargo::orderBy('nombre', 'asc')->get();
-
-    	return view('empleado.edit', [ 'tiposDocumentos'=>$tiposDocumentos, 'cargos'=> $cargos, 'empleado'=> Empleado::findOrFail($id) ]);
+        return view('employee.edit', [ 
+            'positions'=> $positions,
+            'driverLicenses'=> $driverLicenses,
+            'employee'=> Employee::findOrFail($id)
+            ]);
+    	
     }
 
-    public function update (EmpleadoUpdateRequest $request, $id){
-    	$empleado = Empleado::findOrFail($id);
+    public function update (EmployeeUpdateRequest $request, $id){
+    	DB::beginTransaction();
+            //create a new row in table employee
+            $employee= Employee::findOrFail($id);
+            $employee->names=ucfirst( strtolower( trim( $request->get('names') ) ) ); //ucfirst is to upper first letter, srtolower is used for lower all letters, trim is used for erase blank letters
+            $employee->fatherLastName=ucfirst( strtolower( trim( $request->get('fatherLastName') ) ) );
+            $employee->motherLastName=ucfirst( strtolower( trim( $request->get('motherLastName') ) ) );
 
-        $empleado->nombres=$request->get('nombres');
-    	$empleado->apellidoPaterno=$request->get('apellidoPaterno');
-    	$empleado->apellidoMaterno=$request->get('apellidoMaterno');
-    	$empleado->fechaNacimiento=$request->get('fechaNacimiento');
-        //$empleado->numeroDocumento=$request->get('numeroDocumento');
+            $employee->birthdate=$request->get('birthdate');
+            //$employee->documentNumber=$request->get('documentNumber');
+            if ( trim( $request->get('email') )!='' ) $employee->email = strtolower( trim ( $request->get('email') ) );
 
-        if ( $request->get('correo')!='' ) $empleado->correo = $request->get('correo');
-    	
-        //$empleado->estado = 'Activo';
+            //$employee->state = 'Activo';
+            $employee->gender = $request->get('gender');
+            if ( $request->get('phone')!='' ) $employee->phone = $request->get('phone');
 
-        if ( $request->get('licencia')!='' ) $empleado->licencia = $request->get('licencia');
+            //$employee->entryDate= $request->get('entryDate');
+            //$employee->endDate= null;
 
-        //$empleado->fechaIngreso= $request->get('fechaIngreso');
-        //$empleado->fechaSalida = null;
-    	$empleado->idCargo=$request->get('idCargo');
-    	//$empleado->idTipoDocumento=$request->get('idTipoDocumento');
+            //$employee->idDocumentType=$request->get('idDocumentType');
+            if ( $request->get('idDriverLicense')!='' ) $employee->idDriverLicense = $request->get('idDriverLicense');    
+            $employee->idPosition=$request->get('idPosition');
+            //$employee->idUser = $user->id;
 
-    	//$empleado->idUser = $usuario->idUsuario;
-    	$empleado->save();
+            $employee->save();
+        DB::commit();
 
-        return Redirect('empleado'); //es una URL
+        return Redirect('employee')->with('message','El empleado ha sido actualizado exitosamente.');
 
     }
 
     public function destroy ($id){
+    	$employee = Employee::findOrFail($id);
+        $employee->state= 'Inactivo';
+        $employee->endDate= date("Y-m-d H:i:s");
+        $employee->save();
 
-    	//desactivamos el empleado
-    	$empleado = Empleado::findOrFail($id);
-
-        $empleado->estado= 'Inactivo';
-
-        $empleado->save();
-
-        return Redirect('empleado'); //es una URL
+        return Redirect('employee')->with('message','El empleado ha sido desactivado exitosamente.');
     }
 }

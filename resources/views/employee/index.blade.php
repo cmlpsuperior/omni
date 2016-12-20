@@ -15,6 +15,34 @@
     </div>
 </div>
 
+
+
+<!--Errors-->
+@if ( count($errors)>0 )
+  @foreach ( $errors -> all() as $error )
+  <div class="form-group row">
+    <div class="col-md-6">                        
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>Error!</strong> {{ $error }}
+        </div>
+    </div>
+  </div>
+  @endforeach
+@endif
+
+<!--success-->
+@if ( session('message') )
+  <div class="form-group row">
+    <div class="col-md-6">                        
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>Correcto!</strong> {{ session('message') }}
+        </div>
+    </div>
+  </div>
+@endif
+
 <div class="row">
     <div class="col-md-8">
         <h2>Lista de empleados</h2>
@@ -50,8 +78,15 @@
 			            <td>{{ $employee->entryDate }}</td>		
 			            <td>{{ $employee->state }}</td>					            
 			            <td>
+                            <a class="btn btn-default" href="{{ action('EmployeeController@edit', ['id'=>$employee->idEmployee]) }}" title="Editar">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            </a>
+                            <button class="btn btn-default" type="button" data-toggle="modal" data-target="#deleteModal-{{$employee->idEmployee}}" title="Eliminar">
+                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                            </button>
 			            </td>
 			        </tr>
+                    @include('employee.deleteModal')
 			        @endforeach
                 </tbody>
             </table>
