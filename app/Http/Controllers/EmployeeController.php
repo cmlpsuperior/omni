@@ -137,10 +137,11 @@ class EmployeeController extends Controller
 
     public function destroy ($id){
     	$employee = Employee::findOrFail($id);
-        $employee->state= 'Inactivo';
-        $employee->endDate= date("Y-m-d H:i:s");
-        $employee->save();
-
+        if ($employee->state != 'Inactivo') {
+            $employee->state= 'Inactivo';
+            $employee->endDate= date("Y-m-d H:i:s");
+            $employee->save();
+        }
         return Redirect('employee')->with('message','El empleado ha sido desactivado exitosamente.');
     }
 }

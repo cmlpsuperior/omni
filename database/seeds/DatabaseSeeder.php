@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call(DriverLicenseTableSeeder::class);
         $this->call(PositionTableSeeder::class);
         $this->call(EmployeeTableSeeder::class);
+        $this->call(UnitTableSeeder::class);
     }
 	
 }
@@ -151,6 +152,31 @@ class EmployeeTableSeeder extends Seeder
                     'idDocumentType'=> $documentType->idDocumentType,
                     'idDriverLicense'=> null,
                     'idUser'=> $user->id,
+                        ]);
+    }
+}
+
+class UnitTableSeeder extends Seeder 
+{
+
+    public function run()
+    {
+        DB::table('unit')->delete();
+
+        Unit::create([
+                    'name' => 'bolsa'
+                        ]);
+        Unit::create([
+                    'name' => 'm3'
+                        ]);
+        Unit::create([
+                    'name' => 'unidad'
+                        ]);
+        Unit::create([
+                    'name' => 'varilla'
+                        ]);
+        Unit::create([
+                    'name' => 'otro'
                         ]);
     }
 }
