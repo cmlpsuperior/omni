@@ -14,6 +14,7 @@ class CreateZoneTable extends Migration
 
             $table->string('name', 100);
             $table->double('shipping', 15,2);
+            $table->string('state', 50);
         });
     }
 

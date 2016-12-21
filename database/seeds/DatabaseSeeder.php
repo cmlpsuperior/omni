@@ -10,6 +10,7 @@ use App\DriverLicense;
 use App\Position;
 use App\Employee;
 use App\Unit;
+use App\Zone;
 
 class DatabaseSeeder extends Seeder
 {
@@ -21,6 +22,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PositionTableSeeder::class);
         $this->call(EmployeeTableSeeder::class);
         $this->call(UnitTableSeeder::class);
+        $this->call(ZoneTableSeeder::class);
     }
 	
 }
@@ -182,5 +184,39 @@ class UnitTableSeeder extends Seeder
         Unit::create([
                     'name' => 'kg'
                         ]);
+    }
+}
+
+class ZoneTableSeeder extends Seeder 
+{
+
+    public function run()
+    {
+        DB::table('zone')->delete();
+
+        Zone::create([
+                    'name' => '10 de octubre',
+                    'shipping' => 0.0,
+                    'state' => 'Activo'
+                        ]);
+
+        Zone::create([
+                    'name' => 'Platanitos',
+                    'shipping' => 20.0,
+                    'state' => 'Activo'
+                        ]);
+
+        Zone::create([
+                    'name' => 'Cristo rey',
+                    'shipping' => 10.0,
+                    'state' => 'Activo'
+                        ]);
+
+        Zone::create([
+                    'name' => 'Casa blanca',
+                    'shipping' => 5.0,
+                    'state' => 'Activo'
+                        ]);
+
     }
 }

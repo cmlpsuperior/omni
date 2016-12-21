@@ -143,10 +143,10 @@
                         <a href="index.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                     </li>
                     <li>
-                        <a href="{{ action('EmployeeController@index') }}"><i class="fa fa-fw fa-bar-chart-o"></i>Empleados</a>
+                        <a href="{{ action('EmployeeController@index') }}"><i class="fa fa-fw fa-bar-chart-o"></i> Empleados</a>
                     </li>
                     <li>
-                        <a href="tables.html"><i class="fa fa-fw fa-table"></i> Tables</a>
+                        <a href="{{ action('ZoneController@index') }}"><i class="fa fa-fw fa-table"></i> Zonas</a>
                     </li>
                     <li>
                         <a href="forms.html"><i class="fa fa-fw fa-edit"></i> Forms</a>
