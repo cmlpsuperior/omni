@@ -15,6 +15,8 @@ class CreateItemTable extends Migration
             $table->string('name', 100);
             $table->double('price', 15,2);
             $table->string('state', 50);
+            $table->double('realStock', 15, 2);
+            $table->double('availableStock', 15, 2);
 
             $table->integer('idUnit')->unsigned();
 

@@ -9,6 +9,7 @@ use App\DocumentType;
 use App\DriverLicense;
 use App\Position;
 use App\Employee;
+use App\Unit;
 
 class DatabaseSeeder extends Seeder
 {
@@ -177,6 +178,9 @@ class UnitTableSeeder extends Seeder
                         ]);
         Unit::create([
                     'name' => 'otro'
+                        ]);
+        Unit::create([
+                    'name' => 'kg'
                         ]);
     }
 }
