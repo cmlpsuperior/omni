@@ -37,24 +37,33 @@
 
 <div class="row">
   <div class="col-lg-6 col-lg-offset-3">
-    <h2>Datos del material</h2>
-    <div class="form-group">
-      <label for="idUnit">Unidad de medida *</label>
-      <select class="form-control" id="idUnit" name="idUnit" required> 
-        <option value="">Seleccionar</option>      
-        @foreach ($units as $key => $unit)
-          <option value="{{ $unit->idUnit }}" @if (old('idUnit')==$unit->idUnit) selected @endif>{{ $unit->name }}</option>
-        @endforeach
-      </select>
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Datos del material</h3>
+      </div>
+      <div class="panel-body">
+      
+        <div class="form-group">
+          <label for="idUnit">Unidad de medida *</label>
+          <select class="form-control" id="idUnit" name="idUnit" required> 
+            <option value="">Seleccionar</option>      
+            @foreach ($units as $key => $unit)
+              <option value="{{ $unit->idUnit }}" @if (old('idUnit')==$unit->idUnit) selected @endif>{{ $unit->name }}</option>
+            @endforeach
+          </select>
+        </div>
+        <div class="form-group">
+            <label for="name">Nombre *</label>
+            <input class="form-control" id="name" name="name" type="text" required value="{{ old('name') }}">
+        </div>
+        <div class="form-group">
+            <label for="price">Precio base S/ *</label>
+            <input class="form-control" id="price" name="price" type="number" min="0" step="0.01" required value="{{ old('price') }}">
+        </div>
+
+      </div>
     </div>
-    <div class="form-group">
-        <label for="name">Nombre *</label>
-        <input class="form-control" id="name" name="name" type="text" required value="{{ old('name') }}">
-    </div>
-    <div class="form-group">
-        <label for="price">Precio base S/ *</label>
-        <input class="form-control" id="price" name="price" type="number" min="0" step="0.01" required value="{{ old('price') }}">
-    </div>   
+       
   </div>
 </div>
 
