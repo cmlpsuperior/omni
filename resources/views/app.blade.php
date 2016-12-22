@@ -149,7 +149,7 @@
                         <a href="{{ action('ZoneController@index') }}"><i class="fa fa-fw fa-table"></i> Zonas</a>
                     </li>
                     <li>
-                        <a href="forms.html"><i class="fa fa-fw fa-edit"></i> Forms</a>
+                        <a href="{{ action('ItemController@index') }}"><i class="fa fa-fw fa-edit"></i> Materiales</a>
                     </li>
                     <li>
                         <a href="bootstrap-elements.html"><i class="fa fa-fw fa-desktop"></i> Bootstrap Elements</a>

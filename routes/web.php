@@ -28,3 +28,12 @@ Route::post('/zone','ZoneController@store' );
 Route::get('/zone/{id}/edit','ZoneController@edit' );
 Route::put('/zone/{id}/update','ZoneController@update' );
 Route::delete('/zone/{id}/destroy','ZoneController@destroy' );
+
+Route::get('/item','ItemController@index' );
+Route::get('/item/create','ItemController@create' );
+Route::post('/item','ItemController@store' );
+Route::get('/item/{id}/edit','ItemController@edit' );
+Route::put('/item/{id}/update','ItemController@update' );
+Route::delete('/item/{id}/destroy','ItemController@destroy' );
+Route::get('/item/{id}/pricesZone','ItemController@pricesZone' );
+Route::post('/item/{id}/pricesZone','ItemController@pricesZone_process' );

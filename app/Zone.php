@@ -22,6 +22,6 @@ class Zone extends Model
     //relaciones con otros modelos:
     public function items (){
         return $this->belongsToMany('App\Item', 'itemXZone', 'idZone', 'idItem')
-                    ->withPivot('price','shipping');
+                    ->withPivot('price');
     }
 }

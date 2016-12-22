@@ -5,11 +5,11 @@
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">
-            Empleados
+            Meteriales
         </h1>
         <ol class="breadcrumb">
             <li class="active">
-                <i class="fa fa-dashboard"></i>Empleados
+                <i class="fa fa-dashboard"></i>Materiales
             </li>
         </ol>
     </div>
@@ -45,57 +45,61 @@
 
 <div class="row">
     <div class="col-md-8">
-        <h2>Lista de empleados</h2>
+        <h2>Lista de materiales</h2>
     </div>
 
     <div class="col-md-4 text-right">
         <button type="button" class="btn btn-info" data-toggle="modal" data-target="#filterModal"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Buscar</button>
-        <a href="{{ action('EmployeeController@create') }}" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Nuevo empleado</a>
+        <a href="{{ action('ItemController@create') }}" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Nuevo material</a>
     </div>
     
 </div>
 
 <div class="row">
-	<div class="col-lg-10 col-lg-offset-1">        
+	<div class="col-lg-10 col-lg-offset-1">     
         <div class="table-responsive">
             <table class="table table-hover table-striped">
                 <thead>
                     <tr>
-                        <th>N° documento</th>
-                        <th>Nombre completo</th>
-                        <th>Cargo</th>
-                        <th>Fecha incorporación</th>
+                        <th>Unidad</th>
+                        <th>Nombre</th>
+                        <th>Precio S/</th>
+                        <th>Stock disponible</th>
                         <th>Estado</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>                    
-                    @foreach ($employees as $employee)
+                    @foreach ($items as $item)
 		            <tr>
-			            <td>{{ $employee->documentNumber }}</td>
-			            <td>{{ $employee->fatherLastName }} {{ $employee->motherLastName }}, {{ $employee->names }}</td>
-			            <td>{{ $employee->position->name }}</td>	
-			            <td>{{ $employee->entryDate }}</td>		
-			            <td>{{ $employee->state }}</td>					            
+			            <td>{{ $item->unit->name }}</td>
+			            <td>{{ $item->name }}</td>
+			            <td>S/ {{ number_format($item->price, 2, '.'," ") }}</td>
+                        <td>{{ $item->availableStock }}</td>
+                        <td>{{ $item->state }}</td>  				            
 			            <td>
-                            <a class="btn btn-default" href="{{ action('EmployeeController@edit', ['id'=>$employee->idEmployee]) }}" title="Editar">
+                            <a class="btn btn-default" href="{{ action('ItemController@pricesZone', ['id'=>$item->idItem]) }}" title="Precios por zona">
+                                <span class="glyphicon glyphicon-usd" aria-hidden="true"></span>
+                            </a>
+                            <a class="btn btn-default" href="{{ action('ItemController@edit', ['id'=>$item->idItem]) }}" title="Editar">
                                 <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                             </a>
-                            <button class="btn btn-default" type="button" data-toggle="modal" data-target="#deleteModal-{{$employee->idEmployee}}" title="Eliminar">
+                            <button class="btn btn-default" type="button" data-toggle="modal" data-target="#deleteModal-{{$item->idItem}}" title="Eliminar">
                                 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                             </button>
+
 			            </td>
 			        </tr>
-                    @include('employee.deleteModal')
+                    @include('item.deleteModal')
 			        @endforeach
                 </tbody>
             </table>
-            {{ $employees->links() }}
+            {{ $items->links() }}
         </div>
     </div>
 </div>
 
-@include('employee.filterModal')
+@include('item.filterModal')
 
 @endsection
 
