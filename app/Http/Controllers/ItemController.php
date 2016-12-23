@@ -71,7 +71,11 @@ class ItemController extends Controller
                 $prices = $request->get('prices'); 
                     
                 foreach ($idZones as $key=>$idZone){
-                    if ( !$item->zones()->contains($idZone) ) //have to verify, beacuse there could be repited ids 
+                    $exist = DB::table('itemXZone')
+                                ->where('idITem', '=', $item->idItem)
+                                ->where('idZone', '=', $idZone)
+                                ->count();
+                    if ( $exist == 0 ) //have to verify, beacuse there could be repited ids 
                         $item->zones()->attach($idZone, ['price' => $prices[$key]]); //insert the the new relacion idZone and its price
                 }
             }

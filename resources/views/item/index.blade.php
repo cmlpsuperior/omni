@@ -5,7 +5,7 @@
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">
-            Meteriales
+            Materiales
         </h1>
         <ol class="breadcrumb">
             <li class="active">
@@ -67,6 +67,7 @@
                                 <th>Nombre</th>
                                 <th>Precio S/</th>
                                 <th>Stock disponible</th>
+                                <th>Otros precios</th>
                                 <th>Estado</th>
                                 <th>Acciones</th>
                             </tr>
@@ -78,6 +79,7 @@
                                 <td>{{ $item->name }}</td>
                                 <td>S/ {{ number_format($item->price, 2, '.'," ") }}</td>
                                 <td>{{ $item->availableStock }}</td>
+                                <td>{{ count($item->zones) }}</td>
                                 <td>{{ $item->state }}</td>                             
                                 <td>
                                     <a class="btn btn-default" href="{{ action('ItemController@edit', ['id'=>$item->idItem]) }}" title="Editar">
