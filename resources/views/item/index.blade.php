@@ -53,7 +53,7 @@
 
 <div class="row">
 	<div class="col-lg-10 col-lg-offset-1">
-        <div class="panel panel-default">
+        <div class="panel panel-info">
             <div class="panel-heading">
                 <h3 class="panel-title">Lista de materiales</h3>
             </div>
