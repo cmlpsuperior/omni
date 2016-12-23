@@ -55,15 +55,27 @@ class ItemController extends Controller
             ]);        
     }
 
-    public function update (UnitRequest $request, $id){       
-        //create a new row in table employee
-        $item= Item::findOrFail($id);
-        $item->name=ucfirst( strtolower( trim( $request->get('name') ) ) ); //ucfirst is to upper first letter, srtolower is used for lower all letters, trim is used for erase blank letters
-        $item->idUnit= $request->get('idUnit');
-        $item->price= $request->get('price');
+    public function update (ItemRequest $request, $id){ 
+        DB::beginTransaction();
+            $item= Item::findOrFail($id);
+            //save changes of the item
+            $item->name=ucfirst( strtolower( trim( $request->get('name') ) ) ); //ucfirst is to upper first letter, srtolower is used for lower all letters, trim is used for erase blank letters
+            $item->idUnit= $request->get('idUnit');
+            $item->price= $request->get('price');
+            $item->save();       
 
-        $item->save();       
-
+            //save prices by zone if exist
+            $item->zones()->detach(); //erase all zones related to the item
+            if ($request->has('idZones')){
+                $idZones = $request->get('idZones');
+                $prices = $request->get('prices'); 
+                    
+                foreach ($idZones as $key=>$idZone){
+                    if ( !$item->zones()->contains($idZone) ) //have to verify, beacuse there could be repited ids 
+                        $item->zones()->attach($idZone, ['price' => $prices[$key]]); //insert the the new relacion idZone and its price
+                }
+            }
+        DB::commit();
         return Redirect('item')->with('message','El material ha sido actualizado exitosamente.');
 
     }

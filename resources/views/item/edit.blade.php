@@ -70,25 +70,47 @@
       <div class="panel-heading">
         <h3 class="panel-title">Precio por zona</h3>
       </div>
-      <div class="panel-body">
-        
-        <div class=row>
+      <div class="panel-body" id="divAllPriceZones">
+        <!--List all the prices by zone that exist-->
+        @foreach ($item->zones as $zone)
+
+        <div class="row" id="divPriceZone-'+index+'">
           <div class="col-xs-5">
             <div class="form-group">
-              <label for="idZone"> Zona *</label>
-              <select class="form-control" id="idZone" name="idZone" required> 
-                <option value="">Seleccionar</option>      
-                @foreach ($zones as $key => $zone)
-                  <option value="{{ $zone->idZone }}">{{ $zone->name }}</option>
-                @endforeach
+              <label for="idZones[]"> Zona *</label> 
+              <select class="form-control" id="idZones[]" name="idZones[]" readonly> 
+                <option value="{{ $zone->idZone }}">{{ $zone->name }}</option>
               </select>
             </div>
           </div>
 
           <div class="col-xs-4">
             <div class="form-group">
-              <label for="price">Precio S/ *</label>
-              <input class="form-control" id="price" name="price" type="number" min="0" step="0.01" required value="{{ $item->price }}">
+              <label for="prices[]">Precio S/ *</label>
+              <input class="form-control" id="prices[]" name="prices[]" type="number" min="0" step="0.01" required value="{{ $zone->pivot->price }}">
+            </div> 
+          </div>
+
+          
+        </div>
+
+        @endforeach
+
+        <div class="row" id="divButtonAdd">
+          <div class="col-xs-5">
+            
+          </div>
+
+          <div class="col-xs-4">
+            
+          </div>
+
+          <div class="col-xs-3">
+            <div class="form-group">
+              <label for=""></label><br>
+              <a class="btn btn-primary text-down" id="btnAdd" title="Editar">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+              </a>              
             </div> 
           </div>
         </div>
@@ -110,4 +132,80 @@
 </div>
 
 </form>
+@endsection
+
+@section ('script')
+<script>    
+
+  $(document).ready(function() {     
+    index = 0; //global variable   
+
+    $(document).on ('click','#btnAdd',function(){ //is that way, couse buttons added by append has to work too
+      removeOldBtnAdd();  
+      addPriceZone();
+    });    
+    
+  });  
+  
+  function addPriceZone(){
+    index++; //up index that will identify a unique div
+    var newRow =  '<div class="row" id="divPriceZone-'+index+'"> '+
+                    '<div class="col-xs-5"> '+
+                      '<div class="form-group"> ' +
+                        '<label for="idZones[]"> Zona *</label> ' +
+                        '<select class="form-control" id="idZones[]" name="idZones[]" required> '+ 
+                          '<option value="">Seleccionar</option>  '+    
+                          '@foreach ($zones as $key => $zone) '+
+                            '<option value="{{ $zone->idZone }}">{{ $zone->name }}</option> '+
+                          '@endforeach '+
+                        '</select> '+
+                      '</div> '+
+                    '</div> '+
+
+                    '<div class="col-xs-4"> '+
+                      '<div class="form-group"> '+
+                        '<label for="prices[]">Precio S/ *</label> '+
+                        '<input class="form-control" id="prices[]" name="prices[]" type="number" min="0" step="0.01" required value="{{ $item->price }}"> '+
+                      '</div>  '+
+                    '</div> '+
+
+                    '<div class="col-xs-3"> '+
+                      '<div class="form-group"> '+
+                        '<label for=""></label><br> '+
+                        '<a class="btn btn-danger" onclick="deleteDivPriceZone('+index+')" title="Quitar"> '+
+                          '<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> '+
+                        '</a>  '+        
+                      '</div> '+
+                    '</div> '+
+                  '</div> ' +
+
+                  '<div class="row" id="divButtonAdd"> '+
+                    '<div class="col-xs-5"> '+                      
+                      
+                    '</div> '+
+
+                    '<div class="col-xs-4"> '+
+                      
+                    '</div> '+
+
+                    '<div class="col-xs-3"> '+
+                      '<div class="form-group"> '+
+                        '<label for=""></label><br> '+
+                        '<a class="btn btn-primary" id="btnAdd" title="Agregar"> '+
+                          '<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> '+
+                        '</a>  '+        
+                      '</div> '+
+                    '</div> '+
+                  '</div> ' ;
+    $('#divAllPriceZones').append (newRow);
+  }
+
+  function removeOldBtnAdd() {
+    $('#divButtonAdd').remove();
+  }
+  function deleteDivPriceZone(index){
+    $('#divPriceZone-'+index).remove();
+  }
+</script>
+
 @endsection
