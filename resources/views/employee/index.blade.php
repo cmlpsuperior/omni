@@ -106,3 +106,10 @@
 
 @endsection
 
+@section('script')
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#employees').addClass( "active" );
+    });
+</script>
+@endsection

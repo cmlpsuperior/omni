@@ -102,3 +102,10 @@
 
 @endsection
 
+@section('script')
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#clients').addClass( "active" );
+    });
+</script>
+@endsection

@@ -139,19 +139,19 @@
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
-                    <li>
-                        <a href="index.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                    <li id="index">
+                        <a href="#!"><i class="fa fa-fw fa-dashboard"></i> Inicio</a>
                     </li>
-                    <li>
+                    <li id="employees">
                         <a href="{{ action('EmployeeController@index') }}"><i class="fa fa-fw fa-bar-chart-o"></i> Empleados</a>
                     </li>
-                    <li>
+                    <li id="zones">
                         <a href="{{ action('ZoneController@index') }}"><i class="fa fa-fw fa-table"></i> Zonas</a>
                     </li>
-                    <li>
+                    <li id="items">
                         <a href="{{ action('ItemController@index') }}"><i class="fa fa-fw fa-edit"></i> Materiales</a>
                     </li>
-                    <li>
+                    <li id="clients">
                         <a href="{{ action('ClientController@index') }}"><i class="fa fa-fw fa-desktop"></i> Clientes</a>
                     </li>
                     <li>
