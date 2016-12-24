@@ -5,11 +5,11 @@
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">
-            Empleados
+            Clientes
         </h1>
         <ol class="breadcrumb">
             <li class="active">
-                <i class="fa fa-dashboard"></i>Empleados
+                <i class="fa fa-dashboard"></i>Clientes
             </li>
         </ol>
     </div>
@@ -47,7 +47,7 @@
 
     <div class="col-md-12 text-right">
         <button type="button" class="btn btn-info" data-toggle="modal" data-target="#filterModal"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Buscar</button>
-        <a href="{{ action('EmployeeController@create') }}" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Nuevo empleado</a>
+        <a href="{{ action('ClientController@create') }}" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Nuevo cliente</a>
     </div>
     
 </div>
@@ -57,7 +57,7 @@
 	<div class="col-lg-10 col-lg-offset-1">
         <div class="panel panel-info">
             <div class="panel-heading">
-                <h3 class="panel-title">Lista de empleados</h3>
+                <h3 class="panel-title">Lista de clientes</h3>
             </div>
             <div class="panel-body"> 
 
@@ -67,34 +67,30 @@
                             <tr>
                                 <th>N° documento</th>
                                 <th>Nombre completo</th>
-                                <th>Cargo</th>
-                                <th>Fecha incorporación</th>
-                                <th>Estado</th>
+                                <th>Teléfono</th>
+                                <th>Cant. direcciones</th>
+                                <th>Género</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>                    
-                            @foreach ($employees as $employee)
+                            @foreach ($clients as $client)
         		            <tr>
-        			            <td>{{ $employee->documentNumber }}</td>
-        			            <td>{{ $employee->fatherLastName }} {{ $employee->motherLastName }}, {{ $employee->names }}</td>
-        			            <td>{{ $employee->position->name }}</td>	
-        			            <td>{{ $employee->entryDate }}</td>		
-        			            <td>{{ $employee->state }}</td>					            
+        			            <td>{{ $client->documentNumber }}</td>
+        			            <td>{{ $client->fatherLastName }} {{ $client->motherLastName }}, {{ $client->names }}</td>
+        			            <td>{{ $client->phone }}</td>	
+        			            <td>{{ count( $client->addresses ) }}</td>		
+        			            <td>{{ $client->gender }}</td>					            
         			            <td>
-                                    <a class="btn btn-default" href="{{ action('EmployeeController@edit', ['id'=>$employee->idEmployee]) }}" title="Editar">
+                                    <a class="btn btn-default" href="{{ action('ClientController@edit', ['id'=>$client->idClient]) }}" title="Editar">
                                         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                                     </a>
-                                    <button class="btn btn-default" type="button" data-toggle="modal" data-target="#deleteModal-{{$employee->idEmployee}}" title="Eliminar">
-                                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                    </button>
         			            </td>
         			        </tr>
-                            @include('employee.deleteModal')
         			        @endforeach
                         </tbody>
                     </table>
-                    {{ $employees->links() }}
+                    {{ $clients->links() }}
                 </div>
 
             </div>
@@ -102,7 +98,7 @@
     </div>
 </div>
 
-@include('employee.filterModal')
+@include('client.filterModal')
 
 @endsection
 

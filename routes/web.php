@@ -35,5 +35,10 @@ Route::post('/item','ItemController@store' );
 Route::get('/item/{id}/edit','ItemController@edit' );
 Route::put('/item/{id}/update','ItemController@update' );
 Route::delete('/item/{id}/destroy','ItemController@destroy' );
-Route::get('/item/{id}/pricesZone','ItemController@pricesZone' );
-Route::post('/item/{id}/pricesZone','ItemController@pricesZone_process' );
+
+Route::get('/client','ClientController@index' );
+Route::get('/client/create','ClientController@create' );
+Route::post('/client','ClientController@store' );
+Route::get('/client/{id}/edit','ClientController@edit' );
+Route::put('/client/{id}/update','ClientController@update' );
+Route::delete('/client/{id}/destroy','ClientController@destroy' );

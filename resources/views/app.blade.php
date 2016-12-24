@@ -152,7 +152,7 @@
                         <a href="{{ action('ItemController@index') }}"><i class="fa fa-fw fa-edit"></i> Materiales</a>
                     </li>
                     <li>
-                        <a href="bootstrap-elements.html"><i class="fa fa-fw fa-desktop"></i> Bootstrap Elements</a>
+                        <a href="{{ action('ClientController@index') }}"><i class="fa fa-fw fa-desktop"></i> Clientes</a>
                     </li>
                     <li>
                         <a href="bootstrap-grid.html"><i class="fa fa-fw fa-wrench"></i> Bootstrap Grid</a>
