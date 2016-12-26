@@ -42,3 +42,13 @@ Route::post('/client','ClientController@store' );
 Route::get('/client/{id}/edit','ClientController@edit' );
 Route::put('/client/{id}/update','ClientController@update' );
 Route::delete('/client/{id}/destroy','ClientController@destroy' );
+
+Route::get('/order','OrderController@index' );
+Route::get('/order/create','OrderController@create' );
+	Route::post('/order/clientInfo_process','OrderController@clientInfo_process' );
+	Route::get('/order/items','OrderController@items' );
+	Route::post('/order/items_process','OrderController@items_process' );
+Route::post('/order','OrderController@store' );
+Route::get('/order/{id}/edit','OrderController@edit' );
+Route::put('/order/{id}/update','OrderController@update' );
+Route::delete('/order/{id}/destroy','OrderController@destroy' );

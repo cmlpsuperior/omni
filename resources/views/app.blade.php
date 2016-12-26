@@ -154,8 +154,8 @@
                     <li id="clients">
                         <a href="{{ action('ClientController@index') }}"><i class="fa fa-fw fa-desktop"></i> Clientes</a>
                     </li>
-                    <li>
-                        <a href="bootstrap-grid.html"><i class="fa fa-fw fa-wrench"></i> Bootstrap Grid</a>
+                    <li id="orders">
+                        <a href="{{ action('OrderController@index') }}"><i class="fa fa-fw fa-wrench"></i> Pedidos</a>
                     </li>
                     <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Dropdown <i class="fa fa-fw fa-caret-down"></i></a>
