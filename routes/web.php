@@ -35,5 +35,24 @@ Route::post('/item','ItemController@store' );
 Route::get('/item/{id}/edit','ItemController@edit' );
 Route::put('/item/{id}/update','ItemController@update' );
 Route::delete('/item/{id}/destroy','ItemController@destroy' );
-Route::get('/item/{id}/pricesZone','ItemController@pricesZone' );
-Route::post('/item/{id}/pricesZone','ItemController@pricesZone_process' );
+
+Route::get('/client','ClientController@index' );
+Route::get('/client/create','ClientController@create' );
+Route::post('/client','ClientController@store' );
+Route::get('/client/{id}/edit','ClientController@edit' );
+Route::put('/client/{id}/update','ClientController@update' );
+Route::delete('/client/{id}/destroy','ClientController@destroy' );
+
+Route::get('/order','OrderController@index' );
+Route::get('/order/create','OrderController@create' );
+	Route::post('/order/clientInfo_process','OrderController@clientInfo_process' );
+	Route::get('/order/items','OrderController@items' );
+	Route::post('/order/items_process','OrderController@items_process' );
+	Route::get('/order/{id}/resumen','OrderController@resume' );
+Route::delete('/order/{id}/destroy','OrderController@destroy' );
+
+//PDF
+Route::get('pdf/order/{id}', 'PDFController@order' );
+
+//API REST:
+Route::get('/order/searchItem','OrderController@searchItem' ); //AJAX

@@ -11,6 +11,7 @@ use App\Position;
 use App\Employee;
 use App\Unit;
 use App\Zone;
+use App\Client;
 
 class DatabaseSeeder extends Seeder
 {
@@ -23,6 +24,7 @@ class DatabaseSeeder extends Seeder
         $this->call(EmployeeTableSeeder::class);
         $this->call(UnitTableSeeder::class);
         $this->call(ZoneTableSeeder::class);
+        $this->call(ClientTableSeeder::class);
     }
 	
 }
@@ -145,7 +147,7 @@ class EmployeeTableSeeder extends Seeder
                     'email' => 'henryespinozat@gmail.com',
 
                     'state'=> 'Activo',
-                    'gender'=> 'Hombre',        
+                    'gender'=> 'Masculino',        
                     'phone'=> '930414373',
 
                     'entryDate'=> '2016-01-01 00:00:00',
@@ -216,6 +218,35 @@ class ZoneTableSeeder extends Seeder
                     'name' => 'Casa blanca',
                     'shipping' => 5.0,
                     'state' => 'Activo'
+                        ]);
+
+    }
+}
+
+class ClientTableSeeder extends Seeder 
+{
+
+    public function run()
+    {
+        DB::table('client')->delete();
+        
+        //first documentType: DNI
+        $documentType = DocumentType::orderBy('idDocumentType', 'asc')->first();
+
+        Client::create([
+                    'names' => 'Genérico',
+                    'fatherLastName' =>'Pt',
+                    'motherLastName' =>'Mt',
+
+                    'birthdate' => '1990-12-20 00:00:00',
+                    'documentNumber' => '0',
+                    'email' => null,
+
+                    'gender'=> 'Masculino',        
+                    'phone'=> null,
+                    'registerDate'=> '2016-12-24 00:00:00',
+  
+                    'idDocumentType'=> $documentType->idDocumentType
                         ]);
 
     }

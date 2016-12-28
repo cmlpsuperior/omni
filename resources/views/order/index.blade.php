@@ -5,11 +5,11 @@
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">
-            Zonas
+            Pedidos
         </h1>
         <ol class="breadcrumb">
             <li class="active">
-                <i class="fa fa-dashboard"></i>Zonas
+                <i class="fa fa-dashboard"></i>Pedidos
             </li>
         </ol>
     </div>
@@ -43,67 +43,79 @@
   </div>
 @endif
 
-<div class="row">
+<div class="row"> 
     <div class="col-md-12 text-right">
         <button type="button" class="btn btn-info" data-toggle="modal" data-target="#filterModal"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Buscar</button>
-        <a href="{{ action('ZoneController@create') }}" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Nueva zona</a>
+        <a href="{{ action('OrderController@create') }}" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Nuevo pedido</a>
     </div>    
 </div>
 <br>
 
 <div class="row">
-	<div class="col-lg-8 col-lg-offset-2">
+	<div class="col-lg-10 col-lg-offset-1">
         <div class="panel panel-info">
             <div class="panel-heading">
-                <h3 class="panel-title">Lista de zonas</h3>
+                <h3 class="panel-title">Lista de pedidos</h3>
             </div>
-            <div class="panel-body">  
+            <div class="panel-body">
+
                 <div class="table-responsive">
                     <table class="table table-hover table-striped">
                         <thead>
                             <tr>
-                                <th>Código de zona</th>
-                                <th>Nombre zona</th>
-                                <th>Monto de flete S/</th>
+                                <th>Código pedido</th>
+                                <th>Fecha registro</th>
+                                <th>Imp. total S/</th>
+                                <th>Cant. materiales</th>
+                                <th>Zona</th>
                                 <th>Estado</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>                    
-                            @foreach ($zones as $zone)
-        		            <tr>
-        			            <td>{{ $zone->idZone }}</td>
-        			            <td>{{ $zone->name }}</td>
-        			            <td>S/ {{ number_format($zone->shipping, 2, '.'," ") }}</td>
-                                <td>{{ $zone->state }}</td>  				            
-        			            <td>
-                                    <a class="btn btn-default" href="{{ action('ZoneController@edit', ['id'=>$zone->idZone]) }}" title="Editar">
-                                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            @foreach ($orders as $order)
+                            <tr>
+                                <td>{{ $order->idOrder }}</td>
+                                <td>{{ $order->registerDate }}</td>
+                                <td>S/ {{ number_format($order->totalAmount, 2, '.'," ") }}</td>
+                                <td>{{ count( $order->items ) }}</td>
+                                <td>{{ $order->zone->name }}</td>
+                                <td>{{ $order->state }}</td>                        
+                                <td>
+                                    <a class="btn btn-default" href="{{action('OrderController@resume', ['id'=>$order->idOrder])}}" title="Ver">
+                                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
                                     </a>
-                                    <button class="btn btn-default" type="button" data-toggle="modal" data-target="#deleteModal-{{$zone->idZone}}" title="Eliminar">
+                                    <a href="{{action('PDFController@order', ['id'=>$order->idOrder])}}" title="Imprimir" target="_blank" class="btn btn-default">
+                                        <span class="glyphicon glyphicon-print" aria-hidden="true" ></span>
+                                    </a>
+                                    <button class="btn btn-default" type="button" data-toggle="modal" data-target="#deleteModal-{{$order->idOrder}}" title="Anular">
                                         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                     </button>
-        			            </td>
-        			        </tr>
-                            @include('zone.deleteModal')
-        			        @endforeach
+
+                                </td>
+                            </tr>
+                            @include('order.deleteModal')
+                            @endforeach
                         </tbody>
                     </table>
-                    {{ $zones->links() }}
+                    {{ $orders->links() }}
                 </div>
+
             </div>
         </div>
+        
     </div>
 </div>
 
-@include('zone.filterModal')
+@include('order.filterModal')
 
 @endsection
 
 @section('script')
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#zones').addClass( "active" );
+        $('#orders').addClass( "active" );
     });
 </script>
 @endsection
+

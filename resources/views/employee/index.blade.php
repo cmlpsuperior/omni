@@ -57,7 +57,7 @@
 	<div class="col-lg-10 col-lg-offset-1">
         <div class="panel panel-info">
             <div class="panel-heading">
-                <h3 class="panel-title">Lista de zonas</h3>
+                <h3 class="panel-title">Lista de empleados</h3>
             </div>
             <div class="panel-body"> 
 
@@ -106,3 +106,10 @@
 
 @endsection
 
+@section('script')
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#employees').addClass( "active" );
+    });
+</script>
+@endsection

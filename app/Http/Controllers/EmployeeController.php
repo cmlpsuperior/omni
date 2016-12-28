@@ -60,7 +60,7 @@ class EmployeeController extends Controller
             $user->save();
 
         	//create a new row in table employee
-	    	$employee= new employee();
+	    	$employee= new Employee();
 	    	$employee->names=ucfirst( strtolower( trim( $request->get('names') ) ) ); //ucfirst is to upper first letter, srtolower is used for lower all letters, trim is used for erase blank letters
 	    	$employee->fatherLastName=ucfirst( strtolower( trim( $request->get('fatherLastName') ) ) );
 	    	$employee->motherLastName=ucfirst( strtolower( trim( $request->get('motherLastName') ) ) );

@@ -5,11 +5,11 @@
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">
-            Zonas
+            Clientes
         </h1>
         <ol class="breadcrumb">
             <li class="active">
-                <i class="fa fa-dashboard"></i>Zonas
+                <i class="fa fa-dashboard"></i>Clientes
             </li>
         </ol>
     </div>
@@ -43,67 +43,69 @@
   </div>
 @endif
 
-<div class="row">
+<div class="row">   
+
     <div class="col-md-12 text-right">
         <button type="button" class="btn btn-info" data-toggle="modal" data-target="#filterModal"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Buscar</button>
-        <a href="{{ action('ZoneController@create') }}" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Nueva zona</a>
-    </div>    
+        <a href="{{ action('ClientController@create') }}" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Nuevo cliente</a>
+    </div>
+    
 </div>
 <br>
 
 <div class="row">
-	<div class="col-lg-8 col-lg-offset-2">
+	<div class="col-lg-10 col-lg-offset-1">
         <div class="panel panel-info">
             <div class="panel-heading">
-                <h3 class="panel-title">Lista de zonas</h3>
+                <h3 class="panel-title">Lista de clientes</h3>
             </div>
-            <div class="panel-body">  
+            <div class="panel-body"> 
+
                 <div class="table-responsive">
                     <table class="table table-hover table-striped">
                         <thead>
                             <tr>
-                                <th>Código de zona</th>
-                                <th>Nombre zona</th>
-                                <th>Monto de flete S/</th>
-                                <th>Estado</th>
+                                <th>N° documento</th>
+                                <th>Nombre completo</th>
+                                <th>Teléfono</th>
+                                <th>Cant. direcciones</th>
+                                <th>Género</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>                    
-                            @foreach ($zones as $zone)
+                            @foreach ($clients as $client)
         		            <tr>
-        			            <td>{{ $zone->idZone }}</td>
-        			            <td>{{ $zone->name }}</td>
-        			            <td>S/ {{ number_format($zone->shipping, 2, '.'," ") }}</td>
-                                <td>{{ $zone->state }}</td>  				            
+        			            <td>{{ $client->documentNumber }}</td>
+        			            <td>{{ $client->fatherLastName }} {{ $client->motherLastName }}, {{ $client->names }}</td>
+        			            <td>{{ $client->phone }}</td>	
+        			            <td>{{ count( $client->addresses ) }}</td>		
+        			            <td>{{ $client->gender }}</td>					            
         			            <td>
-                                    <a class="btn btn-default" href="{{ action('ZoneController@edit', ['id'=>$zone->idZone]) }}" title="Editar">
+                                    <a class="btn btn-default" href="{{ action('ClientController@edit', ['id'=>$client->idClient]) }}" title="Editar">
                                         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                                     </a>
-                                    <button class="btn btn-default" type="button" data-toggle="modal" data-target="#deleteModal-{{$zone->idZone}}" title="Eliminar">
-                                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                    </button>
         			            </td>
         			        </tr>
-                            @include('zone.deleteModal')
         			        @endforeach
                         </tbody>
                     </table>
-                    {{ $zones->links() }}
+                    {{ $clients->links() }}
                 </div>
+
             </div>
         </div>
     </div>
 </div>
 
-@include('zone.filterModal')
+@include('client.filterModal')
 
 @endsection
 
 @section('script')
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#zones').addClass( "active" );
+        $('#clients').addClass( "active" );
     });
 </script>
 @endsection

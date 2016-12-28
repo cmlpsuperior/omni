@@ -108,3 +108,11 @@
 
 @endsection
 
+@section('script')
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#items').addClass( "active" );
+    });
+</script>
+@endsection
+

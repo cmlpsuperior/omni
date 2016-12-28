@@ -139,38 +139,27 @@
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
-                    <li>
-                        <a href="index.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                                        
+                    <li id="orders">
+                        <a href="{{ action('OrderController@index') }}"><i class="fa fa-fw fa-wrench"></i> Pedidos</a>
                     </li>
                     <li>
-                        <a href="{{ action('EmployeeController@index') }}"><i class="fa fa-fw fa-bar-chart-o"></i> Empleados</a>
-                    </li>
-                    <li>
-                        <a href="{{ action('ZoneController@index') }}"><i class="fa fa-fw fa-table"></i> Zonas</a>
-                    </li>
-                    <li>
-                        <a href="{{ action('ItemController@index') }}"><i class="fa fa-fw fa-edit"></i> Materiales</a>
-                    </li>
-                    <li>
-                        <a href="bootstrap-elements.html"><i class="fa fa-fw fa-desktop"></i> Bootstrap Elements</a>
-                    </li>
-                    <li>
-                        <a href="bootstrap-grid.html"><i class="fa fa-fw fa-wrench"></i> Bootstrap Grid</a>
-                    </li>
-                    <li>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Dropdown <i class="fa fa-fw fa-caret-down"></i></a>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Mantenimiento <b class="caret"></b></a>
                         <ul id="demo" class="collapse">
-                            <li>
-                                <a href="#">Dropdown Item</a>
+                            <li id="items">
+                                <a href="{{ action('ItemController@index') }}"> Materiales</a>
                             </li>
-                            <li>
-                                <a href="#">Dropdown Item</a>
+                            <li id="zones">
+                                <a href="{{ action('ZoneController@index') }}"> Zonas</a>
+                            </li>
+                            <li id="employees">
+                                <a href="{{ action('EmployeeController@index') }}"> Empleados</a>
+                            </li>
+                            <li id="clients">
+                                <a href="{{ action('ClientController@index') }}"> Clientes</a>
                             </li>
                         </ul>
-                    </li>
-                    <li>
-                        <a href="blank-page.html"><i class="fa fa-fw fa-file"></i> Blank Page</a>
-                    </li>
+                    </li>                    
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
