@@ -240,9 +240,8 @@ $(document).ready(function() {
       var price = $(this).find("td").eq(3).find("input").val();
       var idItem = $(this).find("td").eq(4).html();
 
-      if (quantity!='' && quantity> 0 && price != ''){
-        addItemToTblItems(quantity, unit, name, price, idItem);
-        
+      if (quantity!='' && quantity> 0 && price != '' && price >=0){
+        addItemToTblItems(quantity, unit, name, price, idItem);        
         $(this).find("td").eq(0).find("input").val("");
       }      
       

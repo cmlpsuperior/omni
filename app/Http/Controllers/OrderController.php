@@ -12,6 +12,7 @@ use App\Item; //AJAX search
 use DB;
 use Illuminate\Contracts\Routing\ResponseFactory; //JSON
 use Illuminate\Support\Facades\Auth; //to get the employee user
+use App\Http\Requests\ItemsOrderRequest; //to verufy if exist items in the list
 
 class OrderController extends Controller
 {
@@ -60,7 +61,7 @@ class OrderController extends Controller
     	return view('order.items', ['name'=>$name, 'address'=>$address, 'zone'=>$zone]);
     }
 
-    public function items_process (Request $request){        
+    public function items_process (ItemsOrderRequest $request){        
         $name=session('name');
         $address = session('address');
         $idZone = session('idZone');
@@ -135,13 +136,26 @@ class OrderController extends Controller
     //AJAX
     public function searchItem (Request $request){
         $name= $request->get('nameSearch');
-        $idZone= $request->get('idZone');
+        $idZone= $request->get('idZone'); //is the zone input,
 
+        $names = explode(" ", $name); //separete all words
+
+        $arraySearch = Array();
+        foreach($names as $nameSearch){
+            $arraySearch[] =  ['name','like', '%'.$nameSearch.'%'];
+        }
+
+        $items = Item::where ($arraySearch)
+                        ->orderBy('name','asc')
+                        ->with('unit')
+                        ->get();
+        /*
         $items = Item::where ('name','like','%'.$name.'%')
                         ->orderBy('name','asc')
                         ->with('unit')
                         ->get();
-
+        */
+        //verify if exist a diferent price in that zone
         foreach ($items as $item){
             $exist = DB::table('itemXZone')
                         ->where('idItem','=', $item->idItem)

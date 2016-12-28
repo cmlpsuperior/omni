@@ -56,7 +56,7 @@
         <div class="row">
           <div class="col-lg-6">
             <div class="form-group">
-              <label for="idZone">Zona</label>
+              <label for="idZone">Zona *</label>
               <select class="form-control" id="idZone" name="idZone" required> 
                 <option value="">Seleccionar</option>      
                 @foreach ($zones as $key => $zone)
@@ -118,6 +118,10 @@
 $(document).ready(function() {
 
   $('#orders').addClass( "active" ); //to active the menu
+
+  $('#address').keyup(function(){
+    this.value = this.value.toUpperCase();
+  });
 
 });
 
