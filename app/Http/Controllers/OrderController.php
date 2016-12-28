@@ -16,14 +16,17 @@ use Illuminate\Support\Facades\Auth; //to get the employee user
 class OrderController extends Controller
 {
     public function index (Request $request){
-    	$idOrder ='';
-
-        if ( $request->has('idOrder') ) $name = $request->get('idOrder');
+    	$idOrder =0;
+        if ( $request->get('idOrder') != '' ) $idOrder = $request->get('idOrder');
 
         $zones = Zone::orderBy('name','asc')->get();
-        //it can be improved using ifs
-        $orders = Order::orderBy('idOrder','desc')
-                    ->simplePaginate(10);
+
+        if ($idOrder >0 )
+            $orders = Order::where('idOrder','=',$idOrder)
+                        ->simplePaginate(10);
+        else
+            $orders = Order::orderBy('idOrder','desc')
+                        ->simplePaginate(10);
 
         return view('order.index', ['orders'=>$orders, 'zones'=>$zones]);
     }
@@ -119,6 +122,14 @@ class OrderController extends Controller
 
 
         return view('order.resume', ['order'=>$order, 'change'=>$change, 'debt'=>$debt]);
+    }
+
+    public function destroy ($id){
+        $order = Order::findOrFail($id);
+        $order->state= 'Anulado';
+        $order->save();
+        
+        return Redirect('order')->with('message','El pedido ha sido ANULADO exitosamente.');
     }
 
     //AJAX

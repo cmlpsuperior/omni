@@ -66,9 +66,9 @@
                                 <th>Código pedido</th>
                                 <th>Fecha registro</th>
                                 <th>Imp. total S/</th>
-                                <th>Imp. recibido S/</th>
                                 <th>Cant. materiales</th>
                                 <th>Zona</th>
+                                <th>Estado</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -78,11 +78,17 @@
                                 <td>{{ $order->idOrder }}</td>
                                 <td>{{ $order->registerDate }}</td>
                                 <td>S/ {{ number_format($order->totalAmount, 2, '.'," ") }}</td>
-                                <td>S/ {{ number_format($order->receivedAmount, 2, '.'," ") }}</td>
                                 <td>{{ count( $order->items ) }}</td>
-                                <td>{{ $order->zone->name }}</td>                         
+                                <td>{{ $order->zone->name }}</td>
+                                <td>{{ $order->state }}</td>                        
                                 <td>
-                                    <button class="btn btn-default" type="button" data-toggle="modal" data-target="#deleteModal-{{$order->idOrder}}" title="Eliminar">
+                                    <a class="btn btn-default" href="{{action('OrderController@resume', ['id'=>$order->idOrder])}}" title="Ver">
+                                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                                    </a>
+                                    <a href="{{action('PDFController@order', ['id'=>$order->idOrder])}}" title="Imprimir" target="_blank" class="btn btn-default">
+                                        <span class="glyphicon glyphicon-print" aria-hidden="true" ></span>
+                                    </a>
+                                    <button class="btn btn-default" type="button" data-toggle="modal" data-target="#deleteModal-{{$order->idOrder}}" title="Anular">
                                         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                     </button>
 

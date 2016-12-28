@@ -112,3 +112,14 @@
 
 </form>
 @endsection
+
+@section('script')
+<script type="text/javascript">
+$(document).ready(function() {
+
+  $('#orders').addClass( "active" ); //to active the menu
+
+});
+
+</script>
+@endsection

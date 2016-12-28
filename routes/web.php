@@ -49,10 +49,10 @@ Route::get('/order/create','OrderController@create' );
 	Route::get('/order/items','OrderController@items' );
 	Route::post('/order/items_process','OrderController@items_process' );
 	Route::get('/order/{id}/resumen','OrderController@resume' );
-Route::post('/order','OrderController@store' );
-Route::get('/order/{id}/edit','OrderController@edit' );
-Route::put('/order/{id}/update','OrderController@update' );
 Route::delete('/order/{id}/destroy','OrderController@destroy' );
+
+//PDF
+Route::get('pdf/order/{id}', 'PDFController@order' );
 
 //API REST:
 Route::get('/order/searchItem','OrderController@searchItem' ); //AJAX

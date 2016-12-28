@@ -8,20 +8,20 @@
 
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label ="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="myModalLabel">Borrar zona</h4>
+          <h4 class="modal-title" id="myModalLabel">Anular pedido</h4>
         </div>
         <div class="modal-body">
           <div class="row">
             <div class="col-lg-12">            
               <div class="form-group">
-                <p>¿Está seguro que decea anular el pedido?</p>
+                <p>¿Está seguro que desea anular el pedido?</p>
               </div>
             </div>
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-          <button type="submit" class="btn btn-primary">Eliminar</button>
+          <button type="submit" class="btn btn-primary">Anular</button>
         </div>
 
       </form>

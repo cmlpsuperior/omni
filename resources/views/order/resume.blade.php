@@ -12,7 +12,7 @@
                 <i class="fa"></i>Pedidos
             </li>
             <li class="active">
-                <i class="fa"></i>Nuevo pedido
+                <i class="fa"></i>Resumen
             </li>
         </ol>
     </div>
@@ -151,9 +151,13 @@
 
         <div class="row">
           <div class="col-md-12 text-center">
-            <div class="form-group">
-              <a type="button" class="btn btn-info"><span class="glyphicon glyphicon-print" aria-hidden="true" ></span> imprimir</a>
-              <a class="btn btn-primary" href="{{ action('OrderController@index') }}"><span class="glyphicon glyphicon-ok" aria-hidden="true" ></span> Finalizar</a>
+            <div class="form-group">              
+              <a href="{{action('PDFController@order', ['id'=>$order->idOrder])}}" title="Imprimir" target="_blank" class="btn btn-info">
+                <span class="glyphicon glyphicon-print" aria-hidden="true" ></span> imprimir
+              </a>
+              <a class="btn btn-primary" href="{{ action('OrderController@index') }}">
+                <span class="glyphicon glyphicon-ok" aria-hidden="true" ></span> Finalizar
+              </a>
             </div> 
           </div>
         </div>
