@@ -49,7 +49,7 @@
 	
 	<h1>Ferretería Espinoza</h1>
 	<h4>De: Edgar Espinoza Castañeda</h4>
-	<span>Tef. 392-1315   </span>
+	<span>Tef. 392-1315 / RPC 954-774-675</span>
 	
 	<h4>Pedido N° {{ $order->idOrder }}</h4>
 	
@@ -89,5 +89,9 @@
     <h3>Monto: S/ {{ number_format($order->totalAmount, 1, '.'," ") }}</h3>
 	<h4>Deuda: S/ {{ number_format($debt, 1, '.'," ") }}</h4>
 
+	<script type="text/javascript">
+		print();
+	</script>
 </body>
 </html>>
+
