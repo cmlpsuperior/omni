@@ -42,6 +42,7 @@ Route::post('/client','ClientController@store' );
 Route::get('/client/{id}/edit','ClientController@edit' );
 Route::put('/client/{id}/update','ClientController@update' );
 Route::delete('/client/{id}/destroy','ClientController@destroy' );
+Route::get('/client/{id}/location','ClientController@location' );
 
 Route::get('/order','OrderController@index' );
 Route::get('/order/create','OrderController@create' );

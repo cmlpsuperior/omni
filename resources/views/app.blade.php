@@ -16,7 +16,6 @@
 
     <!-- Custom CSS: is the admin theme -->
     <link href="{{ asset('css/sb-admin.css') }}" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   </head>
 
   <body>

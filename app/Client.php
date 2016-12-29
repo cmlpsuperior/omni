@@ -35,7 +35,7 @@ class Client extends Model
         return $this->belongsTo('App\DocumentType', 'idDocumentType', 'idDocumentType');
     }
 
-    public function address()
+    public function addresses()
     {
         return $this->hasMany('App\Address', 'idClient', 'idClient');
     }
