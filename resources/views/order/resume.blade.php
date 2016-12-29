@@ -5,11 +5,14 @@
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">
-            Nuevo pedido
+            Visualizar pedido
         </h1>
         <ol class="breadcrumb">
             <li class="">
                 <i class="fa"></i>Pedidos
+            </li>
+            <li class="">
+                <i class="fa"></i>{{ $order->idOrder }}
             </li>
             <li class="active">
                 <i class="fa"></i>Resumen
