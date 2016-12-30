@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 //my uses;:
 use App\Client;
 use App\DocumentType;
+use App\Address;
 use DB;
 use App\Http\Requests\ClientRequest;
 use App\Http\Requests\ClientUpdateRequest;
@@ -94,6 +95,13 @@ class ClientController extends Controller
 
         return Redirect('client')->with('message','El cliente ha sido actualizado exitosamente.');
 
+    }
+
+    public function location ($id){
+        $client = Client::findOrFail($id);
+        $addresses = $client->addresses; 
+
+        return view ('client.location', ['client'=>$client, 'addresses'=> $addresses]);
     }
 
 }
