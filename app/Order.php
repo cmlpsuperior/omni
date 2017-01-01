@@ -16,10 +16,12 @@ class Order extends Model
     protected $fillable = [
     	'name',
     	'address',
-    	'registerDate',
+        'phone',
 
+    	'registerDate',
         'totalAmount',
         'receivedAmount',
+        
     	'state',
 
     	'idClient',

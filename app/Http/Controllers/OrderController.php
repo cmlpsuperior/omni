@@ -41,12 +41,14 @@ class OrderController extends Controller
     public function clientInfo_process (Request $request){
     	$name = null;
     	$address = null;
+        $phone = null;
     	$idZone = $request->get('idZone');
 
     	if ($request->get('name') != '') $name =$request->get('name');
     	if ($request->get('address') != '') $address =$request->get('address');
+        if ($request->get('phone') != '') $phone =$request->get('phone');
 
-    	session( ['idZone' => $idZone, 'name'=>$name, 'address'=>$address] ); //store temporally
+    	session( ['idZone' => $idZone, 'name'=>$name, 'address'=>$address , 'phone'=>$phone] ); //store temporally
 
     	return redirect()->action('OrderController@items');
     }
@@ -54,16 +56,18 @@ class OrderController extends Controller
     public function items (){
     	$name = session ('name');
     	$address = session ('address');
+        $phone = session ('phone');
     	$idZone = session ('idZone');
 
         $zone = Zone::findOrFail($idZone);
 
-    	return view('order.items', ['name'=>$name, 'address'=>$address, 'zone'=>$zone]);
+    	return view('order.items', ['name'=>$name, 'address'=>$address, 'zone'=>$zone , 'phone'=>$phone]);
     }
 
     public function items_process (ItemsOrderRequest $request){        
         $name=session('name');
         $address = session('address');
+        $phone = session('phone');
         $idZone = session('idZone');
 
         $idItems= $request->get('idItems');
@@ -77,10 +81,12 @@ class OrderController extends Controller
             $order = new Order();
             $order->name = $name;
             $order->address = $address;
-            $order->registerDate = date("Y-m-d H:i:s");
+            $order->phone = $phone;
 
+            $order->registerDate = date("Y-m-d H:i:s");
             $order->totalAmount = $totalAmount;
             $order->receivedAmount = $receivedAmount;
+
             $order->state = 'Confirmado';
 
             $order->idClient= null;
@@ -108,6 +114,7 @@ class OrderController extends Controller
         //erase variable in session:
         session()->forget('name');
         session()->forget('address');
+        session()->forget('phone');
         session()->forget('idZone');
 
         return redirect()->action('OrderController@resume', ['id'=>$order->idOrder]);

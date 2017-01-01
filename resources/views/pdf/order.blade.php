@@ -7,22 +7,23 @@
 	<style type= "text/css">
 		@page { margin: 10px 25px 0px 10px; }
 		table{
-		   border-collapse: collapse; width: 100%;
+		   border-collapse: collapse; 
+		   width: 100%;
 		}
 		
-		td, th{
-		    padding:1px;
+		table, td, th{		    
+			border: 0px;
+			padding: 0px;
+			margin: 0px;
+		    padding-bottom: 10px ;
 		    text-align: left;
-		}
-
-		thead{
-		   width:100%;
-		   position:fixed;
-		   height:109px;
-		}
+		}		
 
 		h1, h3, h4{
 			text-align: center;
+			border: 0px;
+			margin: 0px;
+			padding: 0px;
 		}
 		#moneda{
 			text-align: right;
@@ -48,24 +49,28 @@
 	<img class="center" src="{{ asset('img/chino.jpg') }}" />	
 	
 	<h1>Ferretería Espinoza</h1>
-	<h4>De: Edgar Espinoza Castañeda</h4>
+	<span>De: Edgar Espinoza Castañeda</span>
+	<br>
 	<span>Tef. 392-1315 / RPC 954-774-675</span>
-	
+	<br>
 	<h4>Pedido N° {{ $order->idOrder }}</h4>
-	
-	<p><strong>Fecha:</strong> {{ $order->registerDate}}</p>
-	<p><strong>Cliente:</strong> {{ $order->name }}</p>	
-	<p><strong>Dirección:</strong> {{ $order->address}}, {{ $order->zone->name}}</p>
+	<br>
+	<p><strong>Fecha:</strong> {{ $order->registerDate }}</p>
+	<br>
+	<p><strong>Cliente:</strong> @if ( $order->name != null) {{ $order->name }} @else - @endif</p>
+	<p><strong>Teléfono:</strong> @if ( $order->phone != null) {{ $order->phone }} @else - @endif</p>	
+	<p><strong>Dirección:</strong> {{ $order->address}}</p>
+	<p><strong>Zona:</strong> {{ $order->zone->name}}</p>
 	<br>
 	<p>***********************************</p>
 	<table >
         <thead>
          	<tr>
-         		<th>Cant</th>
-                <th>Uni</th>
+         		<th>Ct</th>
+                <th>Un</th>
                 <th>Material</th>				                
                 <th id="moneda">PU</th>
-                <th id="moneda">Subtotal</th>
+                <th id="moneda">Subto</th>
             </tr>
         </thead>
 
@@ -83,10 +88,11 @@
 
         </tbody>
     </table>
-	<br>
+	
 	<p>***********************************</p>
 
     <h3>Monto: S/ {{ number_format($order->totalAmount, 1, '.'," ") }}</h3>
+    <br>
 	<h4>Deuda: S/ {{ number_format($debt, 1, '.'," ") }}</h4>
 
 	<script type="text/javascript">
