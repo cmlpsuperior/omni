@@ -52,7 +52,7 @@
           <div class="col-lg-6">
             <div class="form-group">
               <label for="phone">Teléfono</label>
-              <input class="form-control" id="phone" name="phone" type="text" value="{{ $phone }}" readonly>
+              <input class="form-control" id="phone" name="phone" type="number" value="{{ $phone }}" readonly>
             </div>
           </div>
 
