@@ -199,6 +199,7 @@ $(document).ready(function() {
   index=0;
   $('#orders').addClass( "active" ); //to active the menu
 
+
   //begin: AJAX to search items
   $("#btnSearchItem").click(function(){
     var nameSearch = $("#nameSearch").val();
@@ -223,7 +224,7 @@ $(document).ready(function() {
         $('#tblSearchItem tbody').empty();
         $.each(data.items, function(k, value){
           $('#tblSearchItem').append( '<tr>'+
-                                        '<td><input type="number" step="0.5" min="0.5"></td>'+
+                                        '<td><input id="quantityItemSearched" type="number" step="0.5" min="0.5"></td>'+
                                         '<td>'+value.unit.name+'</td>'+
                                         '<td>'+value.name+'</td>'+
                                         '<td><input type="number" step="0.01" min="0" value="'+value.price+'"></td>'+
@@ -239,6 +240,7 @@ $(document).ready(function() {
   });
   //Inicio: AJAX para actualizar la busqueda del modal
 
+ 
   $('#btnAddItem').click(function(){
     $('#tblSearchItem tbody tr').each(function (index) {
       var quantity = $(this).find("td").eq(0).find("input").val();
@@ -255,6 +257,29 @@ $(document).ready(function() {
     });
     refreshTotalAmount();
   });
+  
+  /***************Adding events when enter is pressed********************/
+  
+  //Press enter when you are in input search => click btnSearchItem  
+  $('#nameSearch').keyup(function(e){
+    if(e.keyCode == 13)
+    {
+      $('#btnSearchItem').click();
+    }
+  });
+  //End
+
+
+  
+  //press enter when you are in quantity of item searched => click to btnAddItem  
+  $(document).on('keyup', '#quantityItemSearched', function(e) { //it is made this way, because has to take generated input (dinamicaly)
+    
+    if(e.keyCode == 13)
+    {
+      $('#btnAddItem').click();
+    }
+  });
+
   
 
 });
