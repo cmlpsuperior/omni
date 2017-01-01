@@ -186,6 +186,24 @@ class UnitTableSeeder extends Seeder
         Unit::create([
                     'name' => 'kg'
                         ]);
+        Unit::create([
+                    'name' => 'envase'
+                        ]);
+        Unit::create([
+                    'name' => 'm'
+                        ]);
+        Unit::create([
+                    'name' => 'par'
+                        ]);
+        Unit::create([
+                    'name' => 'rollo'
+                        ]);
+        Unit::create([
+                    'name' => 'caja'
+                        ]);
+        Unit::create([
+                    'name' => 'millar'
+                        ]);
     }
 }
 
@@ -203,20 +221,35 @@ class ZoneTableSeeder extends Seeder
                         ]);
 
         Zone::create([
-                    'name' => 'Platanitos',
-                    'shipping' => 20.0,
+                    'name' => 'Maria jesus',
+                    'shipping' => 0.0,
                     'state' => 'Activo'
                         ]);
 
         Zone::create([
-                    'name' => 'Cristo rey',
-                    'shipping' => 10.0,
+                    'name' => 'Nueva luz',
+                    'shipping' => 0.0,
                     'state' => 'Activo'
                         ]);
 
         Zone::create([
-                    'name' => 'Casa blanca',
-                    'shipping' => 5.0,
+                    'name' => 'Balcones verdes',
+                    'shipping' => 0.0,
+                    'state' => 'Activo'
+                        ]);
+        Zone::create([
+                    'name' => 'Santa rosita sector 5',
+                    'shipping' => 0.0,
+                    'state' => 'Activo'
+                        ]);
+        Zone::create([
+                    'name' => 'Planicie',
+                    'shipping' => 0.0,
+                    'state' => 'Activo'
+                        ]);
+        Zone::create([
+                    'name' => 'Otro',
+                    'shipping' => 0.0,
                     'state' => 'Activo'
                         ]);
 

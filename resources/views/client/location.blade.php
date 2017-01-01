@@ -45,7 +45,7 @@
       <div class="panel-body" >
 
         <div class="form-group" style="width:100%;height:500px;background:yellow">
-          <div id="map" style="width:100%;height:100%;background:yellow"></div>
+          <div id="map" style="width:100%;height:100%;"></div>
         </div>
 
       </div>
