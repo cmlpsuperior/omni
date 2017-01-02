@@ -41,24 +41,6 @@
       <div class="panel-body">        
 
         <div class="row">
-
-          <div class="col-lg-6">
-            <div class="form-group">
-              <label for="name">Nombre</label>
-              <input class="form-control" id="name" name="name" type="text" value="{{ $name }}" readonly>
-            </div>
-          </div>
-
-          <div class="col-lg-6">
-            <div class="form-group">
-              <label for="phone">Teléfono</label>
-              <input class="form-control" id="phone" name="phone" type="number" value="{{ $phone }}" readonly>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="row">
           <div class="col-lg-6">
             <div class="form-group">
               <label for="idZone">Zona</label>
@@ -76,6 +58,24 @@
           </div>
         </div>
 
+        <div class="row">
+
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label for="name">Nombre</label>
+              <input class="form-control" id="name" name="name" type="text" value="{{ $name }}" readonly>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label for="phone">Teléfono</label>
+              <input class="form-control" id="phone" name="phone" type="number" value="{{ $phone }}" readonly>
+            </div>
+          </div>
+
+        </div>
+        
       </div>
     </div>
     
