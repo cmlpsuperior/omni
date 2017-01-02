@@ -1,1 +1,3 @@
-En la pantalla de buscar materiales: al hacer enter que ejecute el buscar, no el submit
+En la pantalla de buscar materiales: al hacer enter que ejecute el buscar, no el submit. LSITO
+En la busqueda de materiales: debe hacerlo por letras.
+En pedidos: en la lsita de busuqueda de productos, el enter debe funcionar en el precio.
