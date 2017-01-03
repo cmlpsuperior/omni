@@ -76,6 +76,10 @@ class OrderController extends Controller
         $receivedAmount = $request->get('receivedAmount');
         $totalAmount = $request->get('totalAmount');
 
+        //to know if there is a debt or not
+        $debt = 0;
+        if ($receivedAmount < $totalAmount) $debt = $totalAmount - $receivedAmount;
+
         DB::beginTransaction();
             //create a new order:
             $order = new Order();
@@ -87,7 +91,10 @@ class OrderController extends Controller
             $order->totalAmount = $totalAmount;
             $order->receivedAmount = $receivedAmount;
 
-            $order->state = 'Confirmado';
+            if ($debt >0 )
+                $order->state = 'Deuda';
+            else
+                $order->state = 'Pagado';
 
             $order->idClient= null;
             $order->idZone= $idZone;

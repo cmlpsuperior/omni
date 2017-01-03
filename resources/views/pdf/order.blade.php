@@ -90,10 +90,15 @@
     </table>
 	
 	<p>***********************************</p>
-
-    <h3>Monto: S/ {{ number_format($order->totalAmount, 1, '.'," ") }}</h3>
+	<br>
+    <h3>Total: S/ {{ number_format($order->totalAmount, 1, '.'," ") }}</h3>
     <br>
-	<h4>Deuda: S/ {{ number_format($debt, 1, '.'," ") }}</h4>
+    @if ($debt > 0)
+		<h3>COBRAR:</h3>
+		<h3>S/ {{ number_format($debt, 1, '.'," ") }}</h3>
+	@else 
+		<h3>PAGADO</h3>
+	@endif
 
 	<script type="text/javascript">
 		print();
