@@ -7,6 +7,7 @@
         <h1 class="page-header">
             Nuevo pedido
         </h1>
+        <!--
         <ol class="breadcrumb">
             <li class="">
                 <i class="fa"></i>Pedidos
@@ -15,6 +16,7 @@
                 <i class="fa"></i>Nuevo pedido
             </li>
         </ol>
+        -->
     </div>
 </div>
 
