@@ -15,13 +15,19 @@ class ItemController extends Controller
 {
     public function index (Request $request){
     	$name ='';
-
         if ( $request->has('name') ) $name = $request->get('name');
 
-        //it can be improved using ifs
-        $items = Item::orderBy('name', 'asc')
-                    ->where('name','like', '%'.$name.'%')
-                    ->simplePaginate(10);
+        $names = explode(" ", $name); //separete all words
+
+        $arraySearch = Array();
+        foreach($names as $nameSearch){
+            $arraySearch[] =  ['name','like', '%'.$nameSearch.'%'];
+        }
+
+        $items = Item::where ($arraySearch)
+                        ->orderBy('name','asc')
+                        ->with('unit')
+                        ->simplePaginate(10);        
 
         return view('item.index', ['items'=>$items]);
     }

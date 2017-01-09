@@ -163,12 +163,7 @@ class OrderController extends Controller
                         ->orderBy('name','asc')
                         ->with('unit')
                         ->get();
-        /*
-        $items = Item::where ('name','like','%'.$name.'%')
-                        ->orderBy('name','asc')
-                        ->with('unit')
-                        ->get();
-        */
+        
         //verify if exist a diferent price in that zone
         foreach ($items as $item){
             $exist = DB::table('itemXZone')
