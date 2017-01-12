@@ -13,7 +13,7 @@ class CreateItemXOrderTable extends Migration
             $table->integer('idOrder')->unsigned();
             $table->integer('idItem')->unsigned();
 
-            $table->double('quantity', 15,2);
+            $table->double('quantity', 15,3);
             $table->double('unitPrice', 15,2);
 
             //define the primary keys:

@@ -93,13 +93,14 @@
               <input class="form-control" id="nameSearch" name="nameSearch" type="text" placeholder="pj. piedra chancada">
             </div>
           </div>
-
+          <!--
           <div class="col-lg-4">
             <div class="form-group text-right">
               <label for=""></label><br>
               <a class="btn btn-info" id="btnSearchItem"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> buscar</a>
             </div>
           </div>
+          -->
         </div>        
 
         <div class="table-responsive">
@@ -203,6 +204,7 @@ $(document).ready(function() {
 
 
   //begin: AJAX to search items
+  /*
   $("#btnSearchItem").click(function(){
     var nameSearch = $("#nameSearch").val();
     var idZone = $("#idZone").val();
@@ -240,7 +242,45 @@ $(document).ready(function() {
       },
     });
   });
+  */
   //Inicio: AJAX para actualizar la busqueda del modal
+  $("#nameSearch").keyup(function(){
+    var nameSearch = $("#nameSearch").val();
+    var idZone = $("#idZone").val();
+
+    console.log(idZone);
+    var myUrl=  "{{ url('order/searchItem') }}";
+    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');      
+
+    $.ajax({        
+      type: "GET",   
+      url: myUrl,
+      dataType : "JSON",
+      data: {
+          nameSearch: nameSearch,
+          idZone: idZone,
+          _token: CSRF_TOKEN
+      },
+      success: function(data){
+        console.log(data);  // for testing only      
+        
+        $('#tblSearchItem tbody').empty();
+        $.each(data.items, function(k, value){
+          $('#tblSearchItem').append( '<tr>'+
+                                        '<td><input id="quantityItemSearched" type="number" step="0.5" min="0.5"></td>'+
+                                        '<td>'+value.unit.name+'</td>'+
+                                        '<td>'+value.name+'</td>'+
+                                        '<td><input type="number" step="0.01" min="0" value="'+value.price+'"></td>'+
+                                        '<td hidden>'+value.idItem+'</td>'+
+                                      '</tr>');
+        });               
+           
+      },
+      error: function (e) {
+        console.log(e.responseText);
+      },
+    });
+  });
 
  
   $('#btnAddItem').click(function(){
