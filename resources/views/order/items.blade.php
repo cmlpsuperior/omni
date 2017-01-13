@@ -202,48 +202,7 @@ $(document).ready(function() {
   index=0;
   $('#orders').addClass( "active" ); //to active the menu
 
-
   //begin: AJAX to search items
-  /*
-  $("#btnSearchItem").click(function(){
-    var nameSearch = $("#nameSearch").val();
-    var idZone = $("#idZone").val();
-
-    console.log(idZone);
-    var myUrl=  "{{ url('order/searchItem') }}";
-    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');      
-
-    $.ajax({        
-      type: "GET",   
-      url: myUrl,
-      dataType : "JSON",
-      data: {
-          nameSearch: nameSearch,
-          idZone: idZone,
-          _token: CSRF_TOKEN
-      },
-      success: function(data){
-        console.log(data);  // for testing only      
-        
-        $('#tblSearchItem tbody').empty();
-        $.each(data.items, function(k, value){
-          $('#tblSearchItem').append( '<tr>'+
-                                        '<td><input id="quantityItemSearched" type="number" step="0.5" min="0.5"></td>'+
-                                        '<td>'+value.unit.name+'</td>'+
-                                        '<td>'+value.name+'</td>'+
-                                        '<td><input type="number" step="0.01" min="0" value="'+value.price+'"></td>'+
-                                        '<td hidden>'+value.idItem+'</td>'+
-                                      '</tr>');
-        });               
-           
-      },
-      error: function (e) {
-        console.log(e.responseText);
-      },
-    });
-  });
-  */
-  //Inicio: AJAX para actualizar la busqueda del modal
   $("#nameSearch").keyup(function(){
     var nameSearch = $("#nameSearch").val();
     var idZone = $("#idZone").val();
@@ -281,8 +240,8 @@ $(document).ready(function() {
       },
     });
   });
+  //End: AJAX para actualizar la busqueda del modal
 
- 
   $('#btnAddItem').click(function(){
     $('#tblSearchItem tbody tr').each(function (index) {
       var quantity = $(this).find("td").eq(0).find("input").val();
@@ -300,28 +259,13 @@ $(document).ready(function() {
     refreshTotalAmount();
   });
   
-  /***************Adding events when enter is pressed********************/
-  
-  //Press enter when you are in input search => click btnSearchItem  
-  $('#nameSearch').keyup(function(e){
-    if(e.keyCode == 13)
-    {
-      $('#btnSearchItem').click();
-    }
-  });
-  //End
-
-
-  
+  /***************Adding events when enter is pressed********************/  
   //press enter when you are in quantity of item searched => click to btnAddItem  
   $(document).on('keyup', '#quantityItemSearched', function(e) { //it is made this way, because has to take generated input (dinamicaly)
-    
-    if(e.keyCode == 13)
-    {
+    if(e.keyCode == 13){
       $('#btnAddItem').click();
     }
   });
-
   
 
 });
