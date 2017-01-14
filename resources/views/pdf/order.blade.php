@@ -52,9 +52,15 @@
 	<span>De: Edgar Espinoza Castañeda</span>
 	<br>
 	<span>Tef. 392-1315 / RPC 954-774-675</span>
+
 	<br>
-	<h4>Pedido N° {{ $order->idOrder }}</h4>
+	@If ($order->state =='Proforma')
+		<h4>Proforma N° {{ $order->idOrder }}</h4>
+	@else
+		<h4>Pedido N° {{ $order->idOrder }}</h4>
+	@endif
 	<br>
+
 	<p><strong>Fecha:</strong> {{ $order->registerDate }}</p>
 	<br>
 	<p><strong>Cliente:</strong> @if ( $order->name != null) {{ $order->name }} @else - @endif</p>
@@ -93,11 +99,17 @@
 	<br>
     <h3>Total: S/ {{ number_format($order->totalAmount, 1, '.'," ") }}</h3>
     <br>
-    @if ($debt > 0)
-		<h3>COBRAR:</h3>
-		<h3>S/ {{ number_format($debt, 1, '.'," ") }}</h3>
-	@else 
-		<h3>PAGADO</h3>
+    @If ($order->state =='Proforma')
+    	<h3>PROFORMA</h3>
+    @else
+
+	    @if ($debt > 0)
+			<h3>COBRAR:</h3>
+			<h3>S/ {{ number_format($debt, 1, '.'," ") }}</h3>
+		@else 
+			<h3>PAGADO</h3>
+		@endif
+
 	@endif
 
 	<script type="text/javascript">

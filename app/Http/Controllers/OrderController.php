@@ -74,11 +74,15 @@ class OrderController extends Controller
         $quantitys= $request->get('quantitys');
         $prices= $request->get('prices');
         $receivedAmount = $request->get('receivedAmount');
-        $totalAmount = $request->get('totalAmount');
+        $totalAmount = $request->get('totalAmount');       
 
         //to know if there is a debt or not
         $debt = 0;
         if ($receivedAmount < $totalAmount) $debt = $totalAmount - $receivedAmount;
+
+        //new value when is a pro forma:
+        $isProForma = 0;
+        if ( $request->has('chkProForma') ) $isProForma = 1;
 
         DB::beginTransaction();
             //create a new order:
@@ -99,6 +103,9 @@ class OrderController extends Controller
             $order->idClient= null;
             $order->idZone= $idZone;
             $order->idEmployee= Auth::User()->employee->idEmployee;           
+
+            //new condicion if is a pro forma:
+            if ($isProForma == 1) $order->state = 'Proforma';
 
             $order->save();
 

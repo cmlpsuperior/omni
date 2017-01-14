@@ -23,6 +23,7 @@ class Order extends Model
         'receivedAmount',
         
     	'state',
+        'observations',
 
     	'idClient',
     	'idZone',

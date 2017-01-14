@@ -15,11 +15,13 @@ class CreateOrderTable extends Migration
             $table->string('name', 100)->nullable();
             $table->string('address', 100)->nullable();
             $table->string('phone', 100)->nullable();
-            $table->datetime('registerDate');
 
+            $table->datetime('registerDate');
             $table->double('totalAmount', 15, 2);
             $table->double('receivedAmount', 15, 2);
+
             $table->string('state', 50);
+            $table->string('observations', 250)->nullable();
 
             $table->integer('idClient')->unsigned()->nullable();
             $table->integer('idZone')->unsigned();

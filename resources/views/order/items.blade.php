@@ -92,15 +92,7 @@
               <label for="nameSearch">Material</label>
               <input class="form-control" id="nameSearch" name="nameSearch" type="text" placeholder="pj. piedra chancada">
             </div>
-          </div>
-          <!--
-          <div class="col-lg-4">
-            <div class="form-group text-right">
-              <label for=""></label><br>
-              <a class="btn btn-info" id="btnSearchItem"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> buscar</a>
-            </div>
-          </div>
-          -->
+          </div>          
         </div>        
 
         <div class="table-responsive">
@@ -166,13 +158,23 @@
               <input class="form-control" id="totalAmount" name="totalAmount" type="number" step="0.01" readonly>
             </div> 
           </div>
-        </div>
-        
+        </div>   
+
         <div class="row">
           <div class="col-md-6 col-md-offset-3">
             <div class="form-group">
               <label for="receivedAmount">Importe recibido S/ *</label><br>
               <input class="form-control" id="receivedAmount" name="receivedAmount" type="number" min="0" step="0.01" required>
+            </div> 
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <div class="form-group">
+              <div class="checkbox">
+                <label><input type="checkbox" id="chkProForma" name="chkProForma"  value="yes">Es proforma</label>
+              </div>
             </div> 
           </div>
         </div>
