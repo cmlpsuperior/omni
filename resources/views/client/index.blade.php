@@ -46,8 +46,18 @@
 <div class="row">   
 
     <div class="col-md-12 text-right">
-        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#filterModal"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Buscar</button>
-        <a href="{{ action('ClientController@create') }}" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Nuevo cliente</a>
+        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#filterModal"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Buscar</button>        
+        <div class="btn-group">
+          <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            Nuevo cliente 
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><a href="{{ action('ClientController@createPerson') }}" >Persona</a></li>
+            <li><a href="{{ action('ClientController@createCompany') }}" >Empresa</a></li>
+          </ul>
+        </div>
     </div>
     
 </div>
@@ -65,6 +75,7 @@
                     <table class="table table-hover table-striped">
                         <thead>
                             <tr>
+                                <th>Tipo doc.</th>
                                 <th>N° documento</th>
                                 <th>Nombre completo</th>
                                 <th>Teléfono</th>
@@ -76,16 +87,29 @@
                         <tbody>                    
                             @foreach ($clients as $client)
         		            <tr>
+                                <td>{{ $client->documentType->name }}</td>
         			            <td>{{ $client->documentNumber }}</td>
-        			            <td>{{ $client->fatherLastName }} {{ $client->motherLastName }}, {{ $client->names }}</td>
+                                @if ( $client->names == null )
+                                    <td>{{ $client->businessName }}</td>
+                                @else
+                                    <td>{{ $client->fatherLastName }} {{ $client->motherLastName }}, {{ $client->names }}</td>
+                                @endif        			            
         			            <td>{{ $client->phone }}</td>	
         			            <td>{{ count( $client->addresses ) }}</td>		
-        			            <td>{{ $client->gender }}</td>					            
+        			            <td>{{ $client->gender }}</td>
+                                <!--				            
         			            <td>
-                                    <a class="btn btn-default" href="{{ action('ClientController@edit', ['id'=>$client->idClient]) }}" title="Editar">
-                                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                    </a>
+                                    @if ($client->documentType->type == 'Company')
+                                        <a class="btn btn-default" href="{{ action('ClientController@editCompany', ['id'=>$client->idClient]) }}" title="Editar empresa">
+                                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                        </a>
+                                    @else
+                                        <a class="btn btn-default" href="{{ action('ClientController@editPerson', ['id'=>$client->idClient]) }}" title="Editar persona">
+                                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                        </a>
+                                    @endif
         			            </td>
+                                -->
         			        </tr>
         			        @endforeach
                         </tbody>

@@ -5,14 +5,14 @@
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">
-            Nuevo cliente
+            Nuevo cliente - persona
         </h1>
         <ol class="breadcrumb">
             <li class="">
                 <i class="fa"></i>Clientes
             </li>
             <li class="active">
-                <i class="fa"></i>Nuevo cliente
+                <i class="fa"></i>Nuevo cliente - persona
             </li>
         </ol>
     </div>
@@ -32,7 +32,7 @@
   @endforeach
 @endif
 
-<form role="form" action="{{ action('ClientController@store') }}" method="POST">
+<form role="form" action="{{ action('ClientController@storePerson') }}" method="POST">
 <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
 <div class="row">
@@ -123,7 +123,7 @@
         </div>
         <div class="form-group">
             <label for="phone">Teléfono</label>
-            <input class="form-control" id="phone" name="phone"  type="number" value="{{ old('phone') }}">
+            <input class="form-control" id="phone" name="phone"  type="number" min="0" value="{{ old('phone') }}">
         </div>
 
       </div>

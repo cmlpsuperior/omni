@@ -53,12 +53,20 @@ class DocumentTypeTableSeeder extends Seeder
 
         DocumentType::create([
                     'name' => 'DNI',
-                    'description' => 'Documento de identidad del ciudadano peruano.', 
+                    'description' => 'Documento de identidad del ciudadano peruano.',
+                    'type' => 'Person',
                         ]);
 
         DocumentType::create([
                     'name' => 'Pasaporte',
-                    'description' => 'Documento de identidad de los extrajeros.', 
+                    'description' => 'Documento de identidad de los extrajeros.',
+                    'type' => 'Person',
+                        ]);
+
+        DocumentType::create([
+                    'name' => 'RUC',
+                    'description' => 'Documento único de una empresa.',
+                    'type' => 'Company',
                         ]);
     }
 }
@@ -267,20 +275,20 @@ class ClientTableSeeder extends Seeder
         $documentType = DocumentType::orderBy('idDocumentType', 'asc')->first();
 
         Client::create([
-                    'names' => 'Genérico',
-                    'fatherLastName' =>'Pt',
-                    'motherLastName' =>'Mt',
+                    'names' => 'Henry Antonio',
+                    'fatherLastName' =>'Espinoza',
+                    'motherLastName' =>'Torres',
 
                     'birthdate' => '1990-12-20 00:00:00',
-                    'documentNumber' => '0',
-                    'email' => null,
+                    'documentNumber' => '46618582',
+                    'email' => 'henryespinozat@gmail.com',
 
                     'gender'=> 'Masculino',        
-                    'phone'=> null,
-                    'registerDate'=> '2016-12-24 00:00:00',
-  
+                    'phone'=> '930414373',
+                    'registerDate'=> '2017-01-19 00:00:00',
+                    
+                    'businessName'=> null,
                     'idDocumentType'=> $documentType->idDocumentType
                         ]);
-
     }
 }

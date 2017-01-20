@@ -25,6 +25,8 @@ class Client extends Model
         'phone',        
         'registerDate',
 
+        'businessName',
+        
     	'idDocumentType'
     ];
 

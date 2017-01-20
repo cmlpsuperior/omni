@@ -37,12 +37,17 @@ Route::put('/item/{id}/update','ItemController@update' );
 Route::delete('/item/{id}/destroy','ItemController@destroy' );
 
 Route::get('/client','ClientController@index' );
-Route::get('/client/create','ClientController@create' );
-Route::post('/client','ClientController@store' );
-Route::get('/client/{id}/edit','ClientController@edit' );
-Route::put('/client/{id}/update','ClientController@update' );
+	Route::get('/person/create','ClientController@createPerson' );
+	Route::post('/person','ClientController@storePerson' );
+	Route::get('/person/{id}/edit','ClientController@editPerson' );
+	Route::put('/person/{id}/update','ClientController@updatePerson' );
+
+	Route::get('/company/create','ClientController@createCompany' );
+	Route::post('/company','ClientController@storeCompany' );
+	Route::get('/company/{id}/edit','ClientController@editCompany' );
+	Route::put('/company/{id}/update','ClientController@updateCompany' );
 Route::delete('/client/{id}/destroy','ClientController@destroy' );
-Route::get('/client/{id}/location','ClientController@location' );
+
 
 Route::get('/order','OrderController@index' );
 Route::get('/order/create','OrderController@create' );
