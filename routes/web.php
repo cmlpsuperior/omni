@@ -62,3 +62,13 @@ Route::get('pdf/order/{id}', 'PDFController@order' );
 
 //API REST:
 Route::get('/order/searchItem','OrderController@searchItem' ); //AJAX
+
+
+
+Route::get('/proForma','ProFormaController@index' );
+Route::get('/proForma/create','ProFormaController@create' );
+	Route::post('/proForma/clientInfo_process','ProFormaController@clientInfo_process' );
+	Route::get('/proForma/items','ProFormaController@items' );
+	Route::post('/proForma/items_process','ProFormaController@items_process' );
+	Route::get('/proForma/{id}/resumen','ProFormaController@resume' );
+Route::delete('/proForma/{id}/destroy','ProFormaController@destroy' );

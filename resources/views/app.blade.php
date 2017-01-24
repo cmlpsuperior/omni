@@ -140,6 +140,9 @@
                 <ul class="nav navbar-nav side-nav">
                                         
                     <li id="orders">
+                        <a href="{{ action('ProFormaController@index') }}"><i class="fa fa-fw fa-wrench"></i> Proforma</a>
+                    </li>
+                    <li id="orders">
                         <a href="{{ action('OrderController@index') }}"><i class="fa fa-fw fa-wrench"></i> Pedidos</a>
                     </li>
                     <li>
