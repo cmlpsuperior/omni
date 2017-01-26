@@ -5,18 +5,8 @@
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">
-            Nuevo pedido
+            Nueva proforma
         </h1>
-        <!--
-        <ol class="breadcrumb">
-            <li class="">
-                <i class="fa"></i>Pedidos
-            </li>
-            <li class="active">
-                <i class="fa"></i>Nuevo pedido
-            </li>
-        </ol>
-        -->
     </div>
 </div>
 
@@ -36,9 +26,10 @@
 
 <div class="row">
   <div class="col-lg-6">
+
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title">Datos del cliente</h3>
+        <h3 class="panel-title">Lugar de envío</h3>
       </div>
       <div class="panel-body">        
 
@@ -51,31 +42,6 @@
               </select>
             </div>
           </div>
-
-          <div class="col-lg-6">
-            <div class="form-group">
-              <label for="address">Dirección</label>
-              <input class="form-control" id="address" name="address" type="text" value="{{ $address }}" readonly>
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
-
-          <div class="col-lg-6">
-            <div class="form-group">
-              <label for="name">Nombre</label>
-              <input class="form-control" id="name" name="name" type="text" value="{{ $name }}" readonly>
-            </div>
-          </div>
-
-          <div class="col-lg-6">
-            <div class="form-group">
-              <label for="phone">Teléfono</label>
-              <input class="form-control" id="phone" name="phone" type="number" value="{{ $phone }}" readonly>
-            </div>
-          </div>
-
         </div>
         
       </div>
@@ -85,7 +51,8 @@
       <div class="panel-heading">
         <h3 class="panel-title">Buscar materiales</h3>
       </div>
-      <div class="panel-body"> 
+      <div class="panel-body">
+
         <div class="row">
           <div class="col-lg-8">
             <div class="form-group">
@@ -102,8 +69,7 @@
                       <th>Cantidad</th>
                       <th>Unidad</th>
                       <th>Material</th>
-                      <th>P.U. S/</th>
-                      
+                      <th>P.U. S/</th>                      
                   </tr>
               </thead>
               <tbody>                    
@@ -122,7 +88,7 @@
 
   </div>
 
-  <form role="form" action="{{ action('OrderController@items_process') }}" method="POST">
+  <form role="form" action="{{ action('ProFormaController@items_process') }}" method="POST">
   <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
   <div class="col-lg-6">
@@ -161,25 +127,6 @@
         </div>   
 
         <div class="row">
-          <div class="col-md-6 col-md-offset-3">
-            <div class="form-group">
-              <label for="receivedAmount">Importe recibido S/ *</label><br>
-              <input class="form-control" id="receivedAmount" name="receivedAmount" type="number" min="0" step="0.01" required>
-            </div> 
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-12 text-center">
-            <div class="form-group">
-              <div class="checkbox">
-                <label><input type="checkbox" id="chkProForma" name="chkProForma"  value="yes">Es proforma</label>
-              </div>
-            </div> 
-          </div>
-        </div>
-
-        <div class="row">
           <div class="col-md-12 text-center">
             <div class="form-group">
               <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true" ></span> Registrar</button>
@@ -188,28 +135,23 @@
         </div>
 
       </div>
-    </div>
-       
+    </div>       
   </div>
 
+  </form>
 </div>
-
-
-</form>
 @endsection
 
 @section('script')
 <script type="text/javascript">
 $(document).ready(function() {
   index=0;
-  $('#orders').addClass( "active" ); //to active the menu
+  $('#proFormas').addClass( "active" ); //to active the menu
 
   //begin: AJAX to search items
   $("#nameSearch").keyup(function(){
     var nameSearch = $("#nameSearch").val();
     var idZone = $("#idZone").val();
-
-    console.log(idZone);
     var myUrl=  "{{ url('item/searchItem') }}";
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');      
 
@@ -223,8 +165,6 @@ $(document).ready(function() {
           _token: CSRF_TOKEN
       },
       success: function(data){
-        console.log(data);  // for testing only      
-        
         $('#tblSearchItem tbody').empty();
         $.each(data.items, function(k, value){
           $('#tblSearchItem').append( '<tr>'+
@@ -234,8 +174,7 @@ $(document).ready(function() {
                                         '<td><input type="number" step="0.01" min="0" value="'+value.price+'"></td>'+
                                         '<td hidden>'+value.idItem+'</td>'+
                                       '</tr>');
-        });               
-           
+        });           
       },
       error: function (e) {
         console.log(e.responseText);

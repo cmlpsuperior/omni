@@ -73,7 +73,12 @@
                                 <td>{{ count( $proForma->items ) }}</td>
                                 <td>{{ $proForma->zone->name }}</td>                      
                                 <td>
-                                    
+                                    <a class="btn btn-default" href="{{action('ProFormaController@view', ['id'=>$proForma->idProForma])}}" title="Ver">
+                                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                                    </a>
+                                    <a href="{{action('PDFController@proForma', ['id'=>$proForma->idProForma])}}" title="Imprimir" target="_blank" class="btn btn-default">
+                                        <span class="glyphicon glyphicon-print" aria-hidden="true" ></span>
+                                    </a>
                                 </td>
                             </tr>
                             @endforeach

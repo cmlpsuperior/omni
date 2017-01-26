@@ -153,37 +153,4 @@ class OrderController extends Controller
         
         return Redirect('order')->with('message','El pedido ha sido ANULADO exitosamente.');
     }
-
-    //AJAX
-    public function searchItem (Request $request){
-        $name= $request->get('nameSearch');
-        $idZone= $request->get('idZone'); //is the zone input,
-
-        $names = explode(" ", $name); //separete all words
-
-        $arraySearch = Array();
-        foreach($names as $nameSearch){
-            $arraySearch[] =  ['name','like', '%'.$nameSearch.'%'];
-        }
-
-        $items = Item::where ($arraySearch)
-                        ->orderBy('name','asc')
-                        ->with('unit')
-                        ->get();
-        
-        //verify if exist a diferent price in that zone
-        foreach ($items as $item){
-            $exist = DB::table('itemXZone')
-                        ->where('idItem','=', $item->idItem)
-                        ->where('idZone','=', $idZone)
-                        ->first();
-
-            if ($exist != null){                
-                $item->price=$exist->price;
-            }
-        }
-        return response()->json([
-                            'items' => $items                      
-                        ]);
-    }
 }

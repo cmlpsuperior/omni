@@ -139,7 +139,7 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
                                         
-                    <li id="orders">
+                    <li id="proFormas">
                         <a href="{{ action('ProFormaController@index') }}"><i class="fa fa-fw fa-wrench"></i> Proforma</a>
                     </li>
                     <li id="orders">

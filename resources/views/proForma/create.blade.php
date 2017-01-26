@@ -84,18 +84,3 @@
 
 
 @endsection
-
-@section('script')
-<script type="text/javascript">
-$(document).ready(function() {
-
-  $('#orders').addClass( "active" ); //to active the menu
-
-  $('#address').keyup(function(){
-    this.value = this.value.toUpperCase();
-  });
-
-});
-
-</script>
-@endsection
