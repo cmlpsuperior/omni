@@ -146,7 +146,6 @@
 <script type="text/javascript">
 $(document).ready(function() {
   index=0;
-  $('#proFormas').addClass( "active" ); //to active the menu
 
   //begin: AJAX to search items
   $("#nameSearch").keyup(function(){

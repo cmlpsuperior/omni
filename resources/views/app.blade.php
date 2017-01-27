@@ -139,11 +139,8 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
                                         
-                    <li id="proFormas">
-                        <a href="{{ action('ProFormaController@index') }}"><i class="fa fa-fw fa-wrench"></i> Proforma</a>
-                    </li>
-                    <li id="orders">
-                        <a href="{{ action('OrderController@index') }}"><i class="fa fa-fw fa-wrench"></i> Pedidos</a>
+                    <li id="sales">
+                        <a href="{{ action('MenuController@sale') }}"><i class="fa fa-fw fa-wrench"></i> Ventas</a>
                     </li>
                     <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Mantenimiento <b class="caret"></b></a>

@@ -80,10 +80,6 @@ class OrderController extends Controller
         $debt = 0;
         if ($receivedAmount < $totalAmount) $debt = $totalAmount - $receivedAmount;
 
-        //new value when is a pro forma:
-        $isProForma = 0;
-        if ( $request->has('chkProForma') ) $isProForma = 1;
-
         DB::beginTransaction();
             //create a new order:
             $order = new Order();
@@ -102,11 +98,7 @@ class OrderController extends Controller
 
             $order->idClient= null;
             $order->idZone= $idZone;
-            $order->idEmployee= Auth::User()->employee->idEmployee;           
-
-            //new condicion if is a pro forma:
-            if ($isProForma == 1) $order->state = 'Proforma';
-
+            $order->idEmployee= Auth::User()->employee->idEmployee;
             $order->save();
 
             //insert items of that order
@@ -131,10 +123,10 @@ class OrderController extends Controller
         session()->forget('phone');
         session()->forget('idZone');
 
-        return redirect()->action('OrderController@resume', ['id'=>$order->idOrder]);
+        return redirect()->action('OrderController@view', ['id'=>$order->idOrder]);
     }
 
-    public function resume ($id){
+    public function view ($id){
         $order = Order::findOrFail($id);
         $change = 0;
         $debt = 0;
@@ -142,8 +134,7 @@ class OrderController extends Controller
         if ($order->receivedAmount > $order->totalAmount) $change = $order->receivedAmount - $order->totalAmount;
         if ($order->receivedAmount < $order->totalAmount) $debt = $order->totalAmount - $order->receivedAmount;
 
-
-        return view('order.resume', ['order'=>$order, 'change'=>$change, 'debt'=>$debt]);
+        return view('order.view', ['order'=>$order, 'change'=>$change, 'debt'=>$debt]);
     }
 
     public function destroy ($id){

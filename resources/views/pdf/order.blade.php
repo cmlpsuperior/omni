@@ -54,11 +54,7 @@
 	<span>Tef. 392-1315 / RPC 954-774-675</span>
 
 	<br>
-	@If ($order->state =='Proforma')
-		<h4>Proforma N° {{ $order->idOrder }}</h4>
-	@else
-		<h4>Pedido N° {{ $order->idOrder }}</h4>
-	@endif
+	<h4>Pedido N° {{ $order->idOrder }}</h4>
 	<br>
 
 	<p><strong>Fecha:</strong> {{ $order->registerDate }}</p>
@@ -81,37 +77,28 @@
         </thead>
 
         <tbody>
-
         	@foreach ($order->items as $item)
             <tr>
 	            <td>{{ $item->pivot->quantity }}</td>
 	            <td>{{ substr ( $item->unit->name,0,3) }}</td>
 	            <td>{{ $item->name }}</td>
-	            <td id="moneda">{{ number_format($item->pivot->unitPrice, 1, '.'," ")  }}</td>
-	            <td id="moneda">{{ number_format($item->pivot->quantity*$item->pivot->unitPrice, 1, '.'," ") }}</td>
+	            <td id="moneda">{{ number_format($item->pivot->unitPrice, 1, '.',"")  }}</td>
+	            <td id="moneda">{{ number_format($item->pivot->quantity*$item->pivot->unitPrice, 1, '.',"") }}</td>
 	        </tr> 
 	        @endforeach
-
         </tbody>
     </table>
 	
 	<p>***********************************</p>
 	<br>
-    <h3>Total: S/ {{ number_format($order->totalAmount, 1, '.'," ") }}</h3>
+    <h3>Total: S/ {{ number_format($order->totalAmount, 2, '.'," ") }}</h3>
     <br>
-    @If ($order->state =='Proforma')
-    	<h3>PROFORMA</h3>
-    @else
-
-	    @if ($debt > 0)
-			<h3>COBRAR:</h3>
-			<h3>S/ {{ number_format($debt, 1, '.'," ") }}</h3>
-		@else 
-			<h3>PAGADO</h3>
-		@endif
-
+    @if ($debt > 0)
+		<h3>COBRAR:</h3>
+		<h3>S/ {{ number_format($debt, 2, '.'," ") }}</h3>
+	@else 
+		<h3>PAGADO</h3>
 	@endif
-
 	<script type="text/javascript">
 		print();
 	</script>

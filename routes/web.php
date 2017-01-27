@@ -54,7 +54,7 @@ Route::get('/order/create','OrderController@create' );
 	Route::post('/order/clientInfo_process','OrderController@clientInfo_process' );
 	Route::get('/order/items','OrderController@items' );
 	Route::post('/order/items_process','OrderController@items_process' );
-	Route::get('/order/{id}/resumen','OrderController@resume' );
+	Route::get('/order/{id}/view','OrderController@view' );
 Route::delete('/order/{id}/destroy','OrderController@destroy' );
 
 //PDF
@@ -71,6 +71,8 @@ Route::get('/proForma/create','ProFormaController@create' );
 Route::delete('/proForma/{id}/destroy','ProFormaController@destroy' );
 
 
+//home
+Route::get('/home/sale','MenuController@sale' );
 
 //API REST:
 Route::get('/item/searchItem','ItemController@searchItem' ); //AJAX

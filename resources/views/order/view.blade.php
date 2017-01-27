@@ -5,19 +5,8 @@
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">
-            Visualizar pedido
+            Pedido N° {{ $order->idOrder }}
         </h1>
-        <ol class="breadcrumb">
-            <li class="">
-                <i class="fa"></i>Pedidos
-            </li>
-            <li class="">
-                <i class="fa"></i>{{ $order->idOrder }}
-            </li>
-            <li class="active">
-                <i class="fa"></i>Resumen
-            </li>
-        </ol>
     </div>
 </div>
 
@@ -165,7 +154,7 @@
               <a href="{{action('PDFController@order', ['id'=>$order->idOrder])}}" title="Imprimir" target="_blank" class="btn btn-info">
                 <span class="glyphicon glyphicon-print" aria-hidden="true" ></span> imprimir
               </a>
-              <a class="btn btn-primary" href="{{ action('OrderController@index') }}">
+              <a class="btn btn-primary" href="{{ action('MenuController@sale') }}">
                 <span class="glyphicon glyphicon-ok" aria-hidden="true" ></span> Finalizar
               </a>
             </div> 
@@ -181,16 +170,4 @@
 
 
 </form>
-@endsection
-
-@section('script')
-<script type="text/javascript">
-$(document).ready(function() {
-
-  $('#orders').addClass( "active" ); //to active the menu
-
-
-});
-
-</script>
 @endsection

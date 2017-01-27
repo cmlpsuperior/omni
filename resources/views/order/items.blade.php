@@ -7,16 +7,6 @@
         <h1 class="page-header">
             Nuevo pedido
         </h1>
-        <!--
-        <ol class="breadcrumb">
-            <li class="">
-                <i class="fa"></i>Pedidos
-            </li>
-            <li class="active">
-                <i class="fa"></i>Nuevo pedido
-            </li>
-        </ol>
-        -->
     </div>
 </div>
 
@@ -102,8 +92,7 @@
                       <th>Cantidad</th>
                       <th>Unidad</th>
                       <th>Material</th>
-                      <th>P.U. S/</th>
-                      
+                      <th>P.U. S/</th>                      
                   </tr>
               </thead>
               <tbody>                    
@@ -172,16 +161,6 @@
         <div class="row">
           <div class="col-md-12 text-center">
             <div class="form-group">
-              <div class="checkbox">
-                <label><input type="checkbox" id="chkProForma" name="chkProForma"  value="yes">Es proforma</label>
-              </div>
-            </div> 
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-12 text-center">
-            <div class="form-group">
               <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true" ></span> Registrar</button>
             </div> 
           </div>
@@ -202,14 +181,11 @@
 <script type="text/javascript">
 $(document).ready(function() {
   index=0;
-  $('#orders').addClass( "active" ); //to active the menu
 
   //begin: AJAX to search items
   $("#nameSearch").keyup(function(){
     var nameSearch = $("#nameSearch").val();
     var idZone = $("#idZone").val();
-
-    console.log(idZone);
     var myUrl=  "{{ url('item/searchItem') }}";
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');      
 
@@ -223,8 +199,6 @@ $(document).ready(function() {
           _token: CSRF_TOKEN
       },
       success: function(data){
-        console.log(data);  // for testing only      
-        
         $('#tblSearchItem tbody').empty();
         $.each(data.items, function(k, value){
           $('#tblSearchItem').append( '<tr>'+

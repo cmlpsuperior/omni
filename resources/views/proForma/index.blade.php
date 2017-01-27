@@ -94,12 +94,3 @@
 </div>
 
 @endsection
-
-@section('script')
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#proFormas').addClass( "active" );
-    });
-</script>
-@endsection
-

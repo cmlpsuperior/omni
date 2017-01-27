@@ -5,7 +5,7 @@
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">
-            Visualizar proforma - N° {{ $proForma->idProForma }}
+            Proforma N° {{ $proForma->idProForma }}
         </h1>
     </div>
 </div>
@@ -104,7 +104,7 @@
               <a href="{{action('PDFController@proForma', ['id'=>$proForma->idProForma])}}" title="Imprimir" target="_blank" class="btn btn-info">
                 <span class="glyphicon glyphicon-print" aria-hidden="true" ></span> imprimir
               </a>
-              <a class="btn btn-primary" href="{{ action('ProFormaController@index') }}">
+              <a class="btn btn-primary" href="{{ action('MenuController@sale') }}">
                 <span class="glyphicon glyphicon-ok" aria-hidden="true" ></span> Finalizar
               </a>
             </div> 

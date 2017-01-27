@@ -18,7 +18,7 @@ class LoginController extends Controller
         $name = $request->get('name');
         $password =  $request->get('password');
         if (Auth::attempt(['name' => $name, 'password' => $password])) {
-            return redirect()->action('OrderController@index' );  
+            return redirect()->action('MenuController@sale' );  
         }
         
         return redirect()->action('LoginController@index' )->withInput()->withErrors ('Usuario o contraseña incorrecto');  
