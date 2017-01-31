@@ -4,11 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Position extends Model
+class BillType extends Model
 {
-    protected $table='position';
+    protected $table='billType';
 
-    protected $primaryKey = 'idPosition';
+    protected $primaryKey = 'idBillType';
 
     public $timestamps=false;
 
@@ -19,8 +19,8 @@ class Position extends Model
 
 
     //relaciones con otros modelos:
-    public function employees()
+    public function bills()
     {
-        return $this->hasMany('App\Employee', 'idPosition', 'idPosition');
+        return $this->hasMany('App\Bill', 'idBillType', 'idBillType');
     }
 }

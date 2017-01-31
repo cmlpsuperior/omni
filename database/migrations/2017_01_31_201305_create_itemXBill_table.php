@@ -9,18 +9,18 @@ class CreateItemXOrderTable extends Migration
     
     public function up()
     {
-        Schema::create('itemXOrder', function (Blueprint $table) {
-            $table->integer('idOrder')->unsigned();
+        Schema::create('itemXBill', function (Blueprint $table) {
+            $table->integer('idBill')->unsigned();
             $table->integer('idItem')->unsigned();
 
             $table->double('quantity', 15,3);
             $table->double('unitPrice', 15,2);
 
             //define the primary keys:
-            $table->primary(['idOrder', 'idItem']);
+            $table->primary(['idBill', 'idItem']);
 
             //define the foreign keys
-            $table->foreign('idOrder')->references('idOrder')->on('order');
+            $table->foreign('idBill')->references('idBill')->on('bill');
             $table->foreign('idItem')->references('idItem')->on('item');
         });
     }
@@ -28,6 +28,6 @@ class CreateItemXOrderTable extends Migration
     
     public function down()
     {
-        Schema::drop('itemXOrder');
+        Schema::drop('itemXBill');
     }
 }

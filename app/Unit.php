@@ -18,7 +18,7 @@ class Unit extends Model
 
 
     //relaciones con otros modelos:
-    public function item()
+    public function items()
     {
         return $this->hasMany('App\Item', 'idItem', 'idItem');
     }

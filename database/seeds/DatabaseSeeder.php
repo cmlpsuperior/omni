@@ -12,6 +12,7 @@ use App\Employee;
 use App\Unit;
 use App\Zone;
 use App\Client;
+use App\BillType;
 
 class DatabaseSeeder extends Seeder
 {
@@ -25,6 +26,7 @@ class DatabaseSeeder extends Seeder
         $this->call(UnitTableSeeder::class);
         $this->call(ZoneTableSeeder::class);
         $this->call(ClientTableSeeder::class);
+        $this->call(BillTypeTableSeeder::class);
     }
 	
 }
@@ -289,6 +291,35 @@ class ClientTableSeeder extends Seeder
                     
                     'businessName'=> null,
                     'idDocumentType'=> $documentType->idDocumentType
+                        ]);
+    }
+}
+
+class BillTypeTableSeeder extends Seeder 
+{
+
+    public function run()
+    {
+        DB::table('billType')->delete();
+
+        BillType::create([
+                    'name' => 'Proforma',
+                    'description' => 'Documento que da una estimación del costo de lo que decea el cliente'
+                        ]);
+
+        BillType::create([
+                    'name' => 'Pedido',
+                    'description' => 'Documento válido pero que no se reporta en la SUNAT'
+                        ]);
+
+        BillType::create([
+                    'name' => 'Boleta',
+                    'description' => 'Documento válido que se reporta a la SUNAT, no hay escudo fiscal (No IGV)'
+                        ]);
+
+        BillType::create([
+                    'name' => 'Factura',
+                    'description' => 'Documento válido que se reporta a la SUNAT, si hay escudo fiscal (IGV)'
                         ]);
     }
 }
