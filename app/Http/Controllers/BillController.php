@@ -30,30 +30,195 @@ class BillController extends Controller
         return view('bill.index', ['bills'=>$bills]);
     }
 
-    public function create (){
+    public function create ($idBillType){
     	$zones = Zone::orderBy('name','asc')->get();
-        $billTypes = BillType::orderBy('idBillType','asc')->get();
+        $billType = BillType::findOrFail($idBillType);
 
-        //first is proforma
-        if ($billTypes[1]->idBilltype == )
+        session( [ 'billType' => $billType ] ); //store temporally
 
-        return view('order.create', ['zones'=>$zones]);
+        return view('bill.Shipping', ['zones'=>$zones, 'billType' => $billType]);
     }
 
-    public function clientInfo_process (Request $request){
-        $name = null;
-        $address = null;
-        $phone = null;
-        $documentNumber = null;        
+    public function shipping_process( Request $request ){ //save what the user insert
+        $idZone = null;
+        $shippingAddress = null;
+
         $idZone = $request->get('idZone');
+        if ( $request->has('shippingAddress') ) $shippingAddress =$request->get('shippingAddress');
 
-        if ($request->get('name') != '') $name =$request->get('name');
-        if ($request->get('address') != '') $address =$request->get('address');
-        if ($request->get('phone') != '') $phone =$request->get('phone');
+        session( [  'idZone' => $idZone,
+                    'shippingAddress'=>$shippingAddress ] ); //store temporally
 
-        session( ['idZone' => $idZone, 'name'=>$name, 'address'=>$address , 'phone'=>$phone] ); //store temporally
-
-        return redirect()->action('OrderController@items');
+        return redirect()->action('BillController@items');
     }
+
+    public function items ($idBillType){
+        $shippingAddress = session ('shippingAddress');
+        $idZone = session ('idZone');
+
+        $zone = Zone::findOrFail($idZone);
+        $billType = BillType::findOrFail($idBillType);
+
+        return view('bill.items', [ 'shippingAddress'=>$shippingAddress, 
+                                    'zone'=>$zone , 
+                                    'billType'=>$billType ] );
+    }
+
+    public function items_process ($idBillType, Request $request){
+        $idItems= $request->get('idItems');
+        $names = $request->get('names'); //new value
+        $quantitys= $request->get('quantitys');
+        $prices= $request->get('prices');
+        $totalAmount= $request->get('totalAmount');     
+
+        session( [  'idItems' => $idItems,
+                    'names' => $names,
+                    'quantitys'=>$quantitys,
+                    'prices'=>$prices,
+                    'totalAmount'=> $totalAmount ] ); //store temporally
+
+        $billTypes = BillType::orderBy('idBillType', 'asc')->get();
+
+        if ( $billTypes[0]->idBillType == $idBillType ){ //is a pro forma
+            session( [ 'receivedAmount'=> 0 ] );
+            return redirect()->action('BillController@client');
+        }
+        else // others bills always received money from client
+            return redirect()->action('BillController@receivedAmount');     
+        
+    }
+
+    public function receivedAmount ($idBillType,){
+        $shippingAddress = session ('shippingAddress');
+        $idZone = session ('idZone');
+
+        $names= session ('names');
+        $quantitys= session ('quantitys');
+        $prices= session ('prices');
+        $totalAmount= session ('totalAmount');
+
+        $zone = Zone::findOrFail ( $idZone );
+        $billType = BillType::findOrFail($idBillType);
+
+        return view ('bill.receivedAmount', [   'shippingAddress'=>$shippingAddress, 
+                                                'zone'=>$zone,
+                                                'billType'=>$billType,
+ 
+                                                'names'=>$names,
+                                                'quantitys'=>$quantitys,
+                                                'prices'=>$prices,
+                                                'totalAmount'=>$totalAmount
+                                            ]);
+    }
+
+    public function receivedAmount_process ($idBillType, Request $request){
+        $receivedAmount= $request->get('receivedAmount');
+
+        session( [ 'receivedAmount'=> $receivedAmount ] ); //store temporally
+
+        $billTypes = BillType::orderBy('idBillType', 'asc')->get();
+        
+        if ( $billTypes[1]->idBillType == $idBillType ){
+            return redirect()->action('BillController@pedido');
+        }
+        else if ( $billTypes[2]->idBillType == $idBillType ){
+            return redirect()->action('BillController@boleta');
+        }
+        else if ( $billTypes[3]->idBillType == $idBillType ){
+            return redirect()->action('BillController@factura');
+        }
+        else {
+            return redirect()->action('BillController@bill_process');
+        }
+
+    }
+
+    //this methods depends on the number of billtypes
+    public function pedido (){
+
+    }
+
+    public function bill_process ( $idBillType, Request $request ){
+        $shippingAddress = session('shippingAddress');
+        $idZone = session('idZone'); //null
+
+        $idItems= session ('idItems');
+        $quantitys= session ('quantitys');
+        $prices= session ('prices');
+        $totalAmount= session ('totalAmount');
+
+        $receivedAmount= session ('receivedAmount'); //null ---PROBAR, qu evalor devuelve!!!!--------------------------------------------
+
+        $name = null;
+        $documentNumber = null;
+        $legalAddress = null;        
+        $phone = null;
+
+        if ($request->has('name') ) $name =$request->get('name');
+        if ($request->has('documentNumber') ) $documentNumber =$request->get('documentNumber');
+        if ($request->has('legalAddress') ) $legalAddress =$request->get('legalAddress');
+        if ($request->has('phone') ) $phone =$request->get('phone');
+
+        //to know if there is a debt or not
+        $debt = 0;
+        if ($receivedAmount < $totalAmount) $debt = $totalAmount - $receivedAmount;
+
+        DB::beginTransaction();
+            //create a new order:
+            $bill = new Bill();
+            $bill->name = $name;
+            $bill->shippingAddress = $shippingAddress;
+            $bill->phone = $phone;
+
+            $bill->documentNumber = $documentNumber;
+            $bill->legalAddress = $legalAddress;
+            $bill->registerDate = date("Y-m-d H:i:s");
+
+            $bill->totalAmount = $totalAmount;
+            $bill->receivedAmount = $receivedAmount;
+            if ($debt > 0 )
+                $bill->state = 'Deuda';
+            else
+                $bill->state = 'Pagado';
+
+            $bill->observations = null;
+
+            $bill->idClient = null;
+            $bill->idZone = $idZone;
+            $bill->idEmployee= Auth::User()->employee->idEmployee;
+            $bill->idBillType = $idBillType;
+            $bill->save();
+
+            //insert items of that bill
+            foreach ($idItems as $key=> $idItem){
+                $exist = DB::table('itemXBill')
+                            ->where('idItem','=',$idItem)
+                            ->where('idBill','=',$bill->idBill)
+                            ->first();
+                if ($exist == null)
+                    $bill->items()->attach($idItem, ['quantity'=>$quantitys[$key], 'unitPrice'=>$prices[$key]]);
+                else{
+                    $oldQuantity = $exist->quantity;
+                    $newQuantity = $oldQuantity + $quantitys[$key];
+                    $bill->items()->updateExistingPivot($idItem, ['quantity'=>$newQuantity]);
+                }
+            }
+        DB::commit();
+
+        //erase variable in session:
+        session()->forget('shippingAddress');
+        session()->forget('idZone');
+
+        session()->forget('idItems');
+        session()->forget('quantitys');
+        session()->forget('prices');
+        session()->forget('names');
+        session()->forget('totalAmount');
+
+        session()->forget('receivedAmount');
+
+        return redirect()->action('BillController@view', ['id'=>$bill->idBill]);
+    }
+
 
 }

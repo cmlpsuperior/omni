@@ -14,17 +14,19 @@ class Bill extends Model
 
     protected $fillable = [
     	'name',
-    	'address',
+    	'shippingAddress',
         'phone',
 
         'documentNumber',
+        'legalAddress',
     	'registerDate',
-        'totalAmount',
 
+        'totalAmount',
         'receivedAmount',        
     	'state',
-        'observations',
 
+        'observations',
+        
     	'idClient',
     	'idZone',
     	'idEmployee',
