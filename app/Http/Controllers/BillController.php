@@ -39,7 +39,7 @@ class BillController extends Controller
         return view('bill.Shipping', ['zones'=>$zones, 'billType' => $billType]);
     }
 
-    public function shipping_process( Request $request ){ //save what the user insert
+    public function shipping_process( $idBillType, Request $request ){ //save what the user insert
         $idZone = null;
         $shippingAddress = null;
 
@@ -48,8 +48,8 @@ class BillController extends Controller
 
         session( [  'idZone' => $idZone,
                     'shippingAddress'=>$shippingAddress ] ); //store temporally
-        dd('aqui estoy');
-        return redirect()->action('BillController@items');
+
+        return redirect()->action('BillController@items', $idBillType );
     }
 
     public function items ($idBillType){
@@ -69,22 +69,24 @@ class BillController extends Controller
         $names = $request->get('names'); //new value
         $quantitys= $request->get('quantitys');
         $prices= $request->get('prices');
+        $units= $request->get('units');
         $totalAmount= $request->get('totalAmount');     
 
         session( [  'idItems' => $idItems,
                     'names' => $names,
                     'quantitys'=>$quantitys,
                     'prices'=>$prices,
+                    'units'=>$units,
                     'totalAmount'=> $totalAmount ] ); //store temporally
 
         $billTypes = BillType::orderBy('idBillType', 'asc')->get();
 
         if ( $billTypes[0]->idBillType == $idBillType ){ //is a pro forma
             session( [ 'receivedAmount'=> 0 ] );
-            return redirect()->action('BillController@client');
+            return redirect()->action('BillController@client', $idBillType);
         }
         else // others bills always received money from client
-            return redirect()->action('BillController@receivedAmount');
+            return redirect()->action('BillController@receivedAmount', $idBillType);
     }
 
     public function receivedAmount ($idBillType){
@@ -94,6 +96,7 @@ class BillController extends Controller
         $names= session ('names');
         $quantitys= session ('quantitys');
         $prices= session ('prices');
+        $units= session ('units');
         $totalAmount= session ('totalAmount');
 
         $zone = Zone::findOrFail ( $idZone );
@@ -106,6 +109,7 @@ class BillController extends Controller
                                                 'names'=>$names,
                                                 'quantitys'=>$quantitys,
                                                 'prices'=>$prices,
+                                                'units'=>$units,
                                                 'totalAmount'=>$totalAmount
                                             ]);
     }
@@ -125,6 +129,7 @@ class BillController extends Controller
         $names= session ('names');
         $quantitys= session ('quantitys');
         $prices= session ('prices');
+        $units= session ('units');
         $totalAmount= session ('totalAmount');
 
         $receivedAmount= session ('receivedAmount');
@@ -139,6 +144,7 @@ class BillController extends Controller
                                         'names'=>$names,
                                         'quantitys'=>$quantitys,
                                         'prices'=>$prices,
+                                        'units'=>$units,
                                         'totalAmount'=>$totalAmount,
 
                                         'receivedAmount'=>$receivedAmount

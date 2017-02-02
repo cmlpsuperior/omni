@@ -61,7 +61,7 @@ Route::get('/item/searchItem','ItemController@searchItem' ); //AJAX
 
 Route::get('/bill','BillController@index' );
 	Route::get('/bill/{idBillType}/create','BillController@create' );
-	Route::post('/bill/shipping_process','BillController@shipping_process' );
+	Route::post('/bill/{idBillType}/shipping_process','BillController@shipping_process' );
 
 	Route::get('/bill/{idBillType}/items','BillController@items' );
 	Route::post('/bill/{idBillType}/items_process','BillController@items_process' );
