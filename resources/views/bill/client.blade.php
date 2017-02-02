@@ -5,7 +5,7 @@
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">
-            Nuevo {{ $billType->name }}
+            Nueva venta
         </h1>
     </div>
 </div>
@@ -153,22 +153,151 @@
         <h3 class="panel-title">4. Recibo</h3>
       </div>
 
-      <div class="panel-body">
+      <form role="form" action="{{ action('BillController@client_process') }}" method="POST">
+      <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
+      <div class="panel-body">
         <div class="row">
-          <div class="col-md-6 col-md-offset-3">
+          <div class="col-xs-6 col-md-offset-3 text-center">
             <div class="form-group">
-              <label for="receivedAmount">Importe recibido S/ *</label><br>
-              <input class="form-control" id="receivedAmount" name="receivedAmount" type="number" min="0" step="0.01" required>
+              <label for="idBillType">Tipo de recibo *</label>
+              <select class="form-control" id="idBillType" name="idBillType" required> 
+                <option value="">Seleccionar</option>      
+                @foreach ($billTypes as $key => $billType)
+                  <option value="{{ $billType->idBillType }}" @if (old('idBillType')==$billType->idBillType) selected @endif>{{ $billType->name }}</option>
+                @endforeach
+              </select>
             </div> 
           </div>
         </div>
 
+        <!--Pedido-->
+        <div class="row" id="divBillPedido">
+               <!--Jquery-->     
+        </div>
+
+        <!--Boleta-->
+        <div class="row" id="divBillBoleta">
+                <!--Jquery--> 
+        </div> 
+
+        <!--Factura-->
+        <div class="row" id="divBillFactura">
+                <!--Jquery-->       
+        </div>
+
+        <div class="row">
+          <div class="col-md-12 text-right">
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true" ></span> Registrar</button>
+            </div> 
+          </div>
+        </div>
       </div>
 
+      </form>
     </div>
        
   </div>
   
 </div>
+@endsection
+
+@section('script')
+<script type="text/javascript">
+$(document).ready(function() {
+
+  $('#idBillType').on('change', function (e) {
+    var optionSelected = $("option:selected", this);
+    var valueSelected = this.value;
+    var textSelected = optionSelected.text();   
+    
+    cleanBillTypesData();
+    addBillTypeData(textSelected);
+  });
+
+});
+
+function addBillTypeData(textSelected){
+  if (textSelected == 'Pedido'){
+    $('#divBillPedido').append(
+                              '<div class="col-xs-6">' +
+                                '<div class="form-group">' +
+                                  '<label for="namePedido">Nombre cliente</label>' +
+                                  '<input class="form-control" id="namePedido" name="namePedido" type="text" }}">' +
+                                '</div>' +
+                              '</div>' +
+
+                              '<div class="col-xs-6">' +
+                                '<div class="form-group">' +
+                                  '<label for="phonePedido">Teléfono</label>' +
+                                  '<input class="form-control" id="phonePedido" min="0" name="phonePedido" type="number" }}">' +
+                                '</div>' +
+                              '</div>'
+                              );
+  }
+  else if (textSelected == 'Boleta'){
+    $('#divBillBoleta').append(
+                              '<div class="col-xs-6">' +
+                                '<div class="form-group">' +
+                                  '<label for="documentNumberBoleta">DNI</label>' +
+                                  '<input class="form-control" id="documentNumberBoleta" min="0" name="documentNumberBoleta" type="number" }}">' +
+                                '</div>' +
+                              '</div> ' +
+
+                              '<div class="col-xs-6">' +
+                                '<div class="form-group">' +
+                                  '<label for="nameBoleta">Nombre cliente</label>' +
+                                  '<input class="form-control" id="nameBoleta" name="nameBoleta" type="text" }}">' +
+                                '</div>' +
+                              '</div>' +
+
+                              '<div class="col-xs-6">' +
+                                '<div class="form-group">' +
+                                  '<label for="phoneBoleta">Teléfono</label>' +
+                                  '<input class="form-control" id="phoneBoleta" name="phoneBoleta" type="number" }}">' +
+                                '</div>' +
+                              '</div>'
+                              );
+  }
+  else if (textSelected == 'Factura'){
+    $('#divBillFactura').append(
+                                '<div class="col-xs-6">' +
+                                  '<div class="form-group">' +
+                                    '<label for="documentNumberFactura">RUC *</label>' +
+                                    '<input class="form-control" id="documentNumberFactura" min="0" name="documentNumberFactura" type="number" required}}">' +
+                                  '</div>' +
+                                '</div> ' +
+
+                                '<div class="col-xs-6">' +
+                                  '<div class="form-group">' +
+                                    '<label for="nameFactura">Razón social *</label>' +
+                                    '<input class="form-control" id="nameFactura" name="nameFactura" type="text" required}}">' +
+                                  '</div>' +
+                                '</div>' +
+
+                                '<div class="col-xs-6">' +
+                                  '<div class="form-group">' +
+                                    '<label for="legalAddressFactura">Dirección legal *</label>' +
+                                    '<input class="form-control" id="legalAddressFactura" name="legalAddressFactura" type="text" required}}">' +
+                                  '</div>' +
+                                '</div>' +
+
+                                '<div class="col-xs-6">' +
+                                  '<div class="form-group">' +
+                                    '<label for="phoneFactura">Teléfono</label>' +
+                                    '<input class="form-control" id="phoneFactura" name="phoneFactura" type="number" }}">' +
+                                  '</div>' +
+                                '</div>'                        
+                              );
+  }
+}
+
+function cleanBillTypesData(){
+  $('#divBillPedido').empty();
+  $('#divBillBoleta').empty();
+  $('#divBillFactura').empty();
+}
+
+</script>
 @endsection

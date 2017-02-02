@@ -70,7 +70,7 @@ Route::get('/bill','BillController@index' );
 	Route::post('/bill/{idBillType}/receivedAmount_process','BillController@receivedAmount_process' );
 
 	Route::get('/bill/{idBillType}/client','BillController@client' );
-	Route::post('/bill/{idBillType}/client_process','BillController@client_process' );
+	Route::post('/bill/client_process','BillController@client_process' );
 
 Route::get('/bill/{idBillType}/view','BillController@view' );
 Route::delete('/bill/{idBillType}/destroy','BillController@destroy' );

@@ -135,11 +135,10 @@ class BillController extends Controller
         $receivedAmount= session ('receivedAmount');
 
         $zone = Zone::findOrFail ( $idZone );
-        $billType = BillType::findOrFail($idBillType);
+        $billTypes = BillType::orderBy('idBillType','asc')->get();
 
         return view ('bill.client', [   'shippingAddress'=>$shippingAddress, 
-                                        'zone'=>$zone,
-                                        'billType'=>$billType,
+                                        'zone'=>$zone,                                        
  
                                         'names'=>$names,
                                         'quantitys'=>$quantitys,
@@ -147,11 +146,13 @@ class BillController extends Controller
                                         'units'=>$units,
                                         'totalAmount'=>$totalAmount,
 
-                                        'receivedAmount'=>$receivedAmount
+                                        'receivedAmount'=>$receivedAmount,
+
+                                        'billTypes'=>$billTypes
                                             ]);
     }
 
-    public function client_process ( $idBillType, Request $request ){
+    public function client_process ( Request $request ){
         $shippingAddress = session('shippingAddress');
         $idZone = session('idZone'); //null
 
@@ -162,16 +163,44 @@ class BillController extends Controller
 
         $receivedAmount= session ('receivedAmount');
 
+        //get all the values of the bill
+        $idBillType = $request->get('idBillType');
+
+        $namePedido = null;
+        $phonePedido = null;
+
+        $documentNumberBoleta = null;
+        $nameBoleta = null;        
+        $phoneBoleta = null;
+
+        $documentNumberFactura = null;
+        $nameFactura = null;
+        $legalAddressFactura = null;
+        $phoneFactura = null;
+
+        if ($request->has('namePedido') ) $namePedido =$request->get('namePedido');
+        if ($request->has('phonePedido') ) $phonePedido =$request->get('phonePedido');
+
+        if ($request->has('documentNumberBoleta') ) $documentNumberBoleta =$request->get('documentNumberBoleta');
+        if ($request->has('nameBoleta') ) $nameBoleta =$request->get('nameBoleta');
+        if ($request->has('phoneBoleta') ) $phoneBoleta =$request->get('phoneBoleta');
+
+        if ($request->has('documentNumberFactura') ) $documentNumberFactura =$request->get('documentNumberFactura');
+        if ($request->has('nameFactura') ) $nameFactura =$request->get('nameFactura');
+        if ($request->has('legalAddressFactura') ) $legalAddressFactura =$request->get('legalAddressFactura');
+        if ($request->has('phoneFactura') ) $phoneFactura =$request->get('phoneFactura');
+
+        //set values of bill depending of the type of the bill
+        $billType = BillType::findOrFail($idBillType);
+
         $name = null;
-        $documentNumber = null;
-        $legalAddress = null;        
         $phone = null;
+        $documentNumber = null;
 
-        if ($request->has('name') ) $name =$request->get('name');
-        if ($request->has('documentNumber') ) $documentNumber =$request->get('documentNumber');
-        if ($request->has('legalAddress') ) $legalAddress =$request->get('legalAddress');
-        if ($request->has('phone') ) $phone =$request->get('phone');
+        //AQUIIIIIIIIIIIIIIIIIIIIIIIME QUEDEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+        if ($billType->name == 'Proforma'){ //proforma
 
+        }
         //to know if there is a debt or not
         $debt = 0;
         if ($receivedAmount < $totalAmount) $debt = $totalAmount - $receivedAmount;

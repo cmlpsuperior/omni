@@ -13,12 +13,12 @@ class Bill extends Model
     public $timestamps=false;
 
     protected $fillable = [
-    	'name',
+    	'name', //promforma , pedido, boleta *, factura * 
     	'shippingAddress',
-        'phone',
+        'phone', //promforma , pedido, boleta *, factura * 
 
-        'documentNumber',
-        'legalAddress',
+        'documentNumber', // boleta *, factura *
+        'legalAddress', // factura *
     	'registerDate',
 
         'totalAmount',
