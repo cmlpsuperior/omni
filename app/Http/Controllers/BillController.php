@@ -48,7 +48,7 @@ class BillController extends Controller
 
         session( [  'idZone' => $idZone,
                     'shippingAddress'=>$shippingAddress ] ); //store temporally
-
+        dd('aqui estoy');
         return redirect()->action('BillController@items');
     }
 
@@ -84,11 +84,10 @@ class BillController extends Controller
             return redirect()->action('BillController@client');
         }
         else // others bills always received money from client
-            return redirect()->action('BillController@receivedAmount');     
-        
+            return redirect()->action('BillController@receivedAmount');
     }
 
-    public function receivedAmount ($idBillType,){
+    public function receivedAmount ($idBillType){
         $shippingAddress = session ('shippingAddress');
         $idZone = session ('idZone');
 
@@ -115,30 +114,38 @@ class BillController extends Controller
         $receivedAmount= $request->get('receivedAmount');
 
         session( [ 'receivedAmount'=> $receivedAmount ] ); //store temporally
-
-        $billTypes = BillType::orderBy('idBillType', 'asc')->get();
         
-        if ( $billTypes[1]->idBillType == $idBillType ){
-            return redirect()->action('BillController@pedido');
-        }
-        else if ( $billTypes[2]->idBillType == $idBillType ){
-            return redirect()->action('BillController@boleta');
-        }
-        else if ( $billTypes[3]->idBillType == $idBillType ){
-            return redirect()->action('BillController@factura');
-        }
-        else {
-            return redirect()->action('BillController@bill_process');
-        }
-
+        return redirect()->action('BillController@client');
     }
 
-    //this methods depends on the number of billtypes
-    public function pedido (){
+    public function client ($idBillType){
+        $shippingAddress = session ('shippingAddress');
+        $idZone = session ('idZone');
 
+        $names= session ('names');
+        $quantitys= session ('quantitys');
+        $prices= session ('prices');
+        $totalAmount= session ('totalAmount');
+
+        $receivedAmount= session ('receivedAmount');
+
+        $zone = Zone::findOrFail ( $idZone );
+        $billType = BillType::findOrFail($idBillType);
+
+        return view ('bill.client', [   'shippingAddress'=>$shippingAddress, 
+                                        'zone'=>$zone,
+                                        'billType'=>$billType,
+ 
+                                        'names'=>$names,
+                                        'quantitys'=>$quantitys,
+                                        'prices'=>$prices,
+                                        'totalAmount'=>$totalAmount,
+
+                                        'receivedAmount'=>$receivedAmount
+                                            ]);
     }
 
-    public function bill_process ( $idBillType, Request $request ){
+    public function client_process ( $idBillType, Request $request ){
         $shippingAddress = session('shippingAddress');
         $idZone = session('idZone'); //null
 
@@ -147,7 +154,7 @@ class BillController extends Controller
         $prices= session ('prices');
         $totalAmount= session ('totalAmount');
 
-        $receivedAmount= session ('receivedAmount'); //null ---PROBAR, qu evalor devuelve!!!!--------------------------------------------
+        $receivedAmount= session ('receivedAmount');
 
         $name = null;
         $documentNumber = null;

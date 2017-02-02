@@ -48,31 +48,29 @@ Route::get('/client','ClientController@index' );
 	Route::put('/company/{id}/update','ClientController@updateCompany' );
 Route::delete('/client/{id}/destroy','ClientController@destroy' );
 
-
-Route::get('/order','OrderController@index' );
-Route::get('/order/create','OrderController@create' );
-	Route::post('/order/clientInfo_process','OrderController@clientInfo_process' );
-	Route::get('/order/items','OrderController@items' );
-	Route::post('/order/items_process','OrderController@items_process' );
-	Route::get('/order/{id}/view','OrderController@view' );
-Route::delete('/order/{id}/destroy','OrderController@destroy' );
-
 //PDF
 Route::get('pdf/order/{id}', 'PDFController@order' );
 Route::get('pdf/proForma/{id}', 'PDFController@proForma' );
-
-
-Route::get('/proForma','ProFormaController@index' );
-Route::get('/proForma/create','ProFormaController@create' );
-	Route::post('/proForma/clientInfo_process','ProFormaController@clientInfo_process' );
-	Route::get('/proForma/items','ProFormaController@items' );
-	Route::post('/proForma/items_process','ProFormaController@items_process' );
-	Route::get('/proForma/{id}/view','ProFormaController@view' );
-Route::delete('/proForma/{id}/destroy','ProFormaController@destroy' );
-
 
 //home
 Route::get('/home/sale','MenuController@sale' );
 
 //API REST:
 Route::get('/item/searchItem','ItemController@searchItem' ); //AJAX
+
+
+Route::get('/bill','BillController@index' );
+	Route::get('/bill/{idBillType}/create','BillController@create' );
+	Route::post('/bill/shipping_process','BillController@shipping_process' );
+
+	Route::get('/bill/{idBillType}/items','BillController@items' );
+	Route::post('/bill/{idBillType}/items_process','BillController@items_process' );
+
+	Route::get('/bill/{idBillType}/receivedAmount','BillController@receivedAmount' );
+	Route::post('/bill/{idBillType}/receivedAmount_process','BillController@receivedAmount_process' );
+
+	Route::get('/bill/{idBillType}/client','BillController@client' );
+	Route::post('/bill/{idBillType}/client_process','BillController@client_process' );
+
+Route::get('/bill/{idBillType}/view','BillController@view' );
+Route::delete('/bill/{idBillType}/destroy','BillController@destroy' );
