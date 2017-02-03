@@ -60,17 +60,16 @@ Route::get('/item/searchItem','ItemController@searchItem' ); //AJAX
 
 
 Route::get('/bill','BillController@index' );
-	Route::get('/bill/{idBillType}/create','BillController@create' );
-	Route::post('/bill/{idBillType}/shipping_process','BillController@shipping_process' );
+	Route::get('/bill/create','BillController@create' );
+	Route::post('/bill/shipping_process','BillController@shipping_process' );
 
-	Route::get('/bill/{idBillType}/items','BillController@items' );
-	Route::post('/bill/{idBillType}/items_process','BillController@items_process' );
+	Route::get('/bill/items','BillController@items' );
+	Route::post('/bill/items_process','BillController@items_process' );
 
-	Route::get('/bill/{idBillType}/receivedAmount','BillController@receivedAmount' );
-	Route::post('/bill/{idBillType}/receivedAmount_process','BillController@receivedAmount_process' );
+	Route::get('/bill/receivedAmount','BillController@receivedAmount' );
+	Route::post('/bill/receivedAmount_process','BillController@receivedAmount_process' );
 
-	Route::get('/bill/{idBillType}/client','BillController@client' );
+	Route::get('/bill/client','BillController@client' );
 	Route::post('/bill/client_process','BillController@client_process' );
-
-Route::get('/bill/{idBillType}/view','BillController@view' );
-Route::delete('/bill/{idBillType}/destroy','BillController@destroy' );
+Route::get('/bill/{idBill}/view','BillController@view' );
+Route::delete('/bill/{idBill}/destroy','BillController@destroy' );

@@ -5,7 +5,7 @@
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">
-            Nuevo {{ $billType->name }}
+            Nueva venta
         </h1>
     </div>
 </div>
@@ -31,7 +31,7 @@
         <h3 class="panel-title">1. Datos de envío</h3>
       </div>
       <div class="panel-body">
-        <form role="form" action="{{ action('BillController@shipping_process', $billType->idBillType) }}" method="POST">
+        <form role="form" action="{{ action('BillController@shipping_process') }}" method="POST">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
         <div class="row">

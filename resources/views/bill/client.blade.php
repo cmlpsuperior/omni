@@ -224,14 +224,14 @@ function addBillTypeData(textSelected){
                               '<div class="col-xs-6">' +
                                 '<div class="form-group">' +
                                   '<label for="namePedido">Nombre cliente</label>' +
-                                  '<input class="form-control" id="namePedido" name="namePedido" type="text" }}">' +
+                                  '<input class="form-control" id="namePedido" name="namePedido" type="text" >' +
                                 '</div>' +
                               '</div>' +
 
                               '<div class="col-xs-6">' +
                                 '<div class="form-group">' +
                                   '<label for="phonePedido">Teléfono</label>' +
-                                  '<input class="form-control" id="phonePedido" min="0" name="phonePedido" type="number" }}">' +
+                                  '<input class="form-control" id="phonePedido" min="0" name="phonePedido" type="number" >' +
                                 '</div>' +
                               '</div>'
                               );
@@ -241,21 +241,21 @@ function addBillTypeData(textSelected){
                               '<div class="col-xs-6">' +
                                 '<div class="form-group">' +
                                   '<label for="documentNumberBoleta">DNI</label>' +
-                                  '<input class="form-control" id="documentNumberBoleta" min="0" name="documentNumberBoleta" type="number" }}">' +
+                                  '<input class="form-control" id="documentNumberBoleta" min="0" name="documentNumberBoleta" type="number" >' +
                                 '</div>' +
                               '</div> ' +
 
                               '<div class="col-xs-6">' +
                                 '<div class="form-group">' +
                                   '<label for="nameBoleta">Nombre cliente</label>' +
-                                  '<input class="form-control" id="nameBoleta" name="nameBoleta" type="text" }}">' +
+                                  '<input class="form-control" id="nameBoleta" name="nameBoleta" type="text">' +
                                 '</div>' +
                               '</div>' +
 
                               '<div class="col-xs-6">' +
                                 '<div class="form-group">' +
                                   '<label for="phoneBoleta">Teléfono</label>' +
-                                  '<input class="form-control" id="phoneBoleta" name="phoneBoleta" type="number" }}">' +
+                                  '<input class="form-control" id="phoneBoleta" name="phoneBoleta" type="number" >' +
                                 '</div>' +
                               '</div>'
                               );
@@ -265,28 +265,28 @@ function addBillTypeData(textSelected){
                                 '<div class="col-xs-6">' +
                                   '<div class="form-group">' +
                                     '<label for="documentNumberFactura">RUC *</label>' +
-                                    '<input class="form-control" id="documentNumberFactura" min="0" name="documentNumberFactura" type="number" required}}">' +
+                                    '<input class="form-control" id="documentNumberFactura" min="0" name="documentNumberFactura" type="number" required>' +
                                   '</div>' +
                                 '</div> ' +
 
                                 '<div class="col-xs-6">' +
                                   '<div class="form-group">' +
                                     '<label for="nameFactura">Razón social *</label>' +
-                                    '<input class="form-control" id="nameFactura" name="nameFactura" type="text" required}}">' +
+                                    '<input class="form-control" id="nameFactura" name="nameFactura" type="text" required>' +
                                   '</div>' +
                                 '</div>' +
 
                                 '<div class="col-xs-6">' +
                                   '<div class="form-group">' +
                                     '<label for="legalAddressFactura">Dirección legal *</label>' +
-                                    '<input class="form-control" id="legalAddressFactura" name="legalAddressFactura" type="text" required}}">' +
+                                    '<input class="form-control" id="legalAddressFactura" name="legalAddressFactura" type="text" required>' +
                                   '</div>' +
                                 '</div>' +
 
                                 '<div class="col-xs-6">' +
                                   '<div class="form-group">' +
                                     '<label for="phoneFactura">Teléfono</label>' +
-                                    '<input class="form-control" id="phoneFactura" name="phoneFactura" type="number" }}">' +
+                                    '<input class="form-control" id="phoneFactura" name="phoneFactura" type="number">' +
                                   '</div>' +
                                 '</div>'                        
                               );
