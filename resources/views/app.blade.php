@@ -140,7 +140,7 @@
                 <ul class="nav navbar-nav side-nav">
                                         
                     <li id="sales">
-                        <a href="{{ action('MenuController@sale') }}"><i class="fa fa-fw fa-wrench"></i> Ventas</a>
+                        <a href="{{ action('BillController@create') }}"><i class="fa fa-fw fa-wrench"></i> Ventas</a>
                     </li>
                     <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Mantenimiento <b class="caret"></b></a>

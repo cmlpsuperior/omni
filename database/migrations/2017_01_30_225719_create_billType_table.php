@@ -14,6 +14,7 @@ class CreateBillTypeTable extends Migration
 
             $table->string('name', 50);
             $table->string('description', 200);
+            $table->string('state', 50);
         });
     }
 

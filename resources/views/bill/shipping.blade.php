@@ -55,7 +55,7 @@
           </div>
         </div>        
         
-        <div class="form-group text-right">          
+        <div class="form-group text-center">          
           <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Continuar</button>
         </div>
         </form>

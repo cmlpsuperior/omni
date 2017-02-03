@@ -49,8 +49,7 @@ Route::get('/client','ClientController@index' );
 Route::delete('/client/{id}/destroy','ClientController@destroy' );
 
 //PDF
-Route::get('pdf/order/{id}', 'PDFController@order' );
-Route::get('pdf/proForma/{id}', 'PDFController@proForma' );
+Route::get('pdf/printBill/{idBill}', 'PDFController@printBill' );
 
 //home
 Route::get('/home/sale','MenuController@sale' );

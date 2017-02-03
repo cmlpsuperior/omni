@@ -35,14 +35,14 @@
       <div class="panel-body">
         
         <div class="row">
-          <div class="col-lg-6">
+          <div class="col-xs-6">
             <div class="form-group">
               <label >Zona</label>
               <h4 >{{ $zone->name }}</h4>
             </div>
           </div>
 
-          <div class="col-lg-6">
+          <div class="col-xs-6">
             <div class="form-group">
               <label >Dirección</label>
               <h4 >{{ $shippingAddress }}</h4>
@@ -64,11 +64,11 @@
           <table class="table table-hover table-striped" id="tblItems">
               <thead>
                   <tr>
-                      <th>Cantidad</th>
+                      <th>Cant.</th>
                       <th>Unidad</th>
                       <th>Material</th>
                       <th>P.U. S/</th>
-                      <th>Subtotal</th>
+                      <th>Subtotal S/</th>
                   </tr>
               </thead>
               <tbody>                    
@@ -77,8 +77,8 @@
                   <td>{{ $quantitys[$key] }}</td>
                   <td>{{ $units[$key] }}</td>
                   <td>{{ $name }}</td>
-                  <td>S/ {{ $prices[$key] }}</td>
-                  <td>S/ {{ $prices[$key]*$quantitys[$key] }}</td>
+                  <td class="text-right">{{ number_format($prices[$key], 1, '.'," ") }}</td>
+                  <td class="text-right">{{ number_format($prices[$key]*$quantitys[$key], 1, '.'," ") }}</td>
                 </tr>
               @endforeach   
               </tbody>
@@ -172,22 +172,22 @@
         </div>
 
         <!--Pedido-->
-        <div class="row" id="divBillPedido">
+        <div class="row" id="divBillPedidoElectronico">
                <!--Jquery-->     
         </div>
 
         <!--Boleta-->
-        <div class="row" id="divBillBoleta">
+        <div class="row" id="divBillBoletaElectronica">
                 <!--Jquery--> 
         </div> 
 
         <!--Factura-->
-        <div class="row" id="divBillFactura">
+        <div class="row" id="divBillFacturaElectronica">
                 <!--Jquery-->       
         </div>
 
         <div class="row">
-          <div class="col-md-12 text-right">
+          <div class="col-md-12 text-center">
             <div class="form-group">
               <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true" ></span> Registrar</button>
             </div> 
@@ -219,8 +219,8 @@ $(document).ready(function() {
 });
 
 function addBillTypeData(textSelected){
-  if (textSelected == 'Pedido'){
-    $('#divBillPedido').append(
+  if (textSelected == 'Pedido electronico'){
+    $('#divBillPedidoElectronico').append(
                               '<div class="col-xs-6">' +
                                 '<div class="form-group">' +
                                   '<label for="namePedido">Nombre cliente</label>' +
@@ -236,8 +236,8 @@ function addBillTypeData(textSelected){
                               '</div>'
                               );
   }
-  else if (textSelected == 'Boleta'){
-    $('#divBillBoleta').append(
+  else if (textSelected == 'Boleta electronica'){
+    $('#divBillBoletaElectronica').append(
                               '<div class="col-xs-6">' +
                                 '<div class="form-group">' +
                                   '<label for="documentNumberBoleta">DNI</label>' +
@@ -260,8 +260,8 @@ function addBillTypeData(textSelected){
                               '</div>'
                               );
   }
-  else if (textSelected == 'Factura'){
-    $('#divBillFactura').append(
+  else if (textSelected == 'Factura electronica'){
+    $('#divBillFacturaElectronica').append(
                                 '<div class="col-xs-6">' +
                                   '<div class="form-group">' +
                                     '<label for="documentNumberFactura">RUC *</label>' +
@@ -294,9 +294,9 @@ function addBillTypeData(textSelected){
 }
 
 function cleanBillTypesData(){
-  $('#divBillPedido').empty();
-  $('#divBillBoleta').empty();
-  $('#divBillFactura').empty();
+  $('#divBillPedidoElectronico').empty();
+  $('#divBillBoletaElectronica').empty();
+  $('#divBillFacturaElectronica').empty();
 }
 
 </script>

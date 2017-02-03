@@ -35,14 +35,14 @@
       <div class="panel-body">
         
         <div class="row">
-          <div class="col-lg-6">
+          <div class="col-xs-6">
             <div class="form-group">
               <label >Zona</label>
               <h4 >{{ $zone->name }}</h4>
             </div>
           </div>
 
-          <div class="col-lg-6">
+          <div class="col-xs-6">
             <div class="form-group">
               <label >Dirección</label>
               <h4 >{{ $shippingAddress }}</h4>
@@ -66,11 +66,11 @@
           <table class="table table-hover table-striped" id="tblItems">
               <thead>
                   <tr>
-                      <th>Cantidad</th>
+                      <th>Cant.</th>
                       <th>Unidad</th>
                       <th>Material</th>
                       <th>P.U. S/</th>
-                      <th>Subtotal</th>
+                      <th>Subtotal S/</th>
                       <th></th>
                   </tr>
               </thead>
@@ -91,7 +91,7 @@
         </div>   
 
         <div class="row">
-          <div class="col-md-12 text-right">
+          <div class="col-md-12 text-center">
             <div class="form-group">
               <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true" ></span> Continuar</button>
             </div> 
@@ -225,8 +225,8 @@ function addItemToTblItems(quantity, unit, name, price, idItem){
                             '<td>'+quantity+'</td>'+
                             '<td>'+unit+'</td>'+
                             '<td>'+name+'</td>'+
-                            '<td>'+price+'</td>'+
-                            '<td>'+(price*quantity).toFixed(2)+'</td>'+
+                            '<td class="text-right">'+price+'</td>'+
+                            '<td class="text-right">'+(price*quantity).toFixed(1)+'</td>'+
                             '<td><a class="btn btn-danger" onclick="removeItem('+index+')" title="Quitar"> '+
                                   '<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> '+
                                 '</a>'+

@@ -59,7 +59,7 @@ class BillController extends Controller
                                     'zone'=>$zone ] );
     }
 
-    public function items_process (Request $request){
+    public function items_process (ItemsBillRequest $request){
         $idItems= $request->get('idItems');
         $names = $request->get('names'); //new value
         $quantitys= $request->get('quantitys');
@@ -121,7 +121,8 @@ class BillController extends Controller
         $receivedAmount= session ('receivedAmount');
 
         $zone = Zone::findOrFail ( $idZone );
-        $billTypes = BillType::orderBy('idBillType','asc')->get();
+        $billTypes = BillType::where('state','=', 'Activo')
+                            ->orderBy('idBillType','asc')->get();
 
         return view ('bill.client', [   'shippingAddress'=>$shippingAddress, 
                                         'zone'=>$zone,                                        
@@ -184,16 +185,16 @@ class BillController extends Controller
         $documentNumber = null;
         $legalAddress = null;
 
-        if ( $billType->name == 'Pedido' ){
+        if ( $billType->name == 'Pedido electronico' ){
             $name = $namePedido;
             $phone = $phonePedido;
         }
-        else if ( $billType->name == 'Boleta' ){ //proforma
+        else if ( $billType->name == 'Boleta electronica' ){ //proforma
             $name = $nameBoleta;
             $phone = $phoneBoleta;
             $documentNumber = $documentNumberBoleta;
         }
-        else if ( $billType->name == 'Factura' ){
+        else if ( $billType->name == 'Factura electronica' ){
             $name = $nameFactura;
             $phone = $phoneFactura;
             $documentNumber = $documentNumberFactura;

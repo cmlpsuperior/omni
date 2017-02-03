@@ -35,14 +35,14 @@
       <div class="panel-body">
         
         <div class="row">
-          <div class="col-lg-6">
+          <div class="col-xs-6">
             <div class="form-group">
               <label >Zona</label>
               <h4 >{{ $zone->name }}</h4>
             </div>
           </div>
 
-          <div class="col-lg-6">
+          <div class="col-xs-6">
             <div class="form-group">
               <label >Dirección</label>
               <h4 >{{ $shippingAddress }}</h4>
@@ -64,11 +64,11 @@
           <table class="table table-hover table-striped" id="tblItems">
               <thead>
                   <tr>
-                      <th>Cantidad</th>
+                      <th>Cant.</th>
                       <th>Unidad</th>
                       <th>Material</th>
                       <th>P.U. S/</th>
-                      <th>Subtotal</th>
+                      <th>Subtotal S/</th>
                   </tr>
               </thead>
               <tbody>                    
@@ -77,8 +77,8 @@
                   <td>{{ $quantitys[$key] }}</td>
                   <td>{{ $units[$key] }}</td>
                   <td>{{ $name }}</td>
-                  <td>S/ {{ $prices[$key] }}</td>
-                  <td>S/ {{ $prices[$key]*$quantitys[$key] }}</td>
+                  <td class="text-right">{{ number_format($prices[$key], 1, '.'," ") }}</td>
+                  <td class="text-right">{{ number_format($prices[$key]*$quantitys[$key], 1, '.'," ") }}</td>
                 </tr>
               @endforeach   
               </tbody>
@@ -103,7 +103,7 @@
 
   <div class="col-lg-6">
 
-    <div class="panel panel-success">
+    <div class="panel panel-primary">
 
       <div class="panel-heading">
         <h3 class="panel-title">3. Montos</h3>
@@ -130,7 +130,7 @@
           </div>          
         </div>
 
-        <div class="form-group text-right">          
+        <div class="form-group text-center">          
             <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Continuar</button>
         </div>
 
