@@ -254,7 +254,7 @@
               <a href="{{ action('PDFController@printBill', $bill->idBill) }}" title="Imprimir" target="_blank" class="btn btn-info">
                 <span class="glyphicon glyphicon-print" aria-hidden="true" ></span> imprimir
               </a>
-              <a class="btn btn-primary" href="{{ action('MenuController@sale') }}">
+              <a class="btn btn-primary" href="{{ action('MenuController@dashBoard') }}">
                 <span class="glyphicon glyphicon-ok" aria-hidden="true" ></span> Finalizar
               </a>
             </div> 

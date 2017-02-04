@@ -32,7 +32,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" >Ferreteria espinoza</a>
+                <a href="{{ action('MenuController@dashBoard') }}" class="navbar-brand" >Ferreteria espinoza</a>
             </div>
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">

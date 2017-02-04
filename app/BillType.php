@@ -14,7 +14,9 @@ class BillType extends Model
 
     protected $fillable = [
     	'name',
-    	'description'
+    	'description',
+        'state',
+        'isSale'
     ];
 
 

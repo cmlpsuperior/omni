@@ -305,25 +305,29 @@ class BillTypeTableSeeder extends Seeder
         BillType::create([
                     'name' => 'Proforma electronica',
                     'description' => 'Documento electronico que da una estimación del costo de lo que decea el cliente',
-                    'state' => 'Activo'
+                    'state' => 'Activo',
+                    'isSale' => false
                         ]);
 
         BillType::create([
                     'name' => 'Pedido electronico',
                     'description' => 'Documento electronico válido pero que no se reporta en la SUNAT',
-                    'state' => 'Activo'
+                    'state' => 'Activo',
+                    'isSale' => true
                         ]);
 
         BillType::create([
                     'name' => 'Boleta electronica',
                     'description' => 'Documento electronico válido que se reporta a la SUNAT, no hay escudo fiscal (No IGV)',
-                    'state' => 'Activo'
+                    'state' => 'Activo',
+                    'isSale' => true
                         ]);
 
         BillType::create([
                     'name' => 'Factura electronica',
                     'description' => 'Documento electronico válido que se reporta a la SUNAT, si hay escudo fiscal (IGV)',
-                    'state' => 'Activo'
+                    'state' => 'Activo',
+                    'isSale' => true
                         ]);
     }
 }
