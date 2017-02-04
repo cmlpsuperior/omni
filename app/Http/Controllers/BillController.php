@@ -268,8 +268,10 @@ class BillController extends Controller
         return view('bill.view', ['bill' => $bill] );
     }
 
+
+    //AJAX
     public function saleMonth (){        
-        $days = DB::table('bill')->select ( DB::raw('DAY(registerDate) as dia, sum(totalAmount) as total') )
+        $days = DB::table('bill')->select ( DB::raw('DAY(registerDate) as dia, sum(totalAmount) as total, count(*) as cantidad') )
                                     ->whereYear('registerDate', '=', date('Y'))
                                     ->whereMonth('registerDate', '=', date('m'))
                                     ->groupBy ( DB::raw('DAY(registerDate)') )

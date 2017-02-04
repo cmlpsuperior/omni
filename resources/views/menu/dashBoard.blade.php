@@ -12,14 +12,22 @@
 
 <div class="row">
   <div class="col-md-6">
-    <div class="panel panel-primary text-center">
+    <div class="panel panel-info text-center">
 
       <div class="panel-heading">
         <h3 class="panel-title">Ventas del mes</h3>
       </div>
 
-      <div class="panel-body ">      
-        <label id="totalAmount"></label>
+      <div class="panel-body ">
+        <div class="row">
+          <div class="col-xs-6">
+            <label id="totalAmount"></label>
+          </div>
+
+          <div class="col-xs-6">
+            <label id="totalQuantity"></label>
+          </div>          
+        </div>
       </div>
 
     </div>
@@ -42,6 +50,7 @@ $(document).ready(function(){
   var salesAmount = [];
   var hours = [];
   var totalAmount = 0;
+  var totalQuantity = 0;
 
   var myUrl=  "{{ url('bill/saleMonth') }}";
   $.ajax({        
@@ -49,7 +58,7 @@ $(document).ready(function(){
     url: myUrl,
     dataType : "JSON",
     success: function(data){
-      console.log('data');
+      console.log(data);
       
       //initialize
       for (i = 1; i <= data.numDays; i++) {
@@ -60,11 +69,13 @@ $(document).ready(function(){
       //get values
       $.each(data.days, function(k, value){
         totalAmount = totalAmount + value.total; //amount of month
+        totalQuantity = totalQuantity + value.cantidad; //quantity of month
         salesAmount[value.dia - 1] = salesAmount[value.dia - 1] + value.total; //amount of one day
       });
       
-      //set total amount of month
-      $("#totalAmount").text("S/ "+ totalAmount.toFixed(2));
+      //set total amount and quantityt on month
+      $("#totalAmount").text("Monto: S/ "+ totalAmount.toFixed(2));
+      $("#totalQuantity").text("Cantidad: "+ totalQuantity.toFixed(0));
       //create the chart
       var ctx = $("#myChart");
       var myChart = new Chart(ctx, {
