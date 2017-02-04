@@ -268,4 +268,19 @@ class BillController extends Controller
         return view('bill.view', ['bill' => $bill] );
     }
 
+    public function saleMonth (){
+
+        $bills = Bill::whereYear('registerDate','=', date("Y"))
+                    ->whereMonth('registerDate','=', date("m"))
+                    ->orderBy('registerDate','asc')
+                    ->get();
+        $period = DB::table('')
+        foreach($bills as $bill){
+
+        }
+
+        return response()->json([
+                            'bills' => $bills                      
+                        ]);
+    }
 }

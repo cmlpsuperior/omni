@@ -13,4 +13,8 @@ class MenuController extends Controller
     	$billTypes = BillType::orderBy('idBillType', 'asc')->get();
     	return view ( 'menu.sale', [ 'billTypes'=>$billTypes ] ); 
     }
+
+    public function dashBoard (){
+    	return view ('menu.dashBoard');
+    }
 }

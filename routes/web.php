@@ -53,6 +53,7 @@ Route::get('pdf/printBill/{idBill}', 'PDFController@printBill' );
 
 //home
 Route::get('/home/sale','MenuController@sale' );
+Route::get('/home/dashBoard','MenuController@dashBoard' );
 
 //API REST:
 Route::get('/item/searchItem','ItemController@searchItem' ); //AJAX
@@ -72,3 +73,5 @@ Route::get('/bill','BillController@index' );
 	Route::post('/bill/client_process','BillController@client_process' );
 Route::get('/bill/{idBill}/view','BillController@view' );
 Route::delete('/bill/{idBill}/destroy','BillController@destroy' );
+
+Route::get('/bill/saleMonth','BillController@saleMonth' ); //AJAX
