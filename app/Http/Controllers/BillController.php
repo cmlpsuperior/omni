@@ -271,11 +271,13 @@ class BillController extends Controller
 
     //AJAX
     public function saleMonth (){        
-        $days = DB::table('bill')->select ( DB::raw('DAY(registerDate) as dia, sum(totalAmount) as total, count(*) as cantidad') )
-                                    ->whereYear('registerDate', '=', date('Y'))
-                                    ->whereMonth('registerDate', '=', date('m'))
-                                    ->groupBy ( DB::raw('DAY(registerDate)') )
-                                    ->get();
+        $days = DB::table('bill')->join('billType', 'billType.idBillType', '=', 'bill.idBillType')
+                                ->select ( DB::raw('DAY(registerDate) as dia, sum(totalAmount) as total, count(*) as cantidad') )
+                                ->where('billType.isSale','=', 1)
+                                ->whereYear('registerDate', '=', date('Y'))
+                                ->whereMonth('registerDate', '=', date('m'))
+                                ->groupBy ( DB::raw('DAY(registerDate)') )
+                                ->get();
 
         $numDays = cal_days_in_month( CAL_GREGORIAN, date('n'), date('Y') );
         return response()->json([
