@@ -33,7 +33,7 @@
 		}
 		
 		img {
-		  margin: 1px 1px 1px 75px;
+		  margin: 1px 1px 1px 25px;
 		}
 
 		span {
@@ -46,7 +46,7 @@
 </head>	
 <body>
 	
-	<img class="center" src="{{ asset('img/chino.jpg') }}" />	
+	<img class="center" src="{{ asset('img/minicargador.jpg') }}" />	
 	
 	<h1>Ferretería Espinoza</h1>
 	<span>De: Edgar Espinoza Castañeda</span>
