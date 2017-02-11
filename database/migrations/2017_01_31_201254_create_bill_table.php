@@ -11,20 +11,22 @@ class CreateBillTable extends Migration
     {
         Schema::create('bill', function (Blueprint $table) {
             $table->increments('idBill');
-
-            $table->string('name', 100)->nullable();
+            
+            //anonimus client
+            $table->string('documentNumber', 20)->nullable(); //person
+            $table->string('name', 100)->nullable(); // person, company
+            $table->string('legalAddress', 100)->nullable(); //company         
+            
             $table->string('shippingAddress', 100)->nullable();
             $table->string('phone', 100)->nullable();
+            $table->string('observations', 250)->nullable(); //when a bill is erased.
 
-            $table->string('documentNumber', 20)->nullable();
-            $table->string('legalAddress', 100)->nullable();
             $table->datetime('registerDate');
-
+            $table->datetime('shippingDate')->nullable();
             $table->double('totalAmount', 15, 2);
+
             $table->double('receivedAmount', 15, 2)->nullable();
             $table->string('state', 50);
-            
-            $table->string('observations', 250)->nullable();
 
             $table->integer('idClient')->unsigned()->nullable();
             $table->integer('idZone')->unsigned();

@@ -26,126 +26,13 @@
 
 <div class="row">
   <div class="col-lg-6">
-    <div class="panel panel-success">
-
-      <div class="panel-heading">
-        <h3 class="panel-title">1. Datos del envío</h3>
-      </div>
-
-      <div class="panel-body">
-        
-        <div class="row">
-          <div class="col-xs-6">
-            <div class="form-group">
-              <label >Zona</label>
-              <h4 >{{ $zone->name }}</h4>
-            </div>
-          </div>
-
-          <div class="col-xs-6">
-            <div class="form-group">
-              <label >Dirección</label>
-              <h4 >{{ $shippingAddress }}</h4>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-    
-    <div class="panel panel-success">
-
-      <div class="panel-heading">
-        <h3 class="panel-title">2. Lista de materiales</h3>
-      </div>
-
-      <div class="panel-body">
-        <div class="table-responsive">
-          <table class="table table-hover table-striped" id="tblItems">
-              <thead>
-                  <tr>
-                      <th>Cant.</th>
-                      <th>Unidad</th>
-                      <th>Material</th>
-                      <th>P.U. S/</th>
-                      <th>Subtotal S/</th>
-                  </tr>
-              </thead>
-              <tbody>                    
-              @foreach($names as $key => $name)
-                <tr>
-                  <td>{{ $quantitys[$key] }}</td>
-                  <td>{{ $units[$key] }}</td>
-                  <td>{{ $name }}</td>
-                  <td class="text-right">{{ number_format($prices[$key], 1, '.'," ") }}</td>
-                  <td class="text-right">{{ number_format($prices[$key]*$quantitys[$key], 1, '.'," ") }}</td>
-                </tr>
-              @endforeach   
-              </tbody>
-          </table>
-        </div>
-
-        <br>
-        <div class="row">
-          <div class="col-md-6 col-md-offset-3">
-            <div class="form-group text-center">
-              <label >Importe total </label><br>
-              <h4>S/ {{ number_format($totalAmount, 2, '.'," ") }}</h4>
-            </div> 
-          </div>
-        </div>
-      </div>
-
-    </div>
-
+    @include('bill.block1_shipping')
+    @include('bill.block2_items')
   </div>
-
 
   <div class="col-lg-6">
 
-    <div class="panel panel-success">
-
-      <div class="panel-heading">
-        <h3 class="panel-title">3. Montos</h3>
-      </div>
-
-      <div class="panel-body">
-
-        <div class="row">
-          <div class="col-xs-6 text-center">
-            <div class="form-group">
-              <label>Importe total </label><br>
-              <h4>S/ {{ number_format($totalAmount, 2, '.'," ") }}</h4>
-            </div> 
-          </div>
-
-          <div class="col-xs-6 text-center">
-            <div class="form-group">
-              <label>Importe recibido</label><br>
-              <h4>S/ {{ number_format($receivedAmount, 2, '.'," ") }}</h4>
-            </div> 
-          </div>
-        </div>
-
-        @if ( $receivedAmount - $totalAmount >= 0 ) 
-        <div class="row">
-            <div class="form-group text-center text-success">
-              <label>Vuelto</label><br>
-              <h4>S/ {{ number_format($receivedAmount - $totalAmount, 2, '.'," ") }}</h4>
-            </div>    
-        </div>
-        @else
-        <div class="row">
-            <div class="form-group text-center text-danger">
-              <label>Deuda</label><br>
-              <h4>S/ {{ number_format($totalAmount - $receivedAmount, 2, '.'," ") }}</h4>
-            </div>    
-        </div>
-        @endif
-
-      </div>
-
-    </div>
+    @include('bill.block3_receivedAmount')
 
     <div class="panel panel-primary">
 
@@ -158,7 +45,7 @@
 
       <div class="panel-body">
         <div class="row">
-          <div class="col-xs-6 col-md-offset-3 text-center">
+          <div class="col-xs-6 col-xs-offset-3 text-center">
             <div class="form-group">
               <label for="idBillType">Tipo de recibo *</label>
               <select class="form-control" id="idBillType" name="idBillType" required> 
@@ -183,6 +70,11 @@
 
         <!--Factura-->
         <div class="row" id="divBillFacturaElectronica">
+                <!--Jquery-->       
+        </div>
+
+        <!--Por recoger-->
+        <div class="" id="divBillPorRecoger">
                 <!--Jquery-->       
         </div>
 
@@ -291,12 +183,42 @@ function addBillTypeData(textSelected){
                                 '</div>'                        
                               );
   }
+  else if (textSelected == 'Por recoger'){
+  $('#divBillPorRecoger').append(
+                            '<div class="row">' +
+                              '<div class="col-xs-6">' +
+                                '<div class="form-group">' +
+                                  '<label for="documentNumberPorRecoger">DNI *</label>' +
+                                  '<input class="form-control" id="documentNumberPorRecoger" min="0" name="documentNumberPorRecoger" type="number" required>' +
+                                '</div>' +
+                              '</div> ' +
+
+                              '<div class="col-xs-6">' +
+                                '<div class="btn-toolbar">' +
+                                  '<label for=""></label><br>' +
+                                  '<a  class="btn btn-info"><span class="glyphicon glyphicon-ok" aria-hidden="true" ></span> Verificar</a>'+
+                                  //'<a  class="btn btn-info"><span class="glyphicon glyphicon-plus" aria-hidden="true" ></span> Nuevo</a>'+                               
+                                '</div>' +
+                              '</div>' +
+                            '</div>' +
+
+                            '<div class="row">' +
+                              '<div class="col-xs-6">' +
+                                '<div class="form-group">' +
+                                  '<label for="namePorRecoger">Nombre cliente</label>' +
+                                  '<input class="form-control" id="namePorRecoger" name="namePorRecoger" type="text" readonly>' +
+                                '</div>' +
+                              '</div>' +
+                            '</div>'                    
+                            );
+  }
 }
 
 function cleanBillTypesData(){
   $('#divBillPedidoElectronico').empty();
   $('#divBillBoletaElectronica').empty();
   $('#divBillFacturaElectronica').empty();
+  $('#divBillPorRecoger').empty();
 }
 
 </script>

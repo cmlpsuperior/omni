@@ -26,32 +26,8 @@
 
 <div class="row">
   <div class="col-lg-6">
-    <div class="panel panel-success">
 
-      <div class="panel-heading">
-        <h3 class="panel-title">1. Datos del envío</h3>
-      </div>
-
-      <div class="panel-body">
-        
-        <div class="row">
-          <div class="col-xs-6">
-            <div class="form-group">
-              <label >Zona</label>
-              <h4 >{{ $zone->name }}</h4>
-            </div>
-          </div>
-
-          <div class="col-xs-6">
-            <div class="form-group">
-              <label >Dirección</label>
-              <h4 >{{ $shippingAddress }}</h4>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
+    @include('bill.block1_shipping')    
     
     <form role="form" action="{{ action('BillController@items_process') }}" method="POST">
     <input type="hidden" name="_token" value="{{ csrf_token() }}">

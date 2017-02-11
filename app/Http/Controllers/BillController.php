@@ -30,18 +30,20 @@ class BillController extends Controller
         return view('bill.index', ['bills'=>$bills]);
     }
 
+    //step 1:
     public function create (){
     	$zones = Zone::orderBy('name','asc')->get();
 
-        return view('bill.Shipping', ['zones'=>$zones]);
+        return view('bill.step1_shipping', ['zones'=>$zones]);
     }
 
     public function shipping_process( Request $request ){ //save what the user insert
         $idZone = null;
         $shippingAddress = null;
+        $shippingDate = null;
 
         $idZone = $request->get('idZone');
-        if ( $request->has('shippingAddress') ) $shippingAddress =$request->get('shippingAddress');
+        if ( $request->has('shippingAddress') ) $shippingAddress = mb_strtoupper( $request->get('shippingAddress') );
 
         session( [  'idZone' => $idZone,
                     'shippingAddress'=>$shippingAddress ] ); //store temporally
@@ -49,14 +51,16 @@ class BillController extends Controller
         return redirect()->action('BillController@items' );
     }
 
+
+    //Step 2:
     public function items (){
         $shippingAddress = session ('shippingAddress');
         $idZone = session ('idZone');
 
         $zone = Zone::findOrFail($idZone);
 
-        return view('bill.items', [ 'shippingAddress'=>$shippingAddress, 
-                                    'zone'=>$zone ] );
+        return view('bill.step2_items', [   'shippingAddress'=>$shippingAddress, 
+                                            'zone'=>$zone ] );
     }
 
     public function items_process (ItemsBillRequest $request){
@@ -77,6 +81,8 @@ class BillController extends Controller
         return redirect()->action('BillController@receivedAmount');
     }
 
+
+    //Step 3
     public function receivedAmount (){
         $shippingAddress = session ('shippingAddress');
         $idZone = session ('idZone');
@@ -89,15 +95,15 @@ class BillController extends Controller
 
         $zone = Zone::findOrFail ( $idZone );
 
-        return view ('bill.receivedAmount', [   'shippingAddress'=>$shippingAddress, 
-                                                'zone'=>$zone,
- 
-                                                'names'=>$names,
-                                                'quantitys'=>$quantitys,
-                                                'prices'=>$prices,
-                                                'units'=>$units,
-                                                'totalAmount'=>$totalAmount
-                                            ]);
+        return view ('bill.step3_receivedAmount', [ 'shippingAddress'=>$shippingAddress, 
+                                                    'zone'=>$zone,
+
+                                                    'names'=>$names,
+                                                    'quantitys'=>$quantitys,
+                                                    'prices'=>$prices,
+                                                    'units'=>$units,
+                                                    'totalAmount'=>$totalAmount
+                                                    ]);
     }
 
     public function receivedAmount_process (Request $request){
@@ -108,6 +114,8 @@ class BillController extends Controller
         return redirect()->action('BillController@client');
     }
 
+
+    //Step 4
     public function client (){
         $shippingAddress = session ('shippingAddress');
         $idZone = session ('idZone');
@@ -122,7 +130,8 @@ class BillController extends Controller
 
         $zone = Zone::findOrFail ( $idZone );
         $billTypes = BillType::where('state','=', 'Activo')
-                            ->orderBy('idBillType','asc')->get();
+                            ->orderBy('idBillType','asc')
+                            ->get();
 
         return view ('bill.client', [   'shippingAddress'=>$shippingAddress, 
                                         'zone'=>$zone,                                        
@@ -140,7 +149,7 @@ class BillController extends Controller
     }
 
     public function client_process ( Request $request ){
-        $shippingAddress = session('shippingAddress');
+        //$shippingAddress = session('shippingAddress');
         $idZone = session('idZone'); //null
 
         $idItems= session ('idItems');
@@ -153,6 +162,8 @@ class BillController extends Controller
         //get all the values of the bill
         $idBillType = $request->get('idBillType');
 
+        $shippingAddress = null;
+
         $namePedido = null;
         $phonePedido = null;
 
@@ -164,6 +175,8 @@ class BillController extends Controller
         $nameFactura = null;
         $legalAddressFactura = null;
         $phoneFactura = null;
+
+        if ($request->has('shippingAddress') ) $shippingAddress = mb_strtoupper( $request->get('shippingAddress') );
 
         if ($request->has('namePedido') ) $namePedido =$request->get('namePedido');
         if ($request->has('phonePedido') ) $phonePedido =$request->get('phonePedido');
@@ -189,7 +202,7 @@ class BillController extends Controller
             $name = $namePedido;
             $phone = $phonePedido;
         }
-        else if ( $billType->name == 'Boleta electronica' ){ //proforma
+        else if ( $billType->name == 'Boleta electronica' ){ 
             $name = $nameBoleta;
             $phone = $phoneBoleta;
             $documentNumber = $documentNumberBoleta;
@@ -200,10 +213,6 @@ class BillController extends Controller
             $documentNumber = $documentNumberFactura;
             $legalAddress = $legalAddressFactura;
         }
-
-        //to know if there is a debt or not
-        $debt = 0;
-        if ($receivedAmount < $totalAmount) $debt = $totalAmount - $receivedAmount;
 
         DB::beginTransaction();
             //create a new order:
@@ -218,10 +227,7 @@ class BillController extends Controller
 
             $bill->totalAmount = $totalAmount;
             $bill->receivedAmount = $receivedAmount;
-            if ($debt > 0 )
-                $bill->state = 'Deuda';
-            else
-                $bill->state = 'Pagado';
+            $bill->state = 'Sin enviar';
 
             $bill->observations = null;
 

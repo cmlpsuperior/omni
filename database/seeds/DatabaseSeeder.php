@@ -214,6 +214,10 @@ class UnitTableSeeder extends Seeder
         Unit::create([
                     'name' => 'millar'
                         ]);
+
+        Unit::create([
+                    'name' => 'carretilla'
+                        ]);
     }
 }
 
@@ -232,33 +236,39 @@ class ZoneTableSeeder extends Seeder
 
         Zone::create([
                     'name' => 'Maria jesus',
-                    'shipping' => 0.0,
+                    'shipping' => 10.0,
                     'state' => 'Activo'
                         ]);
 
         Zone::create([
                     'name' => 'Nueva luz',
-                    'shipping' => 0.0,
+                    'shipping' => 10.0,
                     'state' => 'Activo'
                         ]);
 
         Zone::create([
                     'name' => 'Balcones verdes',
-                    'shipping' => 0.0,
+                    'shipping' => 10.0,
                     'state' => 'Activo'
                         ]);
         Zone::create([
                     'name' => 'Santa rosita sector 5',
-                    'shipping' => 0.0,
+                    'shipping' => 20.0,
                     'state' => 'Activo'
                         ]);
         Zone::create([
                     'name' => 'Planicie',
-                    'shipping' => 0.0,
+                    'shipping' => 10.0,
                     'state' => 'Activo'
                         ]);
         Zone::create([
                     'name' => 'Otro',
+                    'shipping' => 0.0,
+                    'state' => 'Activo'
+                        ]);
+
+        Zone::create([
+                    'name' => 'San juan',
                     'shipping' => 0.0,
                     'state' => 'Activo'
                         ]);
@@ -301,7 +311,7 @@ class BillTypeTableSeeder extends Seeder
     public function run()
     {
         DB::table('billType')->delete();
-
+        //NO BORRAR NINGUN PEDIDO ni cambiar el nombre (name). Puede traer problemas.
         BillType::create([
                     'name' => 'Proforma electronica',
                     'description' => 'Documento electronico que da una estimación del costo de lo que decea el cliente',
@@ -311,23 +321,38 @@ class BillTypeTableSeeder extends Seeder
 
         BillType::create([
                     'name' => 'Pedido electronico',
-                    'description' => 'Documento electronico válido pero que no se reporta en la SUNAT',
+                    'description' => 'Documento electronico que no se reporta en la SUNAT',
                     'state' => 'Activo',
                     'isSale' => true
                         ]);
 
         BillType::create([
                     'name' => 'Boleta electronica',
-                    'description' => 'Documento electronico válido que se reporta a la SUNAT, no hay escudo fiscal (No IGV)',
-                    'state' => 'Activo',
+                    'description' => 'Documento electronico que se reporta a la SUNAT, no hay escudo fiscal (No IGV)',
+                    'state' => 'Desactivado',
                     'isSale' => true
                         ]);
 
         BillType::create([
                     'name' => 'Factura electronica',
-                    'description' => 'Documento electronico válido que se reporta a la SUNAT, si hay escudo fiscal (IGV)',
+                    'description' => 'Documento electronico que se reporta a la SUNAT, si hay escudo fiscal (IGV)',
+                    'state' => 'Desactivado',
+                    'isSale' => true
+                        ]);
+
+        BillType::create([
+                    'name' => 'Por recoger',
+                    'description' => 'Documento electronico que no se reporta a la SUNAT. Los productos no tienen fecha de envío.',
                     'state' => 'Activo',
                     'isSale' => true
                         ]);
+
+        BillType::create([
+                    'name' => 'Credito',
+                    'description' => 'Documento electronico que no se reporta a la SUNAT. Los productos se envían sin haber pagado',
+                    'state' => 'Activo',
+                    'isSale' => true
+                        ]);
+
     }
 }
