@@ -44,9 +44,11 @@ class BillController extends Controller
 
         $idZone = $request->get('idZone');
         if ( $request->has('shippingAddress') ) $shippingAddress = mb_strtoupper( $request->get('shippingAddress') );
+        if ( $request->has('shippingDate') ) $shippingDate =  $request->get('shippingDate');
 
         session( [  'idZone' => $idZone,
-                    'shippingAddress'=>$shippingAddress ] ); //store temporally
+                    'shippingAddress'=>$shippingAddress,
+                    'shippingDate'=>$shippingDate ] ); //store temporally
 
         return redirect()->action('BillController@items' );
     }
@@ -54,24 +56,35 @@ class BillController extends Controller
 
     //Step 2:
     public function items (){
-        $shippingAddress = session ('shippingAddress');
         $idZone = session ('idZone');
+        $shippingAddress = session ('shippingAddress');
+        $shippingDate = session ('shippingDate');
 
         $zone = Zone::findOrFail($idZone);
 
-        return view('bill.step2_items', [   'shippingAddress'=>$shippingAddress, 
-                                            'zone'=>$zone ] );
+        return view('bill.step2_items', [   'zone'=>$zone,
+                                            'shippingAddress'=>$shippingAddress,                                            
+                                            'shippingDate'=>$shippingDate ] );
     }
 
     public function items_process (ItemsBillRequest $request){
+        $shippingDate = null;
+        $shippingAddress = null;
+
         $idItems= $request->get('idItems');
-        $names = $request->get('names'); //new value
+        $names = $request->get('names');
         $quantitys= $request->get('quantitys');
         $prices= $request->get('prices');
         $units= $request->get('units');
         $totalAmount= $request->get('totalAmount');     
 
-        session( [  'idItems' => $idItems,
+        if ( $request->has('shippingAddress') ) $shippingAddress = mb_strtoupper( $request->get('shippingAddress') );
+        if ( $request->has('shippingDate') ) $shippingDate =  $request->get('shippingDate');
+
+        session( [  'shippingAddress'=>$shippingAddress,                                            
+                    'shippingDate'=>$shippingDate,
+
+                    'idItems' => $idItems,
                     'names' => $names,
                     'quantitys'=>$quantitys,
                     'prices'=>$prices,
@@ -84,8 +97,9 @@ class BillController extends Controller
 
     //Step 3
     public function receivedAmount (){
-        $shippingAddress = session ('shippingAddress');
         $idZone = session ('idZone');
+        $shippingAddress = session ('shippingAddress');
+        $shippingDate = session ('shippingDate');
 
         $names = session ('names');
         $quantitys = session ('quantitys');
@@ -95,21 +109,41 @@ class BillController extends Controller
 
         $zone = Zone::findOrFail ( $idZone );
 
-        return view ('bill.step3_receivedAmount', [ 'shippingAddress'=>$shippingAddress, 
-                                                    'zone'=>$zone,
+        $billTypes = BillType::where('state','=', 'Activo')
+                            ->orderBy('idBillType','asc')
+                            ->get();
+
+        return view ('bill.step3_receivedAmount', [ 'zone'=>$zone,
+                                                    'shippingAddress'=>$shippingAddress, 
+                                                    'shippingDate'=>$shippingDate,
 
                                                     'names'=>$names,
                                                     'quantitys'=>$quantitys,
                                                     'prices'=>$prices,
                                                     'units'=>$units,
-                                                    'totalAmount'=>$totalAmount
+                                                    'totalAmount'=>$totalAmount,
+
+                                                    'billTypes'=>$billTypes
                                                     ]);
     }
 
     public function receivedAmount_process (Request $request){
-        $receivedAmount= $request->get('receivedAmount');
+        $shippingDate = null;
+        $shippingAddress = null;
 
-        session( [ 'receivedAmount'=> $receivedAmount ] ); //store temporally
+        $voucher =null;
+
+        $receivedAmount = $request->get('receivedAmount');
+        $idBillType = $request->get('idBillType');
+        if ( $request->has('shippingDate') ) $shippingDate =  $request->get('shippingDate');
+        if ( $request->has('shippingAddress') ) $shippingAddress = mb_strtoupper( $request->get('shippingAddress') );
+        if ( $request->has('voucher') ) $voucher =  $request->get('voucher');
+
+        session( [  'shippingAddress'=>$shippingAddress,                                            
+                    'shippingDate'=>$shippingDate,
+                    'receivedAmount'=> $receivedAmount,
+                    'idBillType'=>$idBillType,
+                    'voucher'=>$voucher ] ); //store temporally
         
         return redirect()->action('BillController@client');
     }
@@ -117,8 +151,9 @@ class BillController extends Controller
 
     //Step 4
     public function client (){
-        $shippingAddress = session ('shippingAddress');
         $idZone = session ('idZone');
+        $shippingAddress = session ('shippingAddress');
+        $shippingDate = session ('shippingDate');
 
         $names= session ('names');
         $quantitys= session ('quantitys');
@@ -127,30 +162,33 @@ class BillController extends Controller
         $totalAmount= session ('totalAmount');
 
         $receivedAmount= session ('receivedAmount');
+        $idBillType= session ('idBillType');
+        $voucher= session ('voucher');
 
         $zone = Zone::findOrFail ( $idZone );
-        $billTypes = BillType::where('state','=', 'Activo')
-                            ->orderBy('idBillType','asc')
-                            ->get();
+        $billType = BillType::findOrFail($idBillType);
 
-        return view ('bill.client', [   'shippingAddress'=>$shippingAddress, 
-                                        'zone'=>$zone,                                        
- 
-                                        'names'=>$names,
-                                        'quantitys'=>$quantitys,
-                                        'prices'=>$prices,
-                                        'units'=>$units,
-                                        'totalAmount'=>$totalAmount,
+        return view ('bill.step4_client', [     'zone'=>$zone, //step1
+                                                'shippingAddress'=>$shippingAddress, 
+                                                'shippingDate'=>$shippingDate,                                      
+         
+                                                'names'=>$names, //step2
+                                                'quantitys'=>$quantitys,
+                                                'prices'=>$prices,
+                                                'units'=>$units,
+                                                'totalAmount'=>$totalAmount,
 
-                                        'receivedAmount'=>$receivedAmount,
-
-                                        'billTypes'=>$billTypes
+                                                'receivedAmount'=>$receivedAmount, //step3
+                                                'billType'=>$billType,
+                                                'voucher'=>$voucher
                                             ]);
     }
 
     public function client_process ( Request $request ){
-        //$shippingAddress = session('shippingAddress');
-        $idZone = session('idZone'); //null
+        $shippingDate = null;
+        $shippingAddress = null;
+
+        $idZone = session('idZone');
 
         $idItems= session ('idItems');
         $quantitys= session ('quantitys');
@@ -159,8 +197,11 @@ class BillController extends Controller
 
         $receivedAmount= session ('receivedAmount');
 
+        if ( $request->has('shippingAddress') ) $shippingAddress = mb_strtoupper( $request->get('shippingAddress') );
+        if ( $request->has('shippingDate') ) $shippingDate =  $request->get('shippingDate');
+
         //get all the values of the bill
-        $idBillType = $request->get('idBillType');
+        
 
         $shippingAddress = null;
 

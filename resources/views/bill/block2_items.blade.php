@@ -6,7 +6,7 @@
 
   <div class="panel-body">
     <div class="table-responsive">
-      <table class="table table-hover table-striped" id="tblItems">
+      <table class="table table-hover table-striped">
           <thead>
               <tr>
                   <th>Cant.</th>

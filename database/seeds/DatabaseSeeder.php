@@ -313,43 +313,29 @@ class BillTypeTableSeeder extends Seeder
         DB::table('billType')->delete();
         //NO BORRAR NINGUN PEDIDO ni cambiar el nombre (name). Puede traer problemas.
         BillType::create([
-                    'name' => 'Proforma electronica',
-                    'description' => 'Documento electronico que da una estimación del costo de lo que decea el cliente',
+                    'name' => 'Proforma',
+                    'description' => 'No SUNAT. Estimación del costo de lo que decea el cliente',
                     'state' => 'Activo',
                     'isSale' => false
                         ]);
 
         BillType::create([
-                    'name' => 'Pedido electronico',
-                    'description' => 'Documento electronico que no se reporta en la SUNAT',
+                    'name' => 'Pedido',
+                    'description' => 'Si SUNAT',
                     'state' => 'Activo',
                     'isSale' => true
                         ]);
 
         BillType::create([
-                    'name' => 'Boleta electronica',
-                    'description' => 'Documento electronico que se reporta a la SUNAT, no hay escudo fiscal (No IGV)',
-                    'state' => 'Desactivado',
-                    'isSale' => true
-                        ]);
-
-        BillType::create([
-                    'name' => 'Factura electronica',
-                    'description' => 'Documento electronico que se reporta a la SUNAT, si hay escudo fiscal (IGV)',
-                    'state' => 'Desactivado',
-                    'isSale' => true
-                        ]);
-
-        BillType::create([
                     'name' => 'Por recoger',
-                    'description' => 'Documento electronico que no se reporta a la SUNAT. Los productos no tienen fecha de envío.',
+                    'description' => 'No SUNAT. Se guarda el dinero del cliente.',
                     'state' => 'Activo',
                     'isSale' => true
                         ]);
 
         BillType::create([
                     'name' => 'Credito',
-                    'description' => 'Documento electronico que no se reporta a la SUNAT. Los productos se envían sin haber pagado',
+                    'description' => 'Si SUNAT. Los productos se envían sin haber pagado',
                     'state' => 'Activo',
                     'isSale' => true
                         ]);

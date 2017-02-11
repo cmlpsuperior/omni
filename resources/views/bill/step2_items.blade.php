@@ -25,12 +25,12 @@
 @endif
 
 <div class="row">
-  <div class="col-lg-6">
-
-    @include('bill.block1_shipping')    
+  <div class="col-lg-6">    
     
     <form role="form" action="{{ action('BillController@items_process') }}" method="POST">
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
+    
+    @include('bill.block1_shipping')
 
     <div class="panel panel-primary">
       <div class="panel-heading">

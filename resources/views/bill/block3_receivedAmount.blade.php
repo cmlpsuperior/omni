@@ -37,6 +37,22 @@
     </div>
     @endif
 
+    <br><br>
+    <div class="row">
+      <div class="col-xs-6">
+        <div class="form-group">
+          <label>Transacción</label><br>
+          <h4>{{ $billType->name }}</h4>
+        </div> 
+      </div>
+
+      <div class="col-xs-6">
+        <div class="form-group">
+          <label>Comprobante</label><br>
+          <h4>{{ $voucher }}</h4>
+        </div> 
+      </div>
+    </div>
   </div>
 
 </div>
