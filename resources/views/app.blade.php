@@ -142,6 +142,9 @@
                     <li id="sales">
                         <a href="{{ action('BillController@create') }}"><i class="fa fa-fw fa-wrench"></i> Ventas</a>
                     </li>
+                    <li id="sales">
+                        <a href="{{ action('SaleController@zone') }}"><i class="fa fa-fw fa-wrench"></i> Ventas nuevo</a>
+                    </li>
                     <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Mantenimiento <b class="caret"></b></a>
                         <ul id="demo" class="collapse">

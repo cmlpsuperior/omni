@@ -6,23 +6,28 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateItemXSaleTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
-        //
+        Schema::create('itemXSale', function (Blueprint $table) {
+            $table->integer('idSale')->unsigned();
+            $table->integer('idItem')->unsigned();
+
+            $table->integer('orderNumber')->unsigned();
+            $table->double('quantity', 15,3);
+            $table->double('unitPrice', 15,2);
+
+            //define the primary keys:
+            $table->primary(['idSale', 'idItem']);
+
+            //define the foreign keys
+            $table->foreign('idSale')->references('idSale')->on('sale');
+            $table->foreign('idItem')->references('idItem')->on('item');
+        });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
+    
     public function down()
     {
-        //
+        Schema::drop('itemXSale');
     }
 }

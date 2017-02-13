@@ -75,3 +75,18 @@ Route::get('/bill/{idBill}/view','BillController@view' );
 Route::delete('/bill/{idBill}/destroy','BillController@destroy' );
 
 Route::get('/bill/saleMonth','BillController@saleMonth' ); //AJAX
+
+
+Route::get('/sale','SaleController@index' );
+	Route::get('/sale/zone','SaleController@zone' ); //items
+	Route::post('/sale/zone_process','SaleController@zone_process' );
+	Route::get('/sale/items','SaleController@items' );
+	Route::post('/sale/items_process','SaleController@items_process' );
+
+	Route::get('/sale/receivedAmount','SaleController@receivedAmount' );
+	Route::post('/sale/receivedAmount_process','SaleController@receivedAmount_process' );
+
+	Route::get('/sale/client','SaleController@client' );
+	Route::post('/sale/client_process','SaleController@client_process' );
+Route::get('/sale/{idSale}/view','SaleController@view' );
+Route::delete('/sale/{idSale}/destroy','SaleController@destroy' );
