@@ -66,8 +66,8 @@ Route::get('/bill','BillController@index' );
 	Route::get('/bill/items','BillController@items' );
 	Route::post('/bill/items_process','BillController@items_process' );
 
-	Route::get('/bill/receivedAmount','BillController@receivedAmount' );
-	Route::post('/bill/receivedAmount_process','BillController@receivedAmount_process' );
+	Route::get('/bill/amounts','SaleController@amounts' );
+	Route::post('/bill/amounts_process','SaleController@amounts_process' );
 
 	Route::get('/bill/client','BillController@client' );
 	Route::post('/bill/client_process','BillController@client_process' );

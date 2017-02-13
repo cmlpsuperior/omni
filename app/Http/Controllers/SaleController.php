@@ -36,33 +36,63 @@ class SaleController extends Controller
         return view('sale.step1_items', [ 'zone'=>$zone ] );
     }
 
-    public function items_process (ItemsBillRequest $request){
-        $shippingDate = null;
-        $shippingAddress = null;
-
+    public function items_process (request $request){
         $idItems= $request->get('idItems');
         $names = $request->get('names');
         $quantitys= $request->get('quantitys');
         $prices= $request->get('prices');
         $units= $request->get('units');
-        $totalAmount= $request->get('totalAmount');     
+        $totalAmount= $request->get('totalAmount');
 
-        if ( $request->has('shippingAddress') ) $shippingAddress = mb_strtoupper( $request->get('shippingAddress') );
-        if ( $request->has('shippingDate') ) $shippingDate =  $request->get('shippingDate');
-
-        session( [  'shippingAddress'=>$shippingAddress,                                            
-                    'shippingDate'=>$shippingDate,
-
-                    'idItems' => $idItems,
+        session( [  'idItems' => $idItems,
                     'names' => $names,
                     'quantitys'=>$quantitys,
                     'prices'=>$prices,
                     'units'=>$units,
                     'totalAmount'=> $totalAmount ] ); //store temporally
 
-        return redirect()->action('BillController@receivedAmount');
+        return redirect()->action('SaleController@amounts');
     }
 
+
+    //Step 2:
+    public function amounts (){
+        $idZone = session ('idZone');
+
+        $names = session ('names');
+        $quantitys = session ('quantitys');
+        $prices = session ('prices');
+        $units = session ('units');
+        $totalAmount = session ('totalAmount');
+
+        $zone = Zone::findOrFail ( $idZone );
+
+        return view ('sale.step2_Amounts', ['zone'=>$zone,
+
+                                            'names'=>$names,
+                                            'quantitys'=>$quantitys,
+                                            'prices'=>$prices,
+                                            'units'=>$units,
+                                            'totalAmount'=>$totalAmount
+                                            ]);
+}
+
+    public function amounts_process (Request $request){
+
+        $receivedAmount = $request->get('receivedAmount');
+        $idBillType = $request->get('idBillType');
+        if ( $request->has('shippingDate') ) $shippingDate =  $request->get('shippingDate');
+        if ( $request->has('shippingAddress') ) $shippingAddress = mb_strtoupper( $request->get('shippingAddress') );
+        if ( $request->has('voucher') ) $voucher =  $request->get('voucher');
+
+        session( [  'shippingAddress'=>$shippingAddress,                                            
+                    'shippingDate'=>$shippingDate,
+                    'receivedAmount'=> $receivedAmount,
+                    'idBillType'=>$idBillType,
+                    'voucher'=>$voucher ] ); //store temporally
+        
+        return redirect()->action('BillController@client');
+    }
 
 
     

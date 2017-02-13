@@ -37,7 +37,7 @@
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
         <div class="row">
-          <div class="col-lg-6">
+          <div class="col-xs-6 col-xs-offset-3 text-center">
             <div class="form-group">
               <label for="idZone">Zona *</label>
               <select class="form-control" id="idZone" name="idZone" required> 

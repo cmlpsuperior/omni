@@ -37,7 +37,7 @@
       </div>
       <div class="panel-body">
         <div class="row">
-          <div class="col-xs-12">
+          <div class="col-xs-12 text-center">
             <div class="form-group">
               <label for="totalAmount">Zona: </label>
               <h4>{{ $zone->name }}</h4>
@@ -67,7 +67,7 @@
 
         <br>
         <div class="row">
-          <div class="col-md-6 col-md-offset-3">
+          <div class="col-xs-6 col-xs-offset-3">
             <div class="form-group">
               <label for="totalAmount">Importe total S/</label><br>
               <input class="form-control" id="totalAmount" name="totalAmount" type="number" step="0.01" readonly>
