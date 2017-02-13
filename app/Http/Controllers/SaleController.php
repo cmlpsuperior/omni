@@ -78,11 +78,10 @@ class SaleController extends Controller
 }
 
     public function amounts_process (Request $request){
-
+        $discount = 0;
         $receivedAmount = $request->get('receivedAmount');
-        $idBillType = $request->get('idBillType');
-        if ( $request->has('shippingDate') ) $shippingDate =  $request->get('shippingDate');
-        if ( $request->has('shippingAddress') ) $shippingAddress = mb_strtoupper( $request->get('shippingAddress') );
+
+        if ( $request->has('discount') ) $discount = $request->get('discount');
         if ( $request->has('voucher') ) $voucher =  $request->get('voucher');
 
         session( [  'shippingAddress'=>$shippingAddress,                                            
@@ -91,7 +90,7 @@ class SaleController extends Controller
                     'idBillType'=>$idBillType,
                     'voucher'=>$voucher ] ); //store temporally
         
-        return redirect()->action('BillController@client');
+        return redirect()->action('SaleController@client');
     }
 
 

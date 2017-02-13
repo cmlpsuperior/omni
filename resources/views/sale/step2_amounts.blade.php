@@ -49,7 +49,7 @@
         <div class="form-group">
           <label for="discount" class="col-xs-4 col-sm-4 control-label">Descuento</label>
           <div class="col-xs-8 col-sm-6">
-            <input type="number" step="0.01" min="0" class="form-control text-right" id="discount" name="discount"  >
+            <input type="number" step="0.01" min="0" class="form-control text-right" id="discount" name="discount" >
           </div>            
         </div>
 
@@ -63,26 +63,25 @@
             <h4 id="finalAmount">S/ {{ $totalAmount }}</h4>
           </div>            
         </div>
-      </div>
+        <br>
 
-      <br>
-      
-      <div class="row">
-        <div class="col-xs-6 col-xs-offset-3 ">
-          <div class="form-group">
-            <label for="paymentType">Tipo de pago *</label>
-            <select class="form-control" id="paymentType" name="paymentType" required>
-              <option value="">Seleccionar</option>
-              <option value="cash">Al contado</option>
-              <option value="credit">Al crédito</option>
-            </select>
-          </div> 
+        <div class="form-group">         
+            <label for="paymentType" class="col-xs-4 col-sm-4 control-label">Venta al *</label>
+            <div class="col-xs-8 col-sm-6">
+              <select class="form-control" id="paymentType" name="paymentType" required>
+                <option value="">Seleccionar</option>
+                <option value="cash">Contado</option>
+                <option value="credit">Crédito</option>
+              </select>
+            </div>
+        </div>
+
+        <div class="form-group" id="divCash">
+                     
         </div>
       </div>
 
-      <div class="row" id="divCash">
-        <!--Jquery-->
-      </div>
+    
 
       <div class="row" id="divCredit">
         <!--Jquery-->
@@ -118,13 +117,12 @@ $(document).ready(function() {
 
 function addPaymentData(valueSelected){
   if ( valueSelected == 'cash' ){
-    $('#divCash').append( 
-        '<div class="col-xs-6 col-xs-offset-3">'+
-          '<div class="form-group">'+
-              '<label for="receivedAmount">Importe recibido S/</label><br>'+
-              '<input class="form-control" id="receivedAmount" name="receivedAmount" type="number" min="0" step="0.01" required>'+
-            '</div>'+
-        '</div>'
+    $('#divCash').append(
+      '<label for="receivedAmount" class="col-xs-4 col-sm-4 control-label">Importe recibido</label>'+
+      '<div class="col-xs-8 col-sm-6">'+
+        '<input type="number" step="0.01" min="0" class="form-control text-right" id="receivedAmount" name="receivedAmount" >'+
+      '</div>'
+
       );
   }
 }
