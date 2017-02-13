@@ -179,45 +179,66 @@ class UnitTableSeeder extends Seeder
         DB::table('unit')->delete();
 
         Unit::create([
-                    'name' => 'bolsa'
+                    'name' => 'bolsa',
+                    'legalCode' => 'BG'
                         ]);
         Unit::create([
-                    'name' => 'm3'
+                    'name' => 'botella',
+                    'legalCode' => 'BO'
                         ]);
         Unit::create([
-                    'name' => 'unidad'
-                        ]);
-        Unit::create([
-                    'name' => 'varilla'
-                        ]);
-        Unit::create([
-                    'name' => 'otro'
-                        ]);
-        Unit::create([
-                    'name' => 'kg'
-                        ]);
-        Unit::create([
-                    'name' => 'envase'
-                        ]);
-        Unit::create([
-                    'name' => 'm'
-                        ]);
-        Unit::create([
-                    'name' => 'par'
-                        ]);
-        Unit::create([
-                    'name' => 'rollo'
-                        ]);
-        Unit::create([
-                    'name' => 'caja'
-                        ]);
-        Unit::create([
-                    'name' => 'millar'
+                    'name' => 'caja',
+                    'legalCode' => 'BX'
                         ]);
 
         Unit::create([
-                    'name' => 'carretilla'
+                    'name' => 'hoja',
+                    'legalCode' => 'LEF'
                         ]);
+        Unit::create([
+                    'name' => 'kg',
+                    'legalCode' => 'KGM'
+                        ]);
+        Unit::create([
+                    'name' => 'lata',
+                    'legalCode' => 'CA'
+                        ]);
+
+        Unit::create([
+                    'name' => 'm',
+                    'legalCode' => 'MTR'
+                        ]);
+        Unit::create([
+                    'name' => 'm3',
+                    'legalCode' => 'MTQ'
+                        ]);
+        Unit::create([
+                    'name' => 'millar',
+                    'legalCode' => 'MLL'
+                        ]);
+
+        Unit::create([
+                    'name' => 'rollo',
+                    'legalCode' => 'PK'
+                        ]);
+        Unit::create([
+                    'name' => 'par',
+                    'legalCode' => 'PR'
+                        ]);
+        Unit::create([
+                    'name' => 'unidad',
+                    'legalCode' => 'NIU'
+                        ]);
+
+        Unit::create([
+                    'name' => 'carretilla', // there is not code in SUNAT.
+                    'legalCode' => 'NIU'
+                        ]);
+        Unit::create([
+                    'name' => 'varilla', // there is not code in SUNAT.
+                    'legalCode' => 'NIU'
+                        ]);       
+        
     }
 }
 

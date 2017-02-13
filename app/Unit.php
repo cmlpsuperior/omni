@@ -13,7 +13,8 @@ class Unit extends Model
     public $timestamps=false;
 
     protected $fillable = [
-    	'name'
+    	'name',
+        'legalCode'
     ];
 
 

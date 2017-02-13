@@ -26,8 +26,8 @@
 
       <div class="col-xs-6">
       	<div class="form-group">
-	      	<label for="shippingAddress"></label>
-	      	<input class="form-control" id="shippingAddress" name="shippingAddress" type="text" value="{{ old('shippingAddress') }}">
+	      	<label for="btnSearch"></label><br>
+	      	<a class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true" ></span> buscar</a>
 	     </div>
       </div>
     </div>

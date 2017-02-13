@@ -13,6 +13,7 @@ class CreateUnitTable extends Migration
             $table->increments('idUnit');
 
             $table->string('name', 100);
+            $table->string('legalCode', 3);
         });
     }
 

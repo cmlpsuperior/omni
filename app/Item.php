@@ -16,8 +16,6 @@ class Item extends Model
     	'name',
     	'price',
     	'state',
-        'realStock',
-        'availableStock',
 
     	'idUnit'
     ];
