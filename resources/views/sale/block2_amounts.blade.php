@@ -6,14 +6,14 @@
   <div class="panel-body form-horizontal">
     <div class="form-group">
       <label for="totalAmount" class="col-xs-6 control-label">Imp. total</label>
-      <div class="col-xs-6">
+      <div class="col-xs-6 text-right">
         <h4> {{ number_format($totalAmount, 1, '.','') }}</h4>
       </div>            
     </div> 
     
     <div class="form-group">
       <label for="discount" class="col-xs-6 control-label">Descuento</label>
-      <div class="col-xs-6 ">
+      <div class="col-xs-6 text-right ">
         <h4> {{ number_format($discount, 1, '.','') }}</h4>
         
       </div>            
@@ -26,7 +26,7 @@
     <div class="form-group">
       <label for="discount" class="col-xs-6 control-label">Monto final</label>
       <div class="col-xs-6 text-right">
-        <h4 id="finalAmount">{{ number_format($totalAmount, 1, '.','') }}</h4>
+        <h4 id="finalAmount">{{ number_format($totalAmount - $discount, 1, '.','') }}</h4>
       </div>            
     </div>            
     
@@ -36,8 +36,11 @@
     <div class="form-group text-center">
       <div class="col-lg-10 col-lg-offset-1">
         <label for="charge" class="control-label">Cobro al *</label>
-
-        <h4>{{ $charge }}</h4>
+        @if ($charge == 'credit')
+          <h4>Crédito</h4>
+        @elseif ($charge == 'cash')
+          <h4>Contado</h4>
+        @endif
       </div>     
     </div>
   </div> 

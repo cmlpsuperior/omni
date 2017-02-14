@@ -24,9 +24,6 @@
   @endforeach
 @endif
 
-<form role="form" action="{{ action('SaleController@amounts_process') }}" method="POST">
-<input type="hidden" name="_token" value="{{ csrf_token() }}">
-
 <div class="row">
   <div class="col-lg-6">
     @include('sale.block1_items')
@@ -40,11 +37,74 @@
       </div>
 
       <div class="col-xs-6">
+
+        
         <div class="panel panel-primary">
+
           <div class="panel-heading">
             <h3 class="panel-title">3. Pago</h3>
           </div>
+
+          <div class="panel-body">
+            <ul class="nav nav-tabs">
+              <li class="active"><a data-toggle="tab" href="#money">Efectivo</a></li>
+              <li><a data-toggle="tab" href="#bankDeposit">Depósito</a></li>
+            </ul>
+
+            <div class="tab-content">
+              
+              <div id="money" class="tab-pane fade in active">
+                <form role="form" action="{{ action('SaleController@payment_process') }}" method="POST">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                <br>
+                <div class="form-group">
+                  <label for="receivedAmount">Monto recibido *</label>
+                  <input type="number" step="0.01" min="0" class="form-control text-right" id="receivedAmount" name="receivedAmount" required>          
+                </div>
+
+                <div class="form-group text-center">          
+                  <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Continuar</button>
+                </div> 
+                </form>
+              </div>
+              
+
+              
+              <div id="bankDeposit" class="tab-pane fade">
+                <form role="form" action="{{ action('SaleController@payment_process') }}" method="POST">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+                <br>               
+                <div class="form-group">
+                  <label for="idBankAccount">Cuenta bancária *</label>
+                  <select class="form-control" id="idBankAccount" name="idBankAccount" required>
+                    <option value="">--Seleccionar--</option>
+                    @foreach ( $bankAccounts as $bankAccount )
+                      <option value="{{ $bankAccount->idBankAccount }}">{{ $bankAccount->bankName . $bankAccount->AccountNumber }}</option>
+                    @endforeach
+                  </select>         
+                </div>
+
+                <div class="form-group">
+                  <label for="receivedAmount">Monto recibido *</label>
+                  <input type="number" step="0.01" min="0" class="form-control text-right" id="receivedAmount" name="receivedAmount" required>          
+                </div>
+
+                <div class="form-group text-center">          
+                  <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Continuar</button>
+                </div> 
+                </form>
+              </div>
+              
+
+            </div>
+          </div> 
+
+          
+
         </div>
+        
+
       </div>
     </div> 
 

@@ -104,6 +104,7 @@ class SaleController extends Controller
         $charge = session ('charge');
 
         $zone = Zone::findOrFail ( $idZone );
+        $bankAccounts = [];
 
         return view ('sale.step3_payment', ['zone'=>$zone,
 
@@ -115,6 +116,8 @@ class SaleController extends Controller
 
                                             'discount'=>$discount,
                                             'charge'=>$charge,
+
+                                            'bankAccounts'=>$bankAccounts
                                             ]);
     }
 
