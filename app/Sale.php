@@ -17,8 +17,8 @@ class Sale extends Model
         'discount',
         'totalAmount',
 
-        'state',
-        'isSale',
+        'payment',
+        'state',        
         'observations',    
         
     	'idClient',

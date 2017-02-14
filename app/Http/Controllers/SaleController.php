@@ -75,20 +75,105 @@ class SaleController extends Controller
                                             'units'=>$units,
                                             'totalAmount'=>$totalAmount
                                             ]);
-}
+    }
 
     public function amounts_process (Request $request){
         $discount = 0;
-        $receivedAmount = $request->get('receivedAmount');
+        $charge = $request->get('charge');
 
         if ( $request->has('discount') ) $discount = $request->get('discount');
-        if ( $request->has('voucher') ) $voucher =  $request->get('voucher');
 
-        session( [  'shippingAddress'=>$shippingAddress,                                            
-                    'shippingDate'=>$shippingDate,
-                    'receivedAmount'=> $receivedAmount,
-                    'idBillType'=>$idBillType,
-                    'voucher'=>$voucher ] ); //store temporally
+        session( [  'discount' => $discount,
+                    'charge' => $charge
+                 ] ); //store temporally
+        
+        return redirect()->action('SaleController@payment');
+    }
+
+    //step 3:
+    public function payment (){
+        $idZone = session ('idZone'); //step1.1
+
+        $names = session ('names'); //step1.2
+        $quantitys = session ('quantitys');
+        $prices = session ('prices');
+        $units = session ('units');
+        $totalAmount = session ('totalAmount');
+
+        $discount = session ('discount'); //step 2
+        $charge = session ('charge');
+
+        $zone = Zone::findOrFail ( $idZone );
+
+        return view ('sale.step3_payment', ['zone'=>$zone,
+
+                                            'names'=>$names,
+                                            'quantitys'=>$quantitys,
+                                            'prices'=>$prices,
+                                            'units'=>$units,
+                                            'totalAmount'=>$totalAmount,
+
+                                            'discount'=>$discount,
+                                            'charge'=>$charge,
+                                            ]);
+    }
+
+    public function payment_process (Request $request){
+        $idPaymentType = $request->get('idPaymentType');
+        $idBankAccount = null;
+        $receivedAmount = $request->get('receivedAmount');;
+
+        if ( $request->has('idBankAccount') ) $idBankAccount = $request->get('idBankAccount');
+
+        session( [  'idPaymentType' => $idPaymentType,
+                    'idBankAccount' => $idBankAccount,
+                    'receivedAmount' => $receivedAmount
+                 ] ); //store temporally
+        
+        return redirect()->action('SaleController@client');
+    }
+
+
+
+    //step 4:
+    public function client (){
+        $idZone = session ('idZone'); //step1.1
+
+        $names = session ('names'); //step1.2
+        $quantitys = session ('quantitys');
+        $prices = session ('prices');
+        $units = session ('units');
+        $totalAmount = session ('totalAmount');
+
+        $discount = session ('discount'); //step 2
+        $charge = session ('charge');
+
+        $zone = Zone::findOrFail ( $idZone );
+
+        return view ('sale.step3_payment', ['zone'=>$zone,
+
+                                            'names'=>$names,
+                                            'quantitys'=>$quantitys,
+                                            'prices'=>$prices,
+                                            'units'=>$units,
+                                            'totalAmount'=>$totalAmount,
+
+                                            'discount'=>$discount,
+                                            'charge'=>$charge,
+                                            ]);
+    }
+
+    public function client_process (Request $request){
+        $idPaymentType = $request->get('idPaymentType');
+        $idBankAccount = null;
+        $receivedAmount = $request->get('receivedAmount');;
+
+        if ( $request->has('idBankAccount') ) $idBankAccount = $request->get('idBankAccount');
+
+        session( [  'idPaymentType' => $idPaymentType,
+                    'idBankAccount' => $idBankAccount,
+                    'receivedAmount' => $receivedAmount
+                 ] ); //store temporally
         
         return redirect()->action('SaleController@client');
     }

@@ -15,8 +15,8 @@ class CreateSaleTable extends Migration
             $table->datetime('discount');
             $table->double('totalAmount', 15, 2);
 
-            $table->string('state', 50);
-            $table->boolean('isSale');
+            $table->string('payment', 10); //credit or cash
+            $table->string('state', 50);            
             $table->string('observations', 250)->nullable();
             
             $table->integer('idClient')->unsigned()->nullable();
