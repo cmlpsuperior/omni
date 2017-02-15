@@ -48,6 +48,9 @@ Route::get('/client','ClientController@index' );
 	Route::put('/company/{id}/update','ClientController@updateCompany' );
 Route::delete('/client/{id}/destroy','ClientController@destroy' );
 
+//AJAX
+Route::get('/person/searchPersonByDocumentNumber','ClientController@searchPersonByDocumentNumber' );
+
 //PDF
 Route::get('pdf/printBill/{idBill}', 'PDFController@printBill' );
 

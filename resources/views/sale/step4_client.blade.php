@@ -49,7 +49,88 @@
         </div>
 
         <div class="panel-body">
-          
+          <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#person">Persona</a></li>
+            <li ><a data-toggle="tab" href="#company">Empresa</a></li>
+          </ul>
+
+          <div class="tab-content">
+            <!--have to add a new block for every new paymenttype, here are only the 2 first-->
+            <div id="person" class="tab-pane fade in active">
+              <form role="form" action="{{ action('SaleController@client_process') }}" method="POST">
+              <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+              <br>
+              <input type="hidden" id="clientType" name="clientType" value="person"> 
+
+              <div class="form-group row">
+                <div class="col-xs-6">
+                  <label for="documentNumber">DNI *</label>
+                  <input type="number" min="0" class="form-control" id="documentNumber" name="documentNumber" required>
+                </div>
+
+                <div class="col-xs-6">
+                  <label for=""></label><br>
+                  <a class="btn btn-info" id="btnSearch" ><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Verificar</a>
+                  <label class="" id="status" name="status"> </label>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="col-xs-6">         
+                  <label for="names">Nombres *</label>
+                  <input type="text" class="form-control" id="names" name="names" required>
+                </div>
+              </div>
+
+              <div class="form-group row">       
+                <div class="col-xs-6">
+                  <label for="fatherLastName">Apellido paterno *</label>
+                  <input type="text" class="form-control" id="fatherLastName" name="fatherLastName" required>
+                </div>   
+                <div class="col-xs-6">
+                  <label for="motherLastName">Apellido materno *</label>
+                  <input type="text" class="form-control" id="motherLastName" name="motherLastName" required>
+                </div> 
+              </div>
+
+              <div class="form-group row">
+                <div class="col-xs-6">         
+                  <label for="phone">Teléfono </label>
+                  <input type="number" min="0" class="form-control" id="phone" name="phone">
+                </div>
+              </div>
+
+              </form>
+            </div>
+            
+
+            
+            <div id="company" class="tab-pane fade">
+              <form role="form" action="{{ action('SaleController@client_process') }}" method="POST">
+              <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+              <br>
+              <input type="hidden" id="clientType" name="clientType" value="company">  
+
+              <div class="form-group">
+                <label for="idBankAccount">Cuenta bancária *</label>
+                       
+              </div>
+
+              <div class="form-group">
+                <label for="receivedAmount">Monto recibido *</label>
+                <input type="number" step="0.01" min="0" class="form-control text-right" id="receivedAmount" name="receivedAmount" required>          
+              </div>
+
+              <div class="form-group text-center">          
+                <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Continuar</button>
+              </div> 
+              </form>
+            </div>              
+
+          </div>
+
         </div>         
 
       </div>
@@ -64,31 +145,62 @@
 @section('script')
 <script type="text/javascript">
 $(document).ready(function() {
-  $('#paymentType').on('change', function (e) {
-    var optionSelected = $("option:selected", this);
-    var valueSelected = this.value;
-    var textSelected = optionSelected.text();   
-    
-    cleanPaymentData();
-    addPaymentData(valueSelected);
+
+  $('#btnSearch').on('click', function (e) {
+    var documentNumber = $('#documentNumber').val();  
+    var myUrl = "{{ url('person/searchPersonByDocumentNumber') }}";
+    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+    $.ajax({        
+      type: "GET",   
+      url: myUrl,
+      dataType : "JSON",
+      data: {
+          documentNumber: documentNumber,
+          _token: CSRF_TOKEN
+      },
+      success: function(data){
+        console.log(data.personClient);
+        cleanClientData();
+        updateClientStatus(data.personClient);
+
+        if (data.personClient != null){
+          updateClientInfo(data.personClient);
+        }                
+      },
+      error: function (e) {
+        console.log(e.responseText);
+      },
+    });
+
   });
+
 });
-
-function addPaymentData(valueSelected){
-  if ( valueSelected == 'cash' ){
-    $('#divCash').append(
-      '<label for="receivedAmount" class="col-xs-4 col-sm-4 control-label">Importe recibido</label>'+
-      '<div class="col-xs-8 col-sm-6">'+
-        '<input type="number" step="0.01" min="0" class="form-control text-right" id="receivedAmount" name="receivedAmount" >'+
-      '</div>'
-
-      );
-  }
+function cleanClientData(){
+  $('#names').val('');
+  $('#fatherLastName').val(''); 
+  $('#motherLastName').val('');
+  $('#phone').val(''); 
+}
+function updateClientInfo (personClient){
+  $('#names').val(personClient.names);
+  $('#fatherLastName').val(personClient.fatherLastName); 
+  $('#motherLastName').val(personClient.motherLastName);
+  $('#phone').val(personClient.phone); 
 }
 
-function cleanPaymentData(){
-  $('#divCash').empty();
-  $('#divCredit').empty();
+function updateClientStatus (personClient){
+  $('#status').removeClass('text-danger');
+  $('#status').removeClass('text-success');
+
+  if (personClient == null){
+    $('#status').text(' No es cliente');
+    $('#status').addClass('text-danger');
+  }
+  else {
+    $('#status').text(' Sí es cliente');
+    $('#status').addClass('text-success');
+  }
 }
 
 </script>

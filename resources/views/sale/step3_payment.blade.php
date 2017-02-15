@@ -72,8 +72,6 @@
                 </form>
               </div>
               
-
-              
               <div id="{{ $paymentTypes[1]->name }}" class="tab-pane fade">
                 <form role="form" action="{{ action('SaleController@payment_process') }}" method="POST">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">

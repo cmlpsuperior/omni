@@ -159,4 +159,26 @@ class ClientController extends Controller
         return view ('client.location', ['client'=>$client, 'addresses'=> $addresses]);
     }
 
+
+
+
+
+
+
+    //AJAX: used to find person-client names
+    public function searchPersonByDocumentNumber (Request $request){
+        $documentNumber= $request->get('documentNumber');
+
+        //get ids of documentType person
+        $idsDocumentType = DocumentType::where('type','=', 'person')->pluck('idDocumentType');
+
+        $personClient = Client::where('documentNumber','=',$documentNumber)
+                                ->whereIn('idDocumentType', $idsDocumentType)
+                                ->first();
+
+        return response()->json([
+                            'personClient' => $personClient                      
+                        ]);
+    }
+
 }
