@@ -13,6 +13,8 @@ use App\Unit;
 use App\Zone;
 use App\Client;
 use App\BillType;
+use App\PaymentType;
+use App\bankAccount;
 
 class DatabaseSeeder extends Seeder
 {
@@ -27,6 +29,10 @@ class DatabaseSeeder extends Seeder
         $this->call(ZoneTableSeeder::class);
         $this->call(ClientTableSeeder::class);
         $this->call(BillTypeTableSeeder::class);
+
+        //news
+        $this->call(PaymentTypeTableSeeder::class);
+        $this->call(BankAccountTableSeeder::class);
     }
 	
 }
@@ -359,6 +365,48 @@ class BillTypeTableSeeder extends Seeder
                     'description' => 'Si SUNAT. Los productos se envían sin haber pagado',
                     'state' => 'Activo',
                     'isSale' => true
+                        ]);
+
+    }
+}
+
+class PaymentTypeTableSeeder extends Seeder 
+{
+    public function run()
+    {
+        DB::table('paymentType')->delete();
+        PaymentType::create([
+                    'name' => 'Efectivo',
+                    'description' => 'Dinero dado en mano.',
+                    'state' => 'Activo'
+                        ]);
+
+        PaymentType::create([
+                    'name' => 'Deposito',
+                    'description' => 'Dinero depositado en una cuenta bancaria',
+                    'state' => 'Activo'
+                        ]);
+
+    }
+}
+
+class BankAccountTableSeeder extends Seeder 
+{
+    public function run()
+    {
+        DB::table('bankAccount')->delete();
+        BankAccount::create([
+                    'bankName' => 'BCP',
+                    'accountNumber' => '1234567891',
+                    'interbankAccountNumber' => '1234567891',
+                    'state' => 'Activo'
+                        ]);
+
+        BankAccount::create([
+                    'bankName' => 'INTERBANK',
+                    'accountNumber' => '1234567891',
+                    'interbankAccountNumber' => '1234567891',
+                    'state' => 'Activo'
                         ]);
 
     }

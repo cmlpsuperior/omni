@@ -94,3 +94,21 @@
 
 </form>
 @endsection
+
+@section('script')
+<script type="text/javascript">
+$(document).ready(function() {
+  $('#discount').on('keyup', function (e) {
+    var discount = $("#discount").val();
+    updateFinalAmount(discount);
+  });
+});
+
+function updateFinalAmount(discount){
+  var amount = $("#totalAmount").val();
+  var finalAmount = amount - discount;
+  //alert(amount + ' - ' + discount + ' = '+ finalAmount );
+  $('#finalAmount').text('S/ ' + finalAmount.toFixed(1));
+}
+</script>
+@endsection

@@ -34,3 +34,4 @@ class CreateSaleTable extends Migration
     {
         Schema::drop('sale');
     }
+}

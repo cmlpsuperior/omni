@@ -1,0 +1,14 @@
+<?php 
+namespace App\Http\Services;
+
+//myUses:
+use DB;
+
+
+class PaymentService
+{
+    public function paySale($debt, $receivedAmount, $receivedDate, $idSale, $idEmployee, $idPaymentType, $idBankAccount) {
+        
+    }
+    
+}

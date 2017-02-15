@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 //my uses;:
 use App\Sale;
 use App\Zone;
-use App\Item; //AJAX search
+use App\BankAccount;
+use App\PaymentType;
 use DB;
 use Illuminate\Contracts\Routing\ResponseFactory; //JSON
 use Illuminate\Support\Facades\Auth; //to get the employee user
@@ -104,7 +105,8 @@ class SaleController extends Controller
         $charge = session ('charge');
 
         $zone = Zone::findOrFail ( $idZone );
-        $bankAccounts = [];
+        $bankAccounts = BankAccount::all();
+        $paymentTypes = PaymentType::all();
 
         return view ('sale.step3_payment', ['zone'=>$zone,
 
@@ -117,7 +119,8 @@ class SaleController extends Controller
                                             'discount'=>$discount,
                                             'charge'=>$charge,
 
-                                            'bankAccounts'=>$bankAccounts
+                                            'bankAccounts'=>$bankAccounts,
+                                            'paymentTypes'=> $paymentTypes
                                             ]);
     }
 
@@ -137,7 +140,6 @@ class SaleController extends Controller
     }
 
 
-
     //step 4:
     public function client (){
         $idZone = session ('idZone'); //step1.1
@@ -151,9 +153,18 @@ class SaleController extends Controller
         $discount = session ('discount'); //step 2
         $charge = session ('charge');
 
-        $zone = Zone::findOrFail ( $idZone );
+        $idPaymentType = session('idPaymentType'); //step 3
+        $idBankAccount = session('idBankAccount');
+        $receivedAmount = session('receivedAmount');
 
-        return view ('sale.step3_payment', ['zone'=>$zone,
+        $zone = Zone::findOrFail($idZone);
+        $paymentType = PaymentType::findOrFail($idPaymentType);
+
+        $bankAccount = null;
+        if ($idBankAccount != null)
+            $bankAccount = BankAccount::findOrFail($idBankAccount);        
+
+        return view ('sale.step4_client', [ 'zone'=>$zone,
 
                                             'names'=>$names,
                                             'quantitys'=>$quantitys,
@@ -163,6 +174,10 @@ class SaleController extends Controller
 
                                             'discount'=>$discount,
                                             'charge'=>$charge,
+
+                                            'paymentType'=>$paymentType,
+                                            'bankAccount'=>$bankAccount,
+                                            'receivedAmount'=>$receivedAmount
                                             ]);
     }
 
