@@ -61,15 +61,14 @@ class SaleController extends Controller
 
     //Step 2:
     public function amounts (){
-        $idZone = session ('idZone');
+        $idZone = session ('idZone'); //step1
+        $zone = Zone::findOrFail ($idZone);
 
-        $names = session ('names');
+        $names = session ('names'); //step1.2
         $quantitys = session ('quantitys');
         $prices = session ('prices');
         $units = session ('units');
-        $totalAmount = session ('totalAmount');
-
-        $zone = Zone::findOrFail ( $idZone );
+        $totalAmount = session ('totalAmount');        
 
         return view ('sale.step2_Amounts', ['zone'=>$zone,
 
@@ -83,17 +82,14 @@ class SaleController extends Controller
 
     public function amounts_process (Request $request){
         $discount = 0;
-        $charge = $request->get('charge');
+        $freight = 0;
         if ( $request->has('discount') ) $discount = $request->get('discount');
+        if ( $request->has('freight') )  $freight = $request->get('freight');
 
         session( [  'discount' => $discount,
-                    'charge' => $charge
-                 ] ); //store temporally
+                    'freight' => $freight ] ); //store temporally
 
-        if ($charge =='credit')
-            return redirect()->action('SaleController@client');        
-        else
-            return redirect()->action('SaleController@payment');
+        return redirect()->action('SaleController@payment');
     }
 
     //step 3:
@@ -107,7 +103,7 @@ class SaleController extends Controller
         $totalAmount = session ('totalAmount');
 
         $discount = session ('discount'); //step 2
-        $charge = session ('charge');
+        $freight = session ('freight'); //step 2
 
         $zone = Zone::findOrFail ( $idZone );
         $bankAccounts = BankAccount::all();
@@ -122,7 +118,7 @@ class SaleController extends Controller
                                             'totalAmount'=>$totalAmount,
 
                                             'discount'=>$discount,
-                                            'charge'=>$charge,
+                                            'freight'=>$freight,
 
                                             'bankAccounts'=>$bankAccounts,
                                             'paymentTypes'=> $paymentTypes
@@ -131,8 +127,11 @@ class SaleController extends Controller
 
     public function payment_process (Request $request){
         $idPaymentType = $request->get('idPaymentType');
-        $receivedAmount = $request->get('receivedAmount');
+        $receivedAmount = null;
         $idBankAccount = null;
+        if ( $idPaymentType >= 0 ){ //is not a credit
+            $receivedAmount = $request->get('receivedAmount');
+        }
         if ( $request->has('idBankAccount') ) $idBankAccount = $request->get('idBankAccount');
 
         session( [  'idPaymentType' => $idPaymentType,
@@ -152,6 +151,7 @@ class SaleController extends Controller
     //step 4:
     public function client (Request $request ){
         $idZone = session ('idZone'); //step1.1
+        $zone = Zone::findOrFail($idZone);
 
         $names = session ('names'); //step1.2
         $quantitys = session ('quantitys');
@@ -160,20 +160,13 @@ class SaleController extends Controller
         $totalAmount = session ('totalAmount');
 
         $discount = session ('discount'); //step 2
-        $charge = session ('charge');
+        $freight = session ('freight');
 
-        $idPaymentType = null; //step 3 //CULD BE NULL IF IS A CREDIT 
-        $idBankAccount = null;
-        $receivedAmount = null;
-        if ( $request->session()->has('idPaymentType') ){ //this means, there were a pay (is not a credit sale)
-            $idPaymentType = $request->session()->get('idPaymentType');
-            $idBankAccount = $request->session()->get('idBankAccount');
-            $receivedAmount = $request->session()->get('receivedAmount');
-        }
-
-        $zone = Zone::findOrFail($idZone);
+        $idPaymentType = $request->session()->get('idPaymentType');
+        $idBankAccount = $request->session()->get('idBankAccount');
+        $receivedAmount = $request->session()->get('receivedAmount');        
         $paymentType = null;
-        if ($idPaymentType != null)
+        if ($idPaymentType >=0)
             $paymentType = PaymentType::findOrFail($idPaymentType);
         $bankAccount = null;
         if ($idBankAccount != null)
@@ -188,7 +181,7 @@ class SaleController extends Controller
                                             'totalAmount'=>$totalAmount,
 
                                             'discount'=>$discount,
-                                            'charge'=>$charge,
+                                            'freight'=>$freight,
 
                                             'paymentType'=>$paymentType,
                                             'bankAccount'=>$bankAccount,

@@ -40,48 +40,42 @@
             <h3 class="panel-title">2. Montos</h3>
           </div>
 
-          <div class="panel-body form-horizontal">
-            <div class="form-group">
-              <label for="totalAmount" class="col-xs-6 control-label">Imp. total</label>
+          <div class="panel-body">
+            <div class="form-group row">
+              <label for="totalAmount" class="col-xs-6 control-label text-right">Imp. total</label>
               <div class="col-xs-6">
                 <input type="number" class="form-control text-right" id="totalAmount" name="totalAmount" value="{{ number_format($totalAmount, 1, '.','') }}" readonly>
               </div>            
             </div> 
             
-            <div class="form-group">
-              <label for="discount" class="col-xs-6 control-label">Descuento</label>
+            <div class="form-group row">
+              <label for="freight" class="col-xs-6 control-label text-right">Flete</label>
+              <div class="col-xs-6 ">
+                <input type="number" step="0.01" min="0" class="form-control text-right" id="freight" name="freight" >
+              </div>            
+            </div>
+
+            <div class="form-group row">
+              <label for="discount" class="col-xs-6 control-label text-right">Desc.</label>
               <div class="col-xs-6 ">
                 <input type="number" step="0.01" min="0" class="form-control text-right" id="discount" name="discount" >
               </div>            
             </div>
 
-            <div class="form-group text-right">
+            <div class="form-group row text-right">
               <label class="col-xs-12">--------------------</label>                     
             </div>
 
-            <div class="form-group">
-              <label for="discount" class="col-xs-6 control-label">Monto final</label>
+            <div class="form-group row">
+              <label for="discount" class="col-xs-6 control-label text-right">Monto final</label>
               <div class="col-xs-6 text-right">
-                <h4 id="finalAmount">{{ number_format($totalAmount, 1, '.','') }}</h4>
+                <h4 id="finalAmount">S/ {{ number_format($totalAmount, 1, '.','') }}</h4>
               </div>            
             </div>            
             
           </div>
 
-          <div class="panel-body">
-            <div class="form-group text-center">
-              <div class="col-lg-10 col-lg-offset-1">
-                <label for="charge" class="control-label">Cobro al *</label>
-                <select class="form-control" id="charge" name="charge" required>
-                  <option value="">--Seleccionar--</option>
-                  <option value="cash">Contado</option>
-                  <option value="credit">Crédito</option>
-                </select> 
-              </div>     
-            </div>
-          </div>
-
-          <div class="form-group text-center">          
+          <div class="form-group row text-center">          
             <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Continuar</button>
           </div>   
 
@@ -99,15 +93,20 @@
 <script type="text/javascript">
 $(document).ready(function() {
   $('#discount').on('keyup', function (e) {
-    var discount = $("#discount").val();
-    updateFinalAmount(discount);
+    updateFinalAmount();
+  });
+
+  $('#freight').on('keyup', function (e) {
+    updateFinalAmount();
   });
 });
 
-function updateFinalAmount(discount){
-  var amount = $("#totalAmount").val();
-  var finalAmount = amount - discount;
-  //alert(amount + ' - ' + discount + ' = '+ finalAmount );
+function updateFinalAmount(){
+  var totalAmount = Number ($("#totalAmount").val() );
+  var discount = Number( $("#discount").val() );
+  var freight = Number( $("#freight").val() );
+
+  var finalAmount = totalAmount + freight - discount;
   $('#finalAmount').text('S/ ' + finalAmount.toFixed(1));
 }
 </script>

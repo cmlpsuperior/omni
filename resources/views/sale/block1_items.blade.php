@@ -6,13 +6,20 @@
 
   <div class="panel-body">
     <div class="row">
-      <div class="col-xs-12">
+      <div class="col-xs-6">
         <div class="form-group">
-          <label for="totalAmount">Zona: </label>
+          <label for="totalAmount">Zona</label>
           <p>{{ $zone->name }}</p>
         </div> 
       </div>
       
+      <div class="col-xs-6">
+        <div class="form-group">
+          <label for="totalAmount">Flete sugerido</label>
+          <p>S/ {{ $zone->shipping }}</p>
+        </div> 
+      </div>
+
     </div>
     <br>
 
