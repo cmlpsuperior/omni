@@ -61,7 +61,7 @@
               <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
               <br>
-              <input type="hidden" id="clientType" name="clientType" value="person"> 
+              <input type="hidden" id="clientType" name="clientType" value="Persona"> 
 
               <div class="form-group row">
                 <div class="col-xs-6">
@@ -101,6 +101,10 @@
                 </div>
               </div>
 
+              <div class="form-group text-center">          
+                <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Continuar</button>
+              </div>
+
               </form>
             </div>
             
@@ -111,21 +115,37 @@
               <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
               <br>
-              <input type="hidden" id="clientType" name="clientType" value="company">  
+              <input type="hidden" id="clientType" name="clientType" value="Empresa">  
 
-              <div class="form-group">
-                <label for="idBankAccount">Cuenta bancária *</label>
-                       
+              <div class="form-group row">
+                <div class="col-xs-6">
+                  <label for="documentNumberCompany">RUC *</label>
+                  <input type="number" min="0" class="form-control" id="documentNumberCompany" name="documentNumberCompany" required>
+                </div>
+
+                <div class="col-xs-6">
+                  <label for=""></label><br>
+                  <a class="btn btn-info" id="btnSearchCompany" ><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Verificar</a>
+                  <label class="" id="statusCompany" name="statusCompany"> </label>
+                </div>
               </div>
 
-              <div class="form-group">
-                <label for="receivedAmount">Monto recibido *</label>
-                <input type="number" step="0.01" min="0" class="form-control text-right" id="receivedAmount" name="receivedAmount" required>          
+              <div class="form-group row">
+                <div class="col-xs-6">         
+                  <label for="businessName">Razón social *</label>
+                  <input type="text" class="form-control" id="businessName" name="businessName" required>
+                </div>
+
+                <div class="col-xs-6">         
+                  <label for="phoneCompany">Teléfono </label>
+                  <input type="number" min="0" class="form-control" id="phoneCompany" name="phoneCompany">
+                </div>
               </div>
 
               <div class="form-group text-center">          
                 <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Continuar</button>
-              </div> 
+              </div>
+
               </form>
             </div>              
 
@@ -175,6 +195,35 @@ $(document).ready(function() {
 
   });
 
+  $('#btnSearchCompany').on('click', function (e) {
+    var documentNumber = $('#documentNumberCompany').val();  
+    var myUrl = "{{ url('company/searchCompanyByDocumentNumber') }}";
+    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+    $.ajax({
+      type: "GET",   
+      url: myUrl,
+      dataType : "JSON",
+      data: {
+          documentNumber: documentNumber,
+          _token: CSRF_TOKEN
+      },
+      success: function(data){
+        console.log(data.companyClient);
+        cleanCompanyData();
+        updateCompanyStatus(data.companyClient);
+
+        if (data.companyClient != null){
+          updateCompanyInfo(data.companyClient);
+        }                
+      },
+      error: function (e) {
+        console.log(e.responseText);
+      },
+    });
+
+  });
+
 });
 function cleanClientData(){
   $('#names').val('');
@@ -203,5 +252,27 @@ function updateClientStatus (personClient){
   }
 }
 
+function cleanCompanyData(){
+  $('#businessName').val(''); 
+  $('#phoneCompany').val(''); 
+}
+function updateCompanyInfo (companyClient){
+  $('#businessName').val(companyClient.businessName);
+  $('#phoneCompany').val(companyClient.phone); 
+}
+
+function updateCompanyStatus (companyClient){
+  $('#statusCompany').removeClass('text-danger');
+  $('#statusCompany').removeClass('text-success');
+
+  if (companyClient == null){
+    $('#statusCompany').text(' No es cliente');
+    $('#statusCompany').addClass('text-danger');
+  }
+  else {
+    $('#statusCompany').text(' Sí es cliente');
+    $('#statusCompany').addClass('text-success');
+  }
+}
 </script>
 @endsection

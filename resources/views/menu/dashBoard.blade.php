@@ -52,7 +52,7 @@ $(document).ready(function(){
   var totalAmount = 0;
   var totalQuantity = 0;
 
-  var myUrl=  "{{ url('bill/saleMonth') }}";
+  var myUrl=  "{{ url('sale/saleMonth') }}";
   $.ajax({        
     type: "GET",   
     url: myUrl,

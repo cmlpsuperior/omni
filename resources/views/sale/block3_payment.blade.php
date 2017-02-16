@@ -4,6 +4,7 @@
     <h3 class="panel-title">3. Pago</h3>
   </div>
 
+  @if ($paymentType != null)
   <div class="panel-body">
     <ul class="nav nav-tabs">
       <li class="active"><a data-toggle="tab" href="#{{ $paymentType->name }}">{{ $paymentType->name }}</a></li>
@@ -15,7 +16,7 @@
         <br>
         <div class="form-group">
           <label for="">Monto recibido *</label>
-          <h4>S/ {{ $receivedAmount }}</h4>         
+          <p>S/ {{ $receivedAmount }}</p>         
         </div>
       </div>
       
@@ -23,13 +24,13 @@
       <div id="Deposito" class="tab-pane fade in active">
         <br>               
         <div class="form-group">
-          <label for="idBankAccount">Cuenta bancária *</label>
-          <h4>{{ $bankAccount->bankName. ' - '. $bankAccount->accountNumber }}</h4>        
+          <label for="idBankAccount">Cuenta bancária</label>
+          <p>{{ $bankAccount->bankName. ' - '. $bankAccount->accountNumber }}</p>        
         </div>
 
         <div class="form-group">
-          <label for="">Monto recibido *</label>
-          <h4>S/ {{ $receivedAmount }}</h4>         
+          <label for="">Monto recibido</label>
+          <p>S/ {{ $receivedAmount }}</p>         
         </div>
       </div>
       @endif
@@ -48,4 +49,15 @@
     @endif
   </div>          
 
+
+  @else
+  <div class="panel-body">
+
+    <div class="form-group text-center">
+      <label for="">No aplica</label>        
+    </div>
+
+  </div>
+
+  @endif
 </div>

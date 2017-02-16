@@ -50,13 +50,14 @@ Route::delete('/client/{id}/destroy','ClientController@destroy' );
 
 //AJAX
 Route::get('/person/searchPersonByDocumentNumber','ClientController@searchPersonByDocumentNumber' );
+Route::get('/company/searchCompanyByDocumentNumber','ClientController@searchCompanyByDocumentNumber' );
 
 //PDF
 Route::get('pdf/printBill/{idBill}', 'PDFController@printBill' );
 
 //home
-Route::get('/home/sale','MenuController@sale' );
-Route::get('/home/dashBoard','MenuController@dashBoard' );
+Route::get('/menu/sale','MenuController@sale' );
+Route::get('/menu/dashBoard','MenuController@dashBoard' );
 
 //API REST:
 Route::get('/item/searchItem','ItemController@searchItem' ); //AJAX
@@ -94,5 +95,13 @@ Route::get('/sale','SaleController@index' );
 
 	Route::get('/sale/client','SaleController@client' );
 	Route::post('/sale/client_process','SaleController@client_process' );
+
+	Route::get('/sale/voucher','SaleController@voucher' );
+	Route::post('/sale/voucher_process','SaleController@voucher_process' );
+
+	Route::get('/sale/shipping','SaleController@shipping' );
+	Route::post('/sale/shipping_process','SaleController@shipping_process' );
 Route::get('/sale/{idSale}/view','SaleController@view' );
 Route::delete('/sale/{idSale}/destroy','SaleController@destroy' );
+
+Route::get('/sale/saleMonth','SaleController@saleMonth' ); //AJAX

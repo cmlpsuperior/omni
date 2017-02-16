@@ -170,14 +170,30 @@ class ClientController extends Controller
         $documentNumber= $request->get('documentNumber');
 
         //get ids of documentType person
-        $idsDocumentType = DocumentType::where('type','=', 'person')->pluck('idDocumentType');
+        $idsDocumentType = DocumentType::where('type','like', 'person')->pluck('idDocumentType');
 
-        $personClient = Client::where('documentNumber','=',$documentNumber)
+        $personClient = Client::where('documentNumber','like',$documentNumber)
                                 ->whereIn('idDocumentType', $idsDocumentType)
                                 ->first();
 
         return response()->json([
                             'personClient' => $personClient                      
+                        ]);
+    }
+
+    //AJAX: used to find person-client names
+    public function searchCompanyByDocumentNumber (Request $request){
+        $documentNumber= $request->get('documentNumber');
+
+        //get ids of documentType person
+        $idsDocumentType = DocumentType::where('type','=', 'company')->pluck('idDocumentType');
+
+        $companyClient = Client::where('documentNumber','like',$documentNumber)
+                                ->whereIn('idDocumentType', $idsDocumentType)
+                                ->first();
+
+        return response()->json([
+                            'companyClient' => $companyClient                      
                         ]);
     }
 

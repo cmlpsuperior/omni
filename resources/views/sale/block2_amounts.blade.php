@@ -7,20 +7,20 @@
     <div class="form-group">
       <label for="totalAmount" class="col-xs-6 control-label">Imp. total</label>
       <div class="col-xs-6 text-right">
-        <h4> {{ number_format($totalAmount, 1, '.','') }}</h4>
+        <p> {{ number_format($totalAmount, 1, '.','') }}</p>
       </div>            
     </div> 
     
     <div class="form-group">
       <label for="discount" class="col-xs-6 control-label">Descuento</label>
       <div class="col-xs-6 text-right ">
-        <h4> {{ number_format($discount, 1, '.','') }}</h4>
+        <p> {{ number_format($discount, 1, '.','') }}</p>
         
       </div>            
     </div>
 
     <div class="form-group text-right">
-      <label class="col-xs-12">--------------------</label>                     
+      <p class="col-xs-12">--------------------</p>                     
     </div>
 
     <div class="form-group">
@@ -35,11 +35,11 @@
   <div class="panel-body">
     <div class="form-group text-center">
       <div class="col-lg-10 col-lg-offset-1">
-        <label for="charge" class="control-label">Cobro al *</label>
+        <label for="charge" class="control-label">Cobro al</label>
         @if ($charge == 'credit')
-          <h4>Crédito</h4>
+          <p>Crédito</p>
         @elseif ($charge == 'cash')
-          <h4>Contado</h4>
+          <p>Contado</p>
         @endif
       </div>     
     </div>

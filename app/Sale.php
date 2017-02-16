@@ -42,7 +42,7 @@ class Sale extends Model
     }
 
     public function items (){
-        return $this->belongsToMany('App\Item', 'itemXBill', 'idBill', 'idItem')
-                    ->withPivot('quantity', 'unitPrice');
+        return $this->belongsToMany('App\Item', 'itemXSale', 'idSale', 'idItem')
+                    ->withPivot('orderNumber', 'quantity', 'unitPrice');
     }
 }

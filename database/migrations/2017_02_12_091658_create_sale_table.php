@@ -12,7 +12,7 @@ class CreateSaleTable extends Migration
             $table->increments('idSale');
 
             $table->datetime('registerDate');
-            $table->datetime('discount');
+            $table->double('discount',15,2);
             $table->double('totalAmount', 15, 2);
 
             $table->string('payment', 10); //credit or cash

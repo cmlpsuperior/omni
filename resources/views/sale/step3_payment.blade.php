@@ -84,7 +84,7 @@
                   <select class="form-control" id="idBankAccount" name="idBankAccount" required>
                     <option value="">--Seleccionar--</option>
                     @foreach ( $bankAccounts as $bankAccount )
-                      <option value="{{ $bankAccount->idBankAccount }}">{{ $bankAccount->bankName .' - ' . $bankAccount->AccountNumber }}</option>
+                      <option value="{{ $bankAccount->idBankAccount }}">{{ $bankAccount->bankName .' - ' . $bankAccount->accountNumber }}</option>
                     @endforeach
                   </select>         
                 </div>

@@ -6,10 +6,10 @@
 
   <div class="panel-body">
     <div class="row">
-      <div class="col-xs-12 text-center">
+      <div class="col-xs-12">
         <div class="form-group">
           <label for="totalAmount">Zona: </label>
-          <h4>{{ $zone->name }}</h4>
+          <p>{{ $zone->name }}</p>
         </div> 
       </div>
       
