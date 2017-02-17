@@ -47,13 +47,10 @@ Route::get('/client','ClientController@index' );
 	Route::get('/company/{id}/edit','ClientController@editCompany' );
 	Route::put('/company/{id}/update','ClientController@updateCompany' );
 Route::delete('/client/{id}/destroy','ClientController@destroy' );
-
-//AJAX
-Route::get('/person/searchPersonByDocumentNumber','ClientController@searchPersonByDocumentNumber' );
-Route::get('/company/searchCompanyByDocumentNumber','ClientController@searchCompanyByDocumentNumber' );
+Route::get('/client/searchClientByDocumentNumber','ClientController@searchClientByDocumentNumber' ); //AJAX
 
 //PDF
-Route::get('pdf/printBill/{idBill}', 'PDFController@printBill' );
+Route::get('pdf/printSale/{idSale}', 'PDFController@printSale' );
 
 //home
 Route::get('/menu/sale','MenuController@sale' );

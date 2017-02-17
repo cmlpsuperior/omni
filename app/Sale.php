@@ -15,9 +15,9 @@ class Sale extends Model
     protected $fillable = [
         'registerDate',
         'discount',
-        'totalAmount',
+        'freight',
 
-        'payment',
+        'totalAmount',
         'state',        
         'observations',    
         
@@ -26,6 +26,7 @@ class Sale extends Model
     	'idEmployee'
     ];
 
+    
 
     //relaciones con otros modelos:
     public function client()
@@ -43,6 +44,27 @@ class Sale extends Model
 
     public function items (){
         return $this->belongsToMany('App\Item', 'itemXSale', 'idSale', 'idItem')
-                    ->withPivot('orderNumber', 'quantity', 'unitPrice');
+                    ->withPivot('orderNumber', 'quantity', 'unitPrice')->orderBy('orderNumber','asc');
+    }
+
+    //relaciones con otros modelos:
+    public function salePayments()
+    {
+        return $this->hasMany('App\SalePayment', 'idSale', 'idSale');
+    }
+
+
+    //mutators:
+    public function getFinalAmountAttribute(){
+        return $this->totalAmount + $this->freight - $this->discount;
+    }
+
+    public function getTotalPaymentAttribute(){
+        $sum=0;
+        foreach( $this->salePayments as $salePayment){
+            $sum = $sum + $salePayment->amountPaid; //mutator too
+        }
+
+        return $sum;
     }
 }

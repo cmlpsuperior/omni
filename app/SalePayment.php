@@ -41,4 +41,13 @@ class SalePayment extends Model
     {
         return $this->belongsTo('App\BankAccount', 'idBankAccount', 'idBankAccount');
     }
+
+    
+    //mutators:
+    public function getAmountPaidAttribute(){
+        if ($this->debtAmount >= $this->receivedAmount)
+            return $this->receivedAmount;
+        else
+            return $this->debtAmount;
+    }
 }

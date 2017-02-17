@@ -164,7 +164,18 @@ class ClientController extends Controller
 
 
 
+    //AJAX: used to find client names
+    public function searchClientByDocumentNumber (Request $request){
+        $documentNumber= $request->get('documentNumber');
 
+        $client = Client::where('documentNumber','like',$documentNumber)
+                                ->first();
+
+        return response()->json([
+                            'client' => $client                      
+                        ]);
+    }
+    /*
     //AJAX: used to find person-client names
     public function searchPersonByDocumentNumber (Request $request){
         $documentNumber= $request->get('documentNumber');
@@ -196,5 +207,5 @@ class ClientController extends Controller
                             'companyClient' => $companyClient                      
                         ]);
     }
-
+    */
 }

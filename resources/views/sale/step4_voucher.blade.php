@@ -42,14 +42,10 @@
     </div>
 
     <div class="row">
-      @include('sale.block4_client')
-    </div>
-
-    <div class="row">
       <div class="panel panel-primary">
 
         <div class="panel-heading">
-          <h3 class="panel-title">5. Comprobante</h3>
+          <h3 class="panel-title">4. Comprobante</h3>
         </div>
 
         <div class="panel-body">

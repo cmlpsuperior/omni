@@ -46,7 +46,21 @@
 <!--Is a credit-->
 @else
   <div class="panel-heading">
-    <h3 class="panel-title">3. Pago - Crédito</h3>
+    <h3 class="panel-title">3. Pago - Crédito</h3>    
+  </div>
+
+  <div class="panel-body">
+    <div class="form-group row">
+      <div class="col-xs-12">
+        <label for="">Cliente</label>
+        <p>{{ $client->documentNumber }}</p>
+        @if ($client->names !=null)
+          <p>{{ $client->fatherLastName .' '. $client->motherLastName .', '.$client->names }}</p>
+        @else
+          <p>{{ $client->businessName }}</p>
+        @endif
+      </div>   
+    </div>
   </div>
 @endif
 </div>

@@ -13,9 +13,9 @@ class CreateSaleTable extends Migration
 
             $table->datetime('registerDate');
             $table->double('discount',15,2);
+            $table->double('freight',15,2);
+            
             $table->double('totalAmount', 15, 2);
-
-            $table->string('payment', 10); //credit or cash
             $table->string('state', 50);            
             $table->string('observations', 250)->nullable();
             

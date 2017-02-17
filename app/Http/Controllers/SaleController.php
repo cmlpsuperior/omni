@@ -18,6 +18,12 @@ use Illuminate\Support\Facades\Auth; //to get the employee user
 
 class SaleController extends Controller
 {
+    public function view($idSale){
+        $sale = Sale::findOrFail($idSale);
+        return view('sale.view',['sale'=>$sale]);
+    }  
+
+
     //step 1:
     public function zone (){
     	$zones = Zone::orderBy('name','asc')->get();
@@ -129,25 +135,25 @@ class SaleController extends Controller
         $idPaymentType = $request->get('idPaymentType');
         $receivedAmount = null;
         $idBankAccount = null;
+        $idClient = null;
         if ( $idPaymentType >= 0 ){ //is not a credit
             $receivedAmount = $request->get('receivedAmount');
+            if ( $request->has('idBankAccount') ) $idBankAccount = $request->get('idBankAccount');
         }
-        if ( $request->has('idBankAccount') ) $idBankAccount = $request->get('idBankAccount');
+        else{ //is a credit
+            $idClient = $request->get('idClient');
+        }
 
         session( [  'idPaymentType' => $idPaymentType,
                     'idBankAccount' => $idBankAccount,
-                    'receivedAmount' => $receivedAmount
+                    'receivedAmount' => $receivedAmount,
+                    'idClient' => $idClient
                  ] ); //store temporally
         
-
-        $charge = $request->session()->get('charge');
-        if ($charge == 'cash')
-            return redirect()->action('SaleController@voucher');
-        else 
-            return redirect()->action('SaleController@client');
+        return redirect()->action('SaleController@voucher');
     }
 
-
+    /*
     //step 4:
     public function client (Request $request ){
         $idZone = session ('idZone'); //step1.1
@@ -259,11 +265,12 @@ class SaleController extends Controller
 
         return redirect()->action('SaleController@voucher');
     }
+    */
 
-
-    //step 5
-    public function voucher (Request $request){ //always
+    //step 4
+    public function voucher (){ //always
         $idZone = session ('idZone'); //step1.1
+        $zone = Zone::findOrFail($idZone);
 
         $names = session ('names'); //step1.2
         $quantitys = session ('quantitys');
@@ -272,119 +279,81 @@ class SaleController extends Controller
         $totalAmount = session ('totalAmount');
 
         $discount = session ('discount'); //step 2
-        $charge = session ('charge');
+        $freight = session ('freight');
 
-        $idPaymentType = null; //step 3 CULD BE NULL IF IS A CREDIT 
-        $idBankAccount = null;
-        $receivedAmount = null;
-        if ( $request->session()->has('idPaymentType') ){ //this means, there were a pay (is not a credit sale)
-            $idPaymentType = $request->session()->get('idPaymentType');
-            $idBankAccount = $request->session()->get('idBankAccount');
-            $receivedAmount = $request->session()->get('receivedAmount');
-        }
-
-        $idClient= null;
-        $clientType=null;
-        if ( $request->session()->has('idClient') ){
-            $idClient = $request->session()->get('idClient'); //step 4 --COULD BE NULL
-            $clientType = $request->session()->get('clientType');
-        }
-
-        $zone = Zone::findOrFail($idZone);
-
+        $idPaymentType = session ('idPaymentType'); //step 3
+        $idBankAccount = session ('idBankAccount');
+        $receivedAmount = session ('receivedAmount');
+        $idClient = session ('idClient');        
+        $client = null;
+        if ( $idClient != null) //is a credit
+            $client = Client::findOrFail($idClient);
         $paymentType = null;
-        if ($idPaymentType != null)
+        if ($idPaymentType >= 0)
             $paymentType = PaymentType::findOrFail($idPaymentType);
         $bankAccount = null;
         if ($idBankAccount != null)
-            $bankAccount = BankAccount::findOrFail($idBankAccount);  
+            $bankAccount = BankAccount::findOrFail($idBankAccount);
 
-        $client = null;
-        if ($idClient != null)
-            $client = Client::findOrFail($idClient);
+        return view ('sale.step4_voucher', [    'zone'=>$zone,
+                                                'names'=>$names,
+                                                'quantitys'=>$quantitys,
+                                                'prices'=>$prices,
+                                                'units'=>$units,
+                                                'totalAmount'=>$totalAmount,
 
-        return view ('sale.step5_voucher', [ 'zone'=>$zone,
+                                                'discount'=>$discount,
+                                                'freight'=>$freight,
 
-                                            'names'=>$names,
-                                            'quantitys'=>$quantitys,
-                                            'prices'=>$prices,
-                                            'units'=>$units,
-                                            'totalAmount'=>$totalAmount,
-
-                                            'discount'=>$discount,
-                                            'charge'=>$charge,
-
-                                            'paymentType'=>$paymentType,
-                                            'bankAccount'=>$bankAccount,
-                                            'receivedAmount'=>$receivedAmount,
-
-                                            'client'=>$client,
-                                            'clientType'=>$clientType
+                                                'paymentType'=>$paymentType,
+                                                'bankAccount'=>$bankAccount,
+                                                'receivedAmount'=>$receivedAmount,
+                                                'client'=>$client
                                             ]);
     }
 
     public function voucher_process (Request $request){
-        $voucherType = $request->get('voucherType');
-
-        //verificar que no haya errores:
-        if ($voucherType == 'Factura' && !$request->has('documentNumber') && !$request->has('names') ){
-            return redirect()->action('SaleController@voucher')->withErrors('Error', 'La factura debe tener razón social y RUC');
-        }
-
-        //all is okay:        
-        $documentNumber = null;
-        $namesVoucher = null;        
-        if ( $request->has('documentNumber') ) $documentNumber = $request->get('documentNumber');
-        if ( $request->has('namesVoucher') ) $namesVoucher = $request->get('namesVoucher');        
-
-        //
         $idZone = session ('idZone'); //step1.1
+        $zone = Zone::findOrFail($idZone);
 
-        $idItems = session ('idItems');
+        $idItems = session('idItems');
         $quantitys = session ('quantitys');
         $prices = session ('prices');
         $totalAmount = session ('totalAmount');
 
         $discount = session ('discount'); //step 2
-        $charge = session ('charge');
+        $freight = session ('freight');
 
-        $idPaymentType = null; //step 3 //CULD BE NULL IF IS A CREDIT 
-        $idBankAccount = null;
-        $receivedAmount = null;
-        if ( $request->session()->has('idPaymentType') ){ //this means, there were a pay (is not a credit sale)
-            $idPaymentType = $request->session()->get('idPaymentType');
-            $idBankAccount = $request->session()->get('idBankAccount');
-            $receivedAmount = $request->session()->get('receivedAmount');
-        }
-
-        $idClient = null; //step 4
-        $clientType = null;
-        if ( $request->session()->has('idClient') ){ //this mean, there were a client registered (is a credit)
-            $idClient = $request->session()->get('idClient');
-            $clientType = $request->session()->get('clientType');
-        }
-                
+        $idPaymentType = session ('idPaymentType'); //step 3
+        $idBankAccount = session ('idBankAccount');
+        $receivedAmount = session ('receivedAmount');
+        $idClient = session ('idClient');
         
+        $voucherType = $request->get('voucherType');   //step4   
+        $documentNumber = null;
+        $namesVoucher = null;        
+        if ( $request->has('documentNumber') ) $documentNumber = $request->get('documentNumber');
+        if ( $request->has('namesVoucher') ) $namesVoucher = $request->get('namesVoucher');   
+        
+        $finalAmount = $totalAmount + $freight - $discount;        
         DB::beginTransaction();
         //save a sale:
         $sale = new Sale();
-        $sale->registerDate = date("Y-m-d H:i:s");
-        $sale->totalAmount = $totalAmount;
+        $sale->registerDate = date("Y-m-d H:i:s");        
         $sale->discount = $discount;
-        $sale->payment = $charge;
-        if ($charge =='credit'){
-            $sale->state = 'Deuda';
-        }
-        else if ($charge =='cash'){
-            if ($receivedAmount >= $totalAmount - $discount)
+        $sale->freight = $freight;
+
+        $sale->totalAmount = $totalAmount;
+        if ($idPaymentType <0) //is a credit
+            $sale->state = 'Credito';
+        else {
+            if ($receivedAmount >= $finalAmount)
                 $sale->state = 'Pagado';
             else
                 $sale->state = 'Deuda';
-        }
-        else //esto no deberia pasar
-            $sale->state = 'Caso especial';
-        
+        }        
         $sale->observations = null;
+
         $sale->idClient = $idClient;
         $sale->idZone = $idZone;
         $sale->idEmployee = Auth::User()->employee->idEmployee;
@@ -409,9 +378,9 @@ class SaleController extends Controller
         }
 
         //save payment:
-        if ( $idPaymentType != null && $receivedAmount > 0){ //is a pay(not credit), and y bigger than 0
+        if ( $idPaymentType >= 0 && $receivedAmount > 0){ //is a pay(not credit), and received money bigger than 0
             $salePayment = new SalePayment();
-            $salePayment->debtAmount = $totalAmount - $discount;
+            $salePayment->debtAmount = $finalAmount;
             $salePayment->receivedAmount = $receivedAmount;
             $salePayment->registerDate = date("Y-m-d H:i:s");
             $salePayment->idSale = $sale->idSale;
@@ -422,7 +391,7 @@ class SaleController extends Controller
         }
 
         //register the voucher: (boleta o factura)
-
+        //working in that
 
         DB::commit();
 
@@ -437,24 +406,21 @@ class SaleController extends Controller
         $request->session()->forget('totalAmount');
 
         $request->session()->forget('discount');
-        $request->session()->forget('charge');
+        $request->session()->forget('freight');
 
         $request->session()->forget('idPaymentType');
         $request->session()->forget('idBankAccount');
         $request->session()->forget('receivedAmount');
-
         $request->session()->forget('idClient');
-        $request->session()->forget('clientType');
 
-        return redirect()->action('MenuController@dashBoard');
+        return redirect()->action('SaleController@view',$sale->idSale);
     }
     
-
-
+     
 
     //AJAX
     public function saleMonth (){        
-        $days = DB::table('sale')->select ( DB::raw('DAY(registerDate) as dia, sum(totalAmount-discount) as total, count(*) as cantidad') )
+        $days = DB::table('sale')->select ( DB::raw('DAY(registerDate) as dia, sum(totalAmount + freight - discount) as total, count(*) as cantidad') )
                                 ->whereYear('registerDate', '=', date('Y'))
                                 ->whereMonth('registerDate', '=', date('m'))
                                 ->groupBy ( DB::raw('DAY(registerDate)') )

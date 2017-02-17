@@ -62,7 +62,7 @@
 
                 <div class="form-group">
                   <label for="receivedAmount">Monto recibido S/ *</label>
-                  <input type="number" step="0.01" min="0" class="form-control text-right" id="receivedAmount" name="receivedAmount" required>          
+                  <input type="number" step="0.01" min="0" class="form-control" id="receivedAmount" name="receivedAmount" required>          
                 </div>
 
                 <div class="form-group text-center">          
@@ -90,7 +90,7 @@
 
                 <div class="form-group">
                   <label for="receivedAmount">Monto recibido S/ *</label>
-                  <input type="number" step="0.01" min="0" class="form-control text-right" id="receivedAmount" name="receivedAmount" required>          
+                  <input type="number" step="0.01" min="0" class="form-control" id="receivedAmount" name="receivedAmount" required>          
                 </div>
 
                 <div class="form-group text-center">          
@@ -106,8 +106,34 @@
                 <br>
                 <input type="hidden" id="idPaymentType" name="idPaymentType" value="-1"> <!--is not really a paymentType-->
 
-                <div class="form-group row text-center">          
-                  <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Continuar</button>
+                <input type="hidden" id="idClient" name="idClient">
+
+                <div class="form-group row">
+                  <div class="col-sm-6">
+                    <label for="documentNumber">DNI / RUC *</label>
+                    <input type="number" step="0.01" min="0" class="form-control" id="documentNumber" name="documentNumber" required>  
+                  </div>
+                  
+                  <div class="col-sm-6">
+                    <label for=""></label><br>
+                    <a id="btnSearch" class="btn btn-info"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
+                    <a id="btnNew" class="btn btn-info"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
+                  </div>     
+                </div>
+
+                <div class="form-group">
+                  <label for="nameSearch">Nombre / Razón social</label>
+                  <input type="text" class="form-control" id="nameSearch" name="nameSearch" readonly>          
+                </div>
+
+                <div class="form-group">
+                  <p id="status"></p>        
+                </div>
+
+                <div class="form-group row text-center">
+                  <div class="col-xs-12"> 
+                    <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Continuar</button>
+                  </div>
                 </div> 
                 </form>
               </div>            
@@ -122,4 +148,66 @@
 
   </div>
 </div>
+@endsection
+
+
+@section('script')
+<script type="text/javascript">
+$(document).ready(function() {
+  $('#btnSearch').on('click', function (e) {
+    var documentNumber = $('#documentNumber').val();  
+    var myUrl = "{{ url('client/searchClientByDocumentNumber') }}";
+    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+    $.ajax({        
+      type: "GET",   
+      url: myUrl,
+      dataType : "JSON",
+      data: {
+          documentNumber: documentNumber,
+          _token: CSRF_TOKEN
+      },
+      success: function(data){
+        console.log(data.client);
+        cleanClientData();
+        updateClientStatus(data.client);
+
+        if (data.client != null){
+          updateClientInfo(data.client);
+        }                
+      },
+      error: function (e) {
+        console.log(e.responseText);
+      },
+    });
+
+  });
+});
+function cleanClientData(){
+  $('#nameSearch').val('');
+  $('#idClient').val(''); 
+}
+function updateClientInfo (client){
+  $('#idClient').val(client.idClient);
+
+  if (client.names != null) //is a person
+    $('#nameSearch').val(client.fatherLastName+' '+ client.motherLastName+', '+client.names);
+  else
+    $('#nameSearch').val(client.businessName);
+}
+function updateClientStatus (client){
+  $('#status').removeClass('text-danger');
+  $('#status').removeClass('text-success');
+
+  if (client == null){
+    $('#status').text(' No es cliente');
+    $('#status').addClass('text-danger');
+  }
+  else {
+    $('#status').text(' Sí es cliente');
+    $('#status').addClass('text-success');
+  }
+}
+
+</script>
 @endsection
