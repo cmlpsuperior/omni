@@ -26,7 +26,7 @@ class CreateEmployeeTable extends Migration
             $table->datetime('entryDate');
             $table->datetime('endDate')->nullable();
 
-            $table->integer('idDocumentType')->unsigned();
+            $table->char('idDocumentType',1);
             $table->integer('idDriverLicense')->unsigned()->nullable();
             $table->integer('idPosition')->unsigned();
             $table->integer('idUser')->unsigned();

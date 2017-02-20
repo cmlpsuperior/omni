@@ -13,8 +13,10 @@ use App\Unit;
 use App\Zone;
 use App\Client;
 use App\BillType;
+use App\MoneyType;
 use App\PaymentType;
 use App\bankAccount;
+use App\VoucherType;
 
 class DatabaseSeeder extends Seeder
 {
@@ -28,11 +30,11 @@ class DatabaseSeeder extends Seeder
         $this->call(UnitTableSeeder::class);
         $this->call(ZoneTableSeeder::class);
         $this->call(ClientTableSeeder::class);
-        $this->call(BillTypeTableSeeder::class);
-
         //news
+        $this->call(MoneyTypeTableSeeder::class);
         $this->call(PaymentTypeTableSeeder::class);
         $this->call(BankAccountTableSeeder::class);
+        $this->call(VoucherTypeTableSeeder::class);
     }
 	
 }
@@ -46,7 +48,6 @@ class UsersTableSeeder extends Seeder
 
         User::create([
                     'name' => '46618582',
-        			//'email' => 'henryespinozat@gmail.com',
         			'password' => Hash::make('46618582'), //to encrip password
         				]);
 	}
@@ -60,21 +61,20 @@ class DocumentTypeTableSeeder extends Seeder
         DB::table('documentType')->delete();
 
         DocumentType::create([
+                    'idDocumentType' => '1',
                     'name' => 'DNI',
-                    'description' => 'Documento de identidad del ciudadano peruano.',
-                    'type' => 'Person',
+                    'type' => 'Person'
                         ]);
 
         DocumentType::create([
+                    'idDocumentType' => '7',
                     'name' => 'Pasaporte',
-                    'description' => 'Documento de identidad de los extrajeros.',
-                    'type' => 'Person',
+                    'type' => 'Person'
                         ]);
-
         DocumentType::create([
+                    'idDocumentType' => '6',
                     'name' => 'RUC',
-                    'description' => 'Documento único de una empresa.',
-                    'type' => 'Company',
+                    'type' => 'Company'
                         ]);
     }
 }
@@ -148,7 +148,7 @@ class EmployeeTableSeeder extends Seeder
         $position = Position::orderBy('idPosition', 'asc')->first();
 
         //first documentType: DNI
-        $documentType = DocumentType::orderBy('idDocumentType', 'asc')->first();
+        $documentType = DocumentType::where('name','=', 'DNI')->first();
 
         //first user: el mismo usuario
         $user = User::orderBy('id', 'asc')->first();
@@ -311,7 +311,7 @@ class ClientTableSeeder extends Seeder
         DB::table('client')->delete();
         
         //first documentType: DNI
-        $documentType = DocumentType::orderBy('idDocumentType', 'asc')->first();
+        $documentType = DocumentType::where('name','=', 'DNI')->first();
 
         Client::create([
                     'names' => 'Henry Antonio',
@@ -332,41 +332,22 @@ class ClientTableSeeder extends Seeder
     }
 }
 
-class BillTypeTableSeeder extends Seeder 
+
+class MoneyTypeTableSeeder extends Seeder 
 {
 
     public function run()
     {
-        DB::table('billType')->delete();
-        //NO BORRAR NINGUN PEDIDO ni cambiar el nombre (name). Puede traer problemas.
-        BillType::create([
-                    'name' => 'Proforma',
-                    'description' => 'No SUNAT. Estimación del costo de lo que decea el cliente',
-                    'state' => 'Activo',
-                    'isSale' => false
-                        ]);
+        DB::table('moneyType')->delete();
 
-        BillType::create([
-                    'name' => 'Pedido',
-                    'description' => 'Si SUNAT',
-                    'state' => 'Activo',
-                    'isSale' => true
+        MoneyType::create([
+                    'idMoneyType' => 'PEN',
+                    'name' => 'Sol'
                         ]);
-
-        BillType::create([
-                    'name' => 'Por recoger',
-                    'description' => 'No SUNAT. Se guarda el dinero del cliente.',
-                    'state' => 'Activo',
-                    'isSale' => true
+        MoneyType::create([
+                    'idMoneyType' => 'USD',
+                    'name' => 'Dolares americanos'
                         ]);
-
-        BillType::create([
-                    'name' => 'Credito',
-                    'description' => 'Si SUNAT. Los productos se envían sin haber pagado',
-                    'state' => 'Activo',
-                    'isSale' => true
-                        ]);
-
     }
 }
 
@@ -409,5 +390,36 @@ class BankAccountTableSeeder extends Seeder
                     'state' => 'Activo'
                         ]);
 
+    }
+}
+
+class VoucherTypeTableSeeder extends Seeder 
+{
+    public function run()
+    {
+        DB::table('voucherType')->delete();
+        VoucherType::create([
+                    'idVoucherType' => '01',
+                    'name' => 'Factura',
+                    'forSale' => 1
+                        ]);
+
+        VoucherType::create([
+                    'idVoucherType' => '03',
+                    'name' => 'Boleta de venta',
+                    'forSale' => 1
+                        ]);
+
+        VoucherType::create([
+                    'idVoucherType' => '07',
+                    'name' => 'Nota de crédito',
+                    'forSale' => 0
+                        ]);
+
+        VoucherType::create([
+                    'idVoucherType' => '08',
+                    'name' => 'Nota de débito',
+                    'forSale' => 0
+                        ]);
     }
 }

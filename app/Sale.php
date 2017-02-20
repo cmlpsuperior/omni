@@ -23,7 +23,8 @@ class Sale extends Model
         
     	'idClient',
     	'idZone',
-    	'idEmployee'
+    	'idEmployee',
+        'idMoneyType'
     ];
 
     
@@ -41,10 +42,12 @@ class Sale extends Model
     {
         return $this->belongsTo('App\Employee', 'idEmployee', 'idEmployee');
     }
-
     public function items (){
         return $this->belongsToMany('App\Item', 'itemXSale', 'idSale', 'idItem')
                     ->withPivot('orderNumber', 'quantity', 'unitPrice')->orderBy('orderNumber','asc');
+    }
+    public function moneyType (){
+        return $this->belongsTo('App\MoneyType', 'idMoneyType', 'idMoneyType');
     }
 
     //relaciones con otros modelos:

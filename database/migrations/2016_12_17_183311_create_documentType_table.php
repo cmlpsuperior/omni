@@ -10,11 +10,12 @@ class CreateDocumentTypeTable extends Migration
     public function up()
     {
         Schema::create('documentType', function (Blueprint $table) {
-            $table->increments('idDocumentType');
+            $table->char('idDocumentType',1);
 
             $table->string('name', 50);
-            $table->string('description', 200);
             $table->string('type', 50);
+
+            $table->primary(['idDocumentType']);
         });
     }
 

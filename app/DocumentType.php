@@ -14,7 +14,8 @@ class DocumentType extends Model
 
     protected $fillable = [
     	'name',
-    	'description'
+        'type'
+
     ];
 
 

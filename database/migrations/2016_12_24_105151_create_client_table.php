@@ -26,7 +26,7 @@ class CreateClientTable extends Migration
 
             $table->string('businessName', 100)->nullable(); // comp
 
-            $table->integer('idDocumentType')->unsigned(); // comp
+            $table->char('idDocumentType',1); // comp
 
             $table->foreign('idDocumentType')->references('idDocumentType')->on('documentType');
         });

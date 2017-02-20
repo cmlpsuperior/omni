@@ -22,10 +22,12 @@ class CreateSaleTable extends Migration
             $table->integer('idClient')->unsigned()->nullable();
             $table->integer('idZone')->unsigned();
             $table->integer('idEmployee')->unsigned();
+            $table->char('idMoneyType',2);
 
             $table->foreign('idClient')->references('idClient')->on('client');
             $table->foreign('idZone')->references('idZone')->on('zone');
             $table->foreign('idEmployee')->references('idEmployee')->on('employee');
+            $table->foreign('idMoneyType')->references('idMoneyType')->on('moneyType');
         });
     }
 
