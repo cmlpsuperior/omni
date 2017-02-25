@@ -357,6 +357,7 @@ class SaleController extends Controller
         $sale->idClient = $idClient;
         $sale->idZone = $idZone;
         $sale->idEmployee = Auth::User()->employee->idEmployee;
+        $sale->idMoneyType = 'PEN';
         $sale->save();
 
         //save its items
