@@ -139,12 +139,10 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
                                         
-                    <li id="sales">
-                        <a href="{{ action('BillController@create') }}"><i class="fa fa-fw fa-wrench"></i> Ventas</a>
+                    <li id="shop">
+                        <a href="{{ action('MenuController@shop') }}"><i class="fa fa-fw fa-wrench"></i> Tienda</a>
                     </li>
-                    <li id="sales">
-                        <a href="{{ action('SaleController@zone') }}"><i class="fa fa-fw fa-wrench"></i> Ventas nuevo</a>
-                    </li>
+                   
                     <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Mantenimiento <b class="caret"></b></a>
                         <ul id="demo" class="collapse">

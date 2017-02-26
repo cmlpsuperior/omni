@@ -9,12 +9,11 @@ use App\BillType;
 
 class MenuController extends Controller
 {
-    public function sale(){
-    	$billTypes = BillType::orderBy('idBillType', 'asc')->get();
-    	return view ( 'menu.sale', [ 'billTypes'=>$billTypes ] ); 
-    }
-
     public function dashBoard (){
     	return view ('menu.dashBoard');
+    }
+
+    public function shop (){
+    	return view ('menu.shop');
     }
 }

@@ -51,10 +51,12 @@ Route::get('/client/searchClientByDocumentNumber','ClientController@searchClient
 
 //PDF
 Route::get('pdf/printSale/{idSale}', 'PDFController@printSale' );
+Route::get('pdf/printProForma/{idProForma}', 'PDFController@printProForma' );
 
 //home
 Route::get('/menu/sale','MenuController@sale' );
 Route::get('/menu/dashBoard','MenuController@dashBoard' );
+Route::get('/menu/shop','MenuController@shop' );
 
 //API REST:
 Route::get('/item/searchItem','ItemController@searchItem' ); //AJAX
@@ -102,3 +104,14 @@ Route::get('/sale/{idSale}/view','SaleController@view' );
 Route::delete('/sale/{idSale}/destroy','SaleController@destroy' );
 
 Route::get('/sale/saleMonth','SaleController@saleMonth' ); //AJAX
+
+Route::get('/proForma','ProFormaController@index' );
+	Route::get('/proForma/zone','ProFormaController@zone' ); //items
+	Route::post('/proForma/zone_process','ProFormaController@zone_process' );
+	Route::get('/proForma/items','ProFormaController@items' );
+	Route::post('/proForma/items_process','ProFormaController@items_process' );
+
+	Route::get('/proForma/amounts','ProFormaController@amounts' );
+	Route::post('/proForma/amounts_process','ProFormaController@amounts_process' );
+Route::get('/proForma/{idProForma}/view','ProFormaController@view' );
+Route::delete('/proForma/{idProForma}/destroy','ProFormaController@destroy' );

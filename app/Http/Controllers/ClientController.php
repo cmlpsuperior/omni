@@ -78,9 +78,9 @@ class ClientController extends Controller
     public function storePerson (ClientRequest $request){
     	//create a new row in table client        	
     	$client= new Client();
-    	$client->names=ucfirst( strtolower( trim( $request->get('names') ) ) ); //ucfirst is to upper first letter, srtolower is used for lower all letters, trim is used for erase blank letters
-    	$client->fatherLastName=ucfirst( strtolower( trim( $request->get('fatherLastName') ) ) );
-    	$client->motherLastName=ucfirst( strtolower( trim( $request->get('motherLastName') ) ) );
+    	$client->names=ucfirst( mb_strtolower( trim( $request->get('names') ) ) ); //ucfirst is to upper first letter, srtolower is used for lower all letters, trim is used for erase blank letters
+    	$client->fatherLastName=ucfirst( mb_strtolower( trim( $request->get('fatherLastName') ) ) );
+    	$client->motherLastName=ucfirst( mb_strtolower( trim( $request->get('motherLastName') ) ) );
 
     	if ( trim( $request->get('birthdate') )!='' ) $client->birthdate = $request->get('birthdate');
         $client->documentNumber=$request->get('documentNumber');
@@ -132,9 +132,9 @@ class ClientController extends Controller
     public function update (ClientUpdateRequest $request, $id){
         //modifyn a new row in table client          
         $client= Client::findOrFail($id);
-        $client->names=ucfirst( strtolower( trim( $request->get('names') ) ) ); //ucfirst is to upper first letter, srtolower is used for lower all letters, trim is used for erase blank letters
-        $client->fatherLastName=ucfirst( strtolower( trim( $request->get('fatherLastName') ) ) );
-        $client->motherLastName=ucfirst( strtolower( trim( $request->get('motherLastName') ) ) );
+        $client->names=ucfirst( mb_strtolower( trim( $request->get('names') ) ) ); //ucfirst is to upper first letter, srtolower is used for lower all letters, trim is used for erase blank letters
+        $client->fatherLastName=ucfirst( mb_strtolower( trim( $request->get('fatherLastName') ) ) );
+        $client->motherLastName=ucfirst( mb_strtolower( trim( $request->get('motherLastName') ) ) );
 
         if ( trim( $request->get('birthdate') )!='' ) $client->birthdate = $request->get('birthdate');
         //$client->documentNumber=$request->get('documentNumber');

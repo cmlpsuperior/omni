@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 
-	<title>Imprimir comprobante</title>
+	<title>Imprimir proforma</title>
 	<style type= "text/css">
 		@page { margin: 10px 25px 0px 10px; }
 		table{
@@ -11,15 +11,22 @@
 		   width: 100%;
 		}
 		
-		table, td, th{		    
+		table thead tr th{		    
 			border: 0px;
 			padding: 0px;
 			margin: 0px;
 		    padding-bottom: 10px ;
 		    text-align: left;
-		}		
-
-		h1, h3, h4{
+		}
+		table tbody tr td{		    
+			border: 0px;
+			padding: 0px;
+			margin: 0px;
+		    padding-bottom: 10px ;
+		    text-align: left;
+		}	
+	
+		h1, h3, h4, h5{
 			text-align: center;
 			border: 0px;
 			margin: 0px;
@@ -54,20 +61,14 @@
 	<span>Tef. 392-1315 / RPC 954-774-675</span>
 
 	<br>
-	<h3>COMPROBANTE</h3>
-	<h4>N° {{ $sale->idSale }}</h4>
+	<h3>PROFORMA</h3>
+	<h4>N° {{ $proForma->idProForma }}</h4>
 	<br>
 
-	<p><strong>Fecha:</strong> {{ $sale->registerDate }}</p>
+	<p><strong>Fecha:</strong> {{ $proForma->registerDate }}</p>
 	<br>
-	<p><strong>Zona:</strong> {{ $sale->zone->name}}</p>
-	<p><strong>Direc:</strong> - </p>
-
+	<p><strong>Zona:</strong> {{ $proForma->zone->name}}</p>
 	<br>
-	<p><strong>DNI/RUC:</strong> - </p>
-	<p><strong>Cliente:</strong> - </p>
-	<br>
-
 	<p>***********************************</p>
 	<table >
         <thead>
@@ -81,7 +82,7 @@
         </thead>
 
         <tbody>
-        	@foreach ($sale->items as $item)
+        	@foreach ($proForma->items as $item)
             <tr>
 	            <td>{{ $item->pivot->quantity }}</td>
 	            <td>{{ substr ( $item->unit->name,0,3) }}</td>
@@ -91,8 +92,7 @@
 	        </tr> 
 	        @endforeach
         </tbody>
-    </table>
-	
+    </table>	
 	<p>***********************************</p>
 	<table >
         <thead>
@@ -110,34 +110,29 @@
 	            <td></td>
 	            <td id="moneda">Monto</td>
 	            <td></td>
-	            <td id="moneda">{{ number_format($sale->totalAmount, 1, '.','') }}</td>
+	            <td id="moneda">{{ number_format($proForma->totalAmount, 1, '.','') }}</td>
 	        </tr>
             <tr>
 	            <td></td>	            
 	            <td></td>
 	            <td id="moneda">Flete</td>
 	            <td></td>
-	            <td id="moneda">{{ number_format($sale->freight, 1, '.','') }}</td>
+	            <td id="moneda">{{ number_format($proForma->freight, 1, '.','') }}</td>
 	        </tr>
 	        <tr>
 	            <td></td>	            
 	            <td></td>
 	            <td id="moneda">Descuento</td>
 	            <td></td>
-	            <td id="moneda">{{ number_format($sale->discount, 1, '.','') }}</td>
+	            <td id="moneda">({{ number_format($proForma->discount, 1, '.','') }})</td>
 	        </tr> 
         </tfoot>
     </table>
 	<br>
-    <h4>Total final: S/ {{ number_format($sale->finalAmount, 2, '.',' ') }}</h4>
+    <h3>Total final: S/ {{ number_format($proForma->finalAmount, 2, '.',' ') }}</h3>
     <br>
 
-    @if ($sale->totalPayment >= $sale->finalAmount)
-    <h4>PAGADO</h4>
-    @else 
-    <h3>COBRAR</h3>
-    <h3>S/ {{ number_format($sale->finalAmount - $sale->totalPayment, 2, '.',' ') }} </h3>
-    @endif
+    <h4>PROFORMA</h4>
     
 	<script type="text/javascript">
 		print();

@@ -42,8 +42,6 @@ class ItemController extends Controller
         $item->name = ucfirst( strtolower( trim( $request->get('name') ) ) );
         $item->price = $request->get('price');
         $item->state = 'Activo';
-        $item->realStock = 0;
-        $item->availableStock = 0;
         $item->idUnit= $request->get('idUnit');
 
         $item->save();

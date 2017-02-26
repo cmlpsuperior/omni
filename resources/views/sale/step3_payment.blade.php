@@ -111,7 +111,7 @@
                 <div class="form-group row">
                   <div class="col-sm-6">
                     <label for="documentNumber">DNI / RUC *</label>
-                    <input type="number" step="0.01" min="0" class="form-control" id="documentNumber" name="documentNumber" required>  
+                    <input type="number"  min="0" class="form-control" id="documentNumber" name="documentNumber" required>  
                   </div>
                   
                   <div class="col-sm-6">

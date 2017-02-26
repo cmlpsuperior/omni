@@ -53,7 +53,7 @@
       <div class="col-md-6 col-md-offset-3">
         <div class="form-group text-center">
           <label >Importe total </label><br>
-          <h4>S/ {{ number_format($totalAmount, 1, '.'," ") }}</h4>
+          <h4>S/ {{ number_format($totalAmount, 2, '.'," ") }}</h4>
         </div> 
       </div>
     </div>
