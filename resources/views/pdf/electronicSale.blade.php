@@ -11,7 +11,14 @@
 		   width: 100%;
 		}
 		
-		table, td, th{		    
+		table thead tr th{		    
+			border: 0px;
+			padding: 0px;
+			margin: 0px;
+		    padding-bottom: 10px ;
+		    text-align: left;
+		}
+		table tbody tr td{		    
 			border: 0px;
 			padding: 0px;
 			margin: 0px;
