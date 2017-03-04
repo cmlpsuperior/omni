@@ -26,6 +26,7 @@ class SaleController extends Controller
 
     //step 1:
     public function zone (){
+        $this->eraseMemory();
     	$zones = Zone::orderBy('name','asc')->get();
 
         return view('sale.step1_zone', ['zones'=>$zones]);
@@ -141,7 +142,13 @@ class SaleController extends Controller
             if ( $request->has('idBankAccount') ) $idBankAccount = $request->get('idBankAccount');
         }
         else{ //is a credit
-            $idClient = $request->get('idClient');
+            if (!$request->has('idClient') ){
+
+                return redirect()->action('SaleController@payment')->withErrors('Debe verificar si el cliente existe.');
+
+            }
+            else
+                $idClient = $request->get('idClient');
         }
 
         session( [  'idPaymentType' => $idPaymentType,
@@ -395,29 +402,31 @@ class SaleController extends Controller
         //working in that
 
         DB::commit();
-
-        //erase all sessions variables:
-        $request->session()->forget('idZone');
-
-        $request->session()->forget('idItems');
-        $request->session()->forget('names');
-        $request->session()->forget('quantitys');
-        $request->session()->forget('prices');
-        $request->session()->forget('units');
-        $request->session()->forget('totalAmount');
-
-        $request->session()->forget('discount');
-        $request->session()->forget('freight');
-
-        $request->session()->forget('idPaymentType');
-        $request->session()->forget('idBankAccount');
-        $request->session()->forget('receivedAmount');
-        $request->session()->forget('idClient');
+        $this->eraseMemory();
 
         return redirect()->action('SaleController@view',$sale->idSale);
     }
     
      
+    private function eraseMemory (){
+        //erase all sessions variables:
+        session()->forget('idZone');
+
+        session()->forget('idItems');
+        session()->forget('names');
+        session()->forget('quantitys');
+        session()->forget('prices');
+        session()->forget('units');
+        session()->forget('totalAmount');
+
+        session()->forget('discount');
+        session()->forget('freight');
+
+        session()->forget('idPaymentType');
+        session()->forget('idBankAccount');
+        session()->forget('receivedAmount');
+        session()->forget('idClient');
+    }
 
     //AJAX
     public function saleMonth (){        

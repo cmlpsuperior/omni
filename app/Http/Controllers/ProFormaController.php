@@ -21,8 +21,11 @@ class ProFormaController extends Controller
         return view('proForma.view',['proForma'=>$proForma]);
     } 
 
+    
+
     //step 1:
     public function zone (){
+        $this->eraseMemory();
     	$zones = Zone::orderBy('name','asc')->get();
 
         return view('proForma.step1_zone', ['zones'=>$zones]);
@@ -135,19 +138,23 @@ class ProFormaController extends Controller
 
         DB::commit();
 
-        //erase all sessions variables:
-        $request->session()->forget('idZone');
-
-        $request->session()->forget('idItems');
-        $request->session()->forget('names');
-        $request->session()->forget('quantitys');
-        $request->session()->forget('prices');
-        $request->session()->forget('units');
-        $request->session()->forget('totalAmount');
-
-        $request->session()->forget('discount');
-        $request->session()->forget('freight');
+        $this->eraseMemory();
 
         return redirect()->action('ProFormaController@view',$proForma->idProForma);        
+    }
+
+    private function eraseMemory ( ){
+        //erase all sessions variables:
+        session()->forget('idZone');
+
+        session()->forget('idItems');
+        session()->forget('names');
+        session()->forget('quantitys');
+        session()->forget('prices');
+        session()->forget('units');
+        session()->forget('totalAmount');
+
+        session()->forget('discount');
+        session()->forget('freight');
     }
 }
