@@ -40,6 +40,7 @@
           <div class="col-xs-6">
             <div class="form-group">
               <label for="totalAmount">Zona </label>
+              <input type="hidden" name="idZone" id="idZone" value="{{$zone->idZone}}">
               <p>{{ $zone->name }}</p>
             </div> 
           </div>
