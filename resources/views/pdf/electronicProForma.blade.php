@@ -64,7 +64,7 @@
 	<h3>PROFORMA</h3>
 	<h4>N° {{ $proForma->idProForma }}</h4>
 	<br>
-
+	
 	<p><strong>Fecha:</strong> {{ $proForma->registerDate }}</p>
 	<br>
 	<p><strong>Zona:</strong> {{ $proForma->zone->name}}</p>
